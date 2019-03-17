@@ -1,12 +1,7 @@
 /*
 FOR BUSINESS QUERIES : https://www.yelp.com/developers/documentation/v3/business_search
 FOR REVIEW QUERIES : https://www.yelp.com/developers/documentation/v3/business_reviews
-
-
 */
-
-
-
 
 // import axios from "axios";
 require("dotenv").config()
@@ -19,7 +14,6 @@ const Api_Keys = {
 const key = "hjzawpNl48mrUUwiJ0_8vXq2C5aEgwpmJrsmOOpxlLc1pNvJuJOAgkifVDdKc5lR1GNEK0U8L1ofpZxRnrBXypzCCcrCIR8M0Df73-uLZpv6i_uagjIY-dx9UVOIXHYx"
 //Trouble getting the response to work with an ENV variable so this is what im using for now.""
 
-
 const client = yelp.client(key);
 
 module.exports = {
@@ -28,16 +22,18 @@ module.exports = {
         location: 'austin, tx'
     },
     search: function(query) {
+        console.log("I QUERY THIS!!!", query)
         var recent;
         client.search(query).then(function(response){
+            console.log("TEST")
             const results = response.jsonBody.businesses;
             const prettyJson = JSON.stringify(results, null, 4);
             recent = prettyJson;
-            console.log(recent)
+            console.log(recent);
+            return recent
         }).catch(e => {
-        console.log(e);
+        console.log("search error:", e);
         })
-        this.recent = recent
     },
     recent: null,
 };
