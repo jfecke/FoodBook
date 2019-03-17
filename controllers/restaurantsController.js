@@ -9,6 +9,9 @@ module.exports = {
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
+  queryAll: function(query) {
+    return db.Restaurant.find(query)
+  },
   findById: function(req, res) {
     db.Restaurant
       .findById(req.params.id)

@@ -23,17 +23,7 @@ module.exports = {
     },
     search: function(query) {
         console.log("I QUERY THIS!!!", query)
-        var recent;
-        client.search(query).then(function(response){
-            console.log("TEST")
-            const results = response.jsonBody.businesses;
-            const prettyJson = JSON.stringify(results, null, 4);
-            recent = prettyJson;
-            console.log(recent);
-            return recent
-        }).catch(e => {
-        console.log("search error:", e);
-        })
+        return client.search(query)
     },
     recent: null,
 };
