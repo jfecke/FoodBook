@@ -6,7 +6,9 @@ module.exports = {
     db.Review
       .find(req.query)
       .sort({ date: -1 })
-      .then(dbModel => res.json(dbModel))
+      .then(function(dbModel) {
+        res.json(dbModel)
+      })
       .catch(err => res.status(422).json(err));
   },
   findById: function(req, res) {
