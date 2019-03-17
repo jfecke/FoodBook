@@ -26,6 +26,7 @@ module.exports = {
         return client.search(query)
     },
     review: function(id){
+        console.log("Finding Reviews for id: "+id)
         return client.reviews(id)
     },
 };
