@@ -15,6 +15,14 @@ module.exports = {
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
+  findByIdwithReview: function(req,res) {
+    db.Restaurant
+      .findById(req.params.id)
+      .then(function(results) {
+        db.Reviews.find({restaurantid: results.restaurantid})
+      })
+      .catch(err => res.status(422).json(err));
+  },
   create: function(req, res) {
     db.Restaurant
       .create(req.body)

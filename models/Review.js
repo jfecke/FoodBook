@@ -5,14 +5,22 @@ var ReviewSchema = new Schema({
   // `title` is of type String
   _UserId: {
     type: Schema.Types.ObjectId,
-    ref: "User"
+    ref: "User",
+    required: true
   },
   _RestaurantId: {
     type: Schema.Types.ObjectId,
-    ref: "Restaurant"
+    ref: "Restaurant",
+    required: true
   },
-  title: String,
-  body: String,
+  title: {
+    type: String,
+    required: true
+  },
+  body: {
+    type: String,
+    required: true
+  },
   date: {
     type: Date,
     default: Date.now

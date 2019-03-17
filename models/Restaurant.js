@@ -17,8 +17,7 @@ var RestaurantSchema = new Schema({
     unique: { index: { unique: true } }
   },
   link: {
-    type: String,
-    required: true
+    type: String
   }
 });
 
