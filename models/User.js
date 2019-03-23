@@ -33,6 +33,10 @@ var UserSchema = new Schema({
   following: {
     type: Array,
     default: []
+  },
+  followedby: {
+    type: Array,
+    default: []
   }
 });
 
