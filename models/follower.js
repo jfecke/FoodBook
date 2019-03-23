@@ -1,14 +1,13 @@
 var mongoose = require("mongoose");
-
 var Schema = mongoose.Schema;
+
 var FollowerSchema = new Schema({
-  // `title` is of type String
-  _FollowerId: {
+  FollowerId: {
     type: Schema.Types.ObjectId,
     ref: "User",
     required: true
   },
-  _UserId: {
+  UserId: {
     type: Schema.Types.ObjectId,
     ref: "User",
     required: true

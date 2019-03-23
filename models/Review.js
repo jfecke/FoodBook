@@ -3,12 +3,12 @@ var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 var ReviewSchema = new Schema({
   // `title` is of type String
-  _UserId: {
+  UserId: {
     type: Schema.Types.ObjectId,
     ref: "User",
     required: true
   },
-  _RestaurantId: {
+  RestaurantYelpId: {
     type: Schema.Types.ObjectId,
     ref: "Restaurant",
     required: true
