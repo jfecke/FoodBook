@@ -25,6 +25,7 @@ var UserSchema = new Schema({
 	},
 	profilepic: {
 		type: String,
+		default: "https://profiles.utdallas.edu/img/default.png"
 	},
 	date: {
 		type: Date,
