@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-// import axios from "axios";
-// import classnames from "classnames";
 //might not need withRouter
 import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
