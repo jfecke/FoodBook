@@ -3,7 +3,6 @@ const db = require("../models");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const keys = require("../config/keys.js");
-const passport = require("passport");
 
 //Load Input Validation
 const validateRegisterInput = require("../validation/register");
