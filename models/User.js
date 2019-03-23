@@ -15,7 +15,11 @@ var UserSchema = new Schema({
     required: true,
     unique: { index: { unique: true } }
   },
-  location: {
+  city: {
+    type: String,
+    required: true
+  },
+  state: {
     type: String,
     required: true
   },
@@ -25,6 +29,10 @@ var UserSchema = new Schema({
   date: {
     type: Date,
     default: Date.now
+  },
+  following: {
+    type: Array,
+    default: []
   }
 });
 

@@ -41,6 +41,24 @@ module.exports = function validateRegisterInput(data) {
         errors.password2 = "Passwords must match";
     }
 
+    if (Validator.isEmpty(data.city)) {
+        errors.city = "City field is required";
+    }
+    
+    if (!Validator.isLength(data.city, {min: 2, max: 30})) {
+        errors.city = "Password must be at least 2 characters";
+    }
+
+    if (Validator.isEmpty(data.state)) {
+        errors.state = "State field is required";
+    }
+    
+    if (!Validator.isLength(data.state, {min: 2, max: 2})) {
+        errors.state = "State must be 2 characters";
+    }
+
+
+
     return {
         errors,
         isValid: isEmpty(errors)

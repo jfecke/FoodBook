@@ -37,7 +37,8 @@ module.exports = {
             name: req.body.name,
             email: req.body.email,
             password: req.body.password,
-            location: req.body.location,
+            city: req.body.city,
+            state: req.body.state,
             profilepic: req.body.profilepic
           }
           
