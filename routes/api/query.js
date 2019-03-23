@@ -26,6 +26,8 @@ router.route("/").put(function(req, res) {
                 };
                 res.send(filtered);
             }  else {
+                var arraylength = restaurants.length
+                console.log("Array LENGTH",arraylength);
                 res.send(restaurants);
             }         
         })
@@ -38,6 +40,8 @@ router.route("/").put(function(req, res) {
 module.exports = router;
 
 // {
-//     "category": "restaurants",
-//     "location": "austin, tx"
+//     "term": "restaurant",
+//     "categories": "bbq",
+//     "location": "austin, tx",
+//     "limit": "50"
 // }
