@@ -73,7 +73,7 @@ module.exports = {
     const password = req.body.password;
 
     //Find User by Email
-    db.User.findOne({email: req.body.email})
+    db.User.findOne({email: email})
       .then(user => {
         if (!user) {
           errors.email = "User not found";
