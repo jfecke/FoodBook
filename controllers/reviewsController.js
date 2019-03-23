@@ -1,4 +1,5 @@
 const db = require("../models");
+const validateReviewInput = require("../validation/login");
 
 // Defining methods for the booksController
 module.exports = {
@@ -18,8 +19,14 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   create: function(req, res) {
-    db.Review
-      .create(req.body)
+    const {errors, isValid} = validateReviewInput(req.body);
+
+    //Check Validation
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
+    
+    db.Review.create(req.body)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },

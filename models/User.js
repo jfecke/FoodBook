@@ -6,14 +6,37 @@ var UserSchema = new Schema({
     type: String,
     required: true
   },
+  password : {
+    type: String,
+    required: true
+  },
   email: {
     type: String,
     required: true,
     unique: { index: { unique: true } }
   },
-  location: {
+  city: {
     type: String,
     required: true
+  },
+  state: {
+    type: String,
+    required: true
+  },
+  profilepic: {
+    type: String
+  },
+  date: {
+    type: Date,
+    default: Date.now
+  },
+  following: {
+    type: Array,
+    default: []
+  },
+  followedby: {
+    type: Array,
+    default: []
   }
 });
 
