@@ -6,6 +6,10 @@ var UserSchema = new Schema({
     type: String,
     required: true
   },
+  password : {
+    type: String,
+    required: true
+  },
   email: {
     type: String,
     required: true,
@@ -14,6 +18,13 @@ var UserSchema = new Schema({
   location: {
     type: String,
     required: true
+  },
+  profilepic: {
+    type: String
+  },
+  date: {
+    type: Date,
+    default: Date.now
   }
 });
 
