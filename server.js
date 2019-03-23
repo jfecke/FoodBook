@@ -5,11 +5,12 @@ const passport = require("passport");
 const routes = require("./routes");
 const app = express();
 const PORT = process.env.PORT || 3001;
+const bodyParser = require('body-parser');
+const passport = require('passport');
 
 // Defines middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
 
 // Serve up static assets (usually on heroku)
 if (process.env.NODE_ENV === "production") {
@@ -17,6 +18,9 @@ if (process.env.NODE_ENV === "production") {
 }
 // Add routes, both API and view
 app.use(routes);
+// app.use('/api/users', users);
+// app.use('/api/profile', profile);
+// app.use('/api/posts', posts);
 
 // Connect to the Mongo DB
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/foodbook");
