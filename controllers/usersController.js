@@ -7,6 +7,7 @@ const passport = require("passport");
 
 //Load Input Validation
 const validateRegisterInput = require("../validation/register");
+const validateLoginInput = require("../validation/login");
 
 // Defining methods for the booksController
 module.exports = {
@@ -28,7 +29,8 @@ module.exports = {
     db.User.findOne({email: req.body.email})
       .then(user => {
         if (user) {
-          return res.status(400).json({email: "Email already exists"})
+          errors.email = "Email already exists";
+          return res.status(400).json(errors);
         } else {
           console.log(req.body);
           //Create object of new user using info received from front end
@@ -61,6 +63,12 @@ module.exports = {
     )
   },
   login: function(req, res) {
+    const {errors, isValid} = validateLoginInput(req.body);
+
+    //Check Validation
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
     const email = req.body.email;
     const password = req.body.password;
 
@@ -68,7 +76,8 @@ module.exports = {
     db.User.findOne({email: req.body.email})
       .then(user => {
         if (!user) {
-          return res.status(404).json({email: "User not found"});
+          errors.email = "User not found";
+          return res.status(404).json(errors);
         }
 
         //Check password
@@ -88,7 +97,8 @@ module.exports = {
                 })
               });
             } else {
-              return res.status(400).json({password: "Incorrect Password"})
+              errors.password = "Incorrect Password";
+              return res.status(400).json(errors);
             }
           })
       })

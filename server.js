@@ -1,12 +1,10 @@
 const express = require("express");
-const API = require("./routes/utils/API.js")
 const mongoose = require("mongoose");
 const passport = require("passport");
 const routes = require("./routes");
+
 const app = express();
 const PORT = process.env.PORT || 3001;
-const bodyParser = require('body-parser');
-const passport = require('passport');
 
 // Defines middleware
 app.use(express.urlencoded({ extended: true }));
