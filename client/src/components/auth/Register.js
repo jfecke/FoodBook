@@ -8,140 +8,140 @@ import { connect } from "react-redux";
 import { registerUser } from "../../actions/authActions";
 import TextFieldGroup from "../common/TextFieldGroup";
 
-
 class Register extends Component {
-  state = {
-    name: "",
-    email: "",
-    password: "",
-    password2: "",
-    location: "",
-    errors: {}
-  };
+	state = {
+		name: "",
+		email: "",
+		password: "",
+		password2: "",
+		location: "",
+		errors: {},
+	};
 
-   // Check to see if logged in
-   componentDidMount() {
-    if(this.props.auth.isAuthenticated) {
-      this.props.history.push('/dashboard');
-    }
-  }
-  
-  //redux
-  //test for errors property
-  //errors from component state
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.errors) {
-      this.setState({ errors: nextProps.errors });
-    }
-  }
-  // onChange
-  onChange = e => {
-    e.preventDefault();
-    this.setState({ [e.target.name]: e.target.value });
-  };
-  //onSubmit
-  onSubmit = e => {
-    e.preventDefault();
-    const newUser = {
-      name: this.state.name,
-      email: this.state.email,
-      password: this.state.password,
-      password2: this.state.password2,
-      location: this.state.location
-    };
-    // axios call to be replaced in /authAction.js
-    // axios
-    //   .post("/api/users/register", newUser)
-    //   .then(res => console.log(res.data))
-    //   .catch(err => this.setState({ errors: err.response.data }));
-    this.props.registerUser(newUser, this.props.history);
-  };
+	// Check to see if logged in
+	componentDidMount() {
+		if (this.props.auth.isAuthenticated) {
+			this.props.history.push("/dashboard");
+		}
+	}
 
-  render() {
-    const { errors } = this.state;
+	//redux
+	//test for errors property
+	//errors from component state
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.errors) {
+			this.setState({ errors: nextProps.errors });
+		}
+	}
+	// onChange
+	onChange = e => {
+		e.preventDefault();
+		this.setState({ [e.target.name]: e.target.value });
+	};
+	//onSubmit
+	onSubmit = e => {
+		e.preventDefault();
+		const newUser = {
+			name: this.state.name,
+			email: this.state.email,
+			password: this.state.password,
+			password2: this.state.password2,
+			location: this.state.location,
+		};
+		// axios call to be replaced in /authAction.js
+		// axios
+		//   .post("/api/users/register", newUser)
+		//   .then(res => console.log(res.data))
+		//   .catch(err => this.setState({ errors: err.response.data }));
+		this.props.registerUser(newUser, this.props.history);
+	};
 
-    return (
-      <div className="register">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-8 m-auto">
-              <h1 className="display-4 text-center">Sign Up</h1>
-              <p className="lead text-center">Create your FoodBook account</p>
-              <form noValidate onSubmit={this.onSubmit}>
-                <div className="form-group">
-                
-                <TextFieldGroup
-                  placeholder="Name"
-                  name="name"
-                  type="name"
-                  value={this.state.name}
-                  onChange={this.onChange}
-                  error={errors.name}
-                />
+	render() {
+		const { errors } = this.state;
 
-                 <TextFieldGroup
-                  placeholder="Email Address"
-                  name="email"
-                  type="email"
-                  value={this.state.email}
-                  onChange={this.onChange}
-                  error={errors.email}
-                  info="This site uses Gravatar so if you want a profile image, use
+		return (
+			<div className="register">
+				<div className="container">
+					<div className="row">
+						<div className="col-md-8 m-auto">
+							<h1 className="display-4 text-center">Sign Up</h1>
+							<p className="lead text-center">Create your FoodBook account</p>
+							<form noValidate onSubmit={this.onSubmit}>
+								<div className="form-group">
+									<TextFieldGroup
+										placeholder="Name"
+										name="name"
+										type="name"
+										value={this.state.name}
+										onChange={this.onChange}
+										error={errors.name}
+									/>
+
+									<TextFieldGroup
+										placeholder="Email Address"
+										name="email"
+										type="email"
+										value={this.state.email}
+										onChange={this.onChange}
+										error={errors.email}
+										info="This site uses Gravatar so if you want a profile image, use
                   a Gravatar email"
-                />
+									/>
 
-                <TextFieldGroup
-                  placeholder="Password"
-                  name="password"
-                  type="password"
-                  value={this.state.password}
-                  onChange={this.onChange}
-                  error={errors.password}
-                />
+									<TextFieldGroup
+										placeholder="Location"
+										name="location"
+										type=""
+										value={this.state.location}
+										onChange={this.onChange}
+										error={errors.location}
+									/>
 
-                <TextFieldGroup
-                  placeholder="Confirm Password"
-                  name="password2"
-                  type="password"
-                  value={this.state.password2}
-                  onChange={this.onChange}
-                  error={errors.password2}
-                />
+									<TextFieldGroup
+										placeholder="Password"
+										name="password"
+										type="password"
+										value={this.state.password}
+										onChange={this.onChange}
+										error={errors.password}
+									/>
 
-                <TextFieldGroup
-                  placeholder="Location"
-                  name="location"
-                  type=""
-                  value={this.state.location}
-                  onChange={this.onChange}
-                  error={errors.location}
-                />
-        
-                <input type="submit" className="btn btn-info btn-block mt-4" />
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-    
-    );
-  }
+									<TextFieldGroup
+										placeholder="Confirm Password"
+										name="password2"
+										type="password"
+										value={this.state.password2}
+										onChange={this.onChange}
+										error={errors.password2}
+									/>
+
+									<input
+										type="submit"
+										className="btn btn-info btn-block mt-4"
+									/>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		);
+	}
 }
 
 //For Redux
 Register.propTypes = {
-  registerUser: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired
+	registerUser: PropTypes.func.isRequired,
+	auth: PropTypes.object.isRequired,
+	errors: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
-  auth: state.auth,
-  errors: state.errors
+	auth: state.auth,
+	errors: state.errors,
 });
 
 export default connect(
-  mapStateToProps,
-  { registerUser }
+	mapStateToProps,
+	{ registerUser }
 )(withRouter(Register));
