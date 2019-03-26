@@ -8,6 +8,9 @@ module.exports = function validateRegisterInput(data) {
 	data.email = !isEmpty(data.email) ? data.email : "";
 	data.password = !isEmpty(data.password) ? data.password : "";
 	data.password2 = !isEmpty(data.password2) ? data.password2 : "";
+	data.city = !isEmpty(data.city) ? data.city : "";
+	data.stateName = !isEmpty(data.stateName) ? data.stateName : "";
+
 
 	if (!Validator.isLength(data.name, { min: 2, max: 30 })) {
 		errors.name = "Name must be between 2 and 30 characters";
@@ -50,11 +53,11 @@ module.exports = function validateRegisterInput(data) {
 	}
 
 	if (Validator.isEmpty(data.stateName)) {
-		errors.state = "State field is required";
+		errors.stateName = "State field is required";
 	}
 
 	if (!Validator.isLength(data.stateName, { min: 2, max: 2 })) {
-		errors.state = "State must be 2 characters";
+		errors.stateName = "State must be 2 characters";
 	}
 
 	return {
