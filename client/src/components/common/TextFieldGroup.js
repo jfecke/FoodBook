@@ -1,158 +1,48 @@
-import React, { Component } from "react";
-// import axios from "axios";
-// import classnames from "classnames";
-//might not need withRouter
-import { withRouter } from "react-router-dom";
+import React from "react";
+import classnames from "classnames";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { registerUser } from "../../actions/authActions";
-import TextFieldGroup from "../common/TextFieldGroup";
 
-class Register extends Component {
-	state = {
-		name: "",
-		email: "",
-		city: "",
-		stateName: "",
-		password: "",
-		password2: "",
-		errors: {},
-	};
-
-	// Check to see if logged in
-	componentDidMount() {
-		if (this.props.auth.isAuthenticated) {
-			this.props.history.push("/dashboard");
-		}
-	}
-
-	//redux
-	//test for errors property
-	//errors from component state
-	componentWillReceiveProps(nextProps) {
-		if (nextProps.errors) {
-			this.setState({ errors: nextProps.errors });
-		}
-	}
-	// onChange
-	onChange = e => {
-		e.preventDefault();
-		this.setState({ [e.target.name]: e.target.value });
-	};
-	//onSubmit
-	onSubmit = e => {
-		e.preventDefault();
-		const newUser = {
-			name: this.state.name,
-			email: this.state.email,
-			city: this.state.city,
-			stateName: this.state.stateName,
-			password: this.state.password,
-			password2: this.state.password2,
-		};
-		// axios call to be replaced in /authAction.js
-		// axios
-		//   .post("/api/users/register", newUser)
-		//   .then(res => console.log(res.data))
-		//   .catch(err => this.setState({ errors: err.response.data }));
-		this.props.registerUser(newUser, this.props.history);
-	};
-
-	render() {
-		const { errors } = this.state;
-
-		return (
-			<div className="register">
-				<div className="container">
-					<div className="row">
-						<div className="col-md-8 m-auto">
-							<h1 className="display-4 text-center">Sign Up</h1>
-							<p className="lead text-center">Create your FoodBook account</p>
-							<form noValidate onSubmit={this.onSubmit}>
-								<div className="form-group">
-									<TextFieldGroup
-										placeholder="Name"
-										name="name"
-										type="name"
-										value={this.state.name}
-										onChange={this.onChange}
-										error={errors.name}
-									/>
-
-									<TextFieldGroup
-										placeholder="Email Address"
-										name="email"
-										type="email"
-										value={this.state.email}
-										onChange={this.onChange}
-										error={errors.email}
-										info="This site uses Gravatar so if you want a profile image, use
-                  a Gravatar email"
-									/>
-
-									<TextFieldGroup
-										placeholder="City"
-										name="city"
-										type=""
-										value={this.state.city}
-										onChange={this.onChange}
-										error={errors.city}
-									/>
-
-									<TextFieldGroup
-										placeholder="State"
-										name="stateName"
-										type=""
-										value={this.state.stateName}
-										onChange={this.onChange}
-										error={errors.stateName}
-									/>
-
-									<TextFieldGroup
-										placeholder="Password"
-										name="password"
-										type="password"
-										value={this.state.password}
-										onChange={this.onChange}
-										error={errors.password}
-									/>
-
-									<TextFieldGroup
-										placeholder="Confirm Password"
-										name="password2"
-										type="password"
-										value={this.state.password2}
-										onChange={this.onChange}
-										error={errors.password2}
-									/>
-
-									<input
-										type="submit"
-										className="btn btn-info btn-block mt-4"
-									/>
-								</div>
-							</form>
-						</div>
-					</div>
-				</div>
-			</div>
-		);
-	}
-}
-
-//For Redux
-Register.propTypes = {
-	registerUser: PropTypes.func.isRequired,
-	auth: PropTypes.object.isRequired,
-	errors: PropTypes.object.isRequired,
+const TextFieldGroup = ({
+  name,
+  placeholder,
+  value,
+  error,
+  info,
+  type,
+  onChange,
+  disabled
+}) => {
+  return (
+    <div className="form-group">
+      <input
+        type={type}
+        className={classnames("form-control form-control-lg", {
+          "is-invalid": error
+        })}
+        placeholder={placeholder}
+        name={name}
+        value={value}
+        onChange={onChange}
+        disabled={disabled}
+      />
+      {info && <small className="form-text text muted">{info}</small>}
+      {error && <div className="invalid-feedback">{error}</div>}
+    </div>
+  );
 };
 
-const mapStateToProps = state => ({
-	auth: state.auth,
-	errors: state.errors,
-});
+TextFieldGroup.propTypes = {
+  name: PropTypes.string.isRequired,
+  placeholder: PropTypes.string,
+  value: PropTypes.string.isRequired,
+  info: PropTypes.string,
+  error: PropTypes.string,
+  onChange: PropTypes.func.isRequired,
+  disabled: PropTypes.string
+};
 
-export default connect(
-	mapStateToProps,
-	{ registerUser }
-)(withRouter(Register));
+TextFieldGroup.defaultProps = {
+  type: "text"
+};
+
+export default TextFieldGroup;
