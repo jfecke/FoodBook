@@ -1,5 +1,6 @@
 img {
 	width: 100%;
+	margin: 2px;
 }
 
 .landing {
@@ -65,4 +66,8 @@ img {
 .restaruant-pic {
 	height: 160px;
 	width: 160px;
+}
+
+.card {
+	margin-bottom: 10px;
 }

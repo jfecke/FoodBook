@@ -11,8 +11,11 @@ import Footer from "./components/layout/Footer";
 import Landing from "./components/layout/Landing";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
-import Dashboard from "./components/dashboard/Dashboard";
+// import Dashboard from "./components/dashboard/Dashboard";
 import FollowReview from "./components/review/FollowReview";
+import CommentCard from "./components/comments/CommentCard";
+import UserReview from "./components/review/UserReview";
+import CommentForm from "./components/comments/CommentForm";
 import { clearCurrentProfile } from "./actions/profileActions";
 
 import "./App.css";
@@ -48,8 +51,24 @@ class App extends Component {
 						<div className="container">
 							<Route exact path="/register" component={Register} />
 							<Route exact path="/login" component={Login} />
-							<Route exact path="/dashboard" component={Dashboard} />
-							<Route exact path="/review" component={FollowReview} />
+							{/* <Route path="/dashboard" component={Dashboard} /> */}
+							<Route path="/dashboard/review" component={FollowReview} />
+							<Route
+								exact
+								path="/dashboard/review/comment"
+								component={CommentCard}
+							/>
+							<Route path="/dashboard/userreview" component={UserReview} />
+							<Route
+								exact
+								path="/dashboard/userreview/comment"
+								component={CommentCard}
+							/>
+							<Route
+								exact
+								path="/comment/commentform"
+								component={CommentForm}
+							/>
 						</div>
 						<Footer />
 					</div>
