@@ -15,18 +15,18 @@ export default class Comment extends Component {
 					</div>
 					<div className="col-md">
 						<form>
-							<div class="form-group">
+							<div className="form-group">
 								<label for="title">Post Title:</label>
 								<input
 									type="text"
-									class="form-control"
+									className="form-control"
 									id="title"
 									placeholder="Title"
 								/>
 							</div>
-							<div class="form-group">
+							<div className="form-group">
 								<label for="rating">Rating:</label>
-								<select class="form-control" id="rating">
+								<select className="form-control" id="rating">
 									<option>1</option>
 									<option>2</option>
 									<option>3</option>
@@ -34,9 +34,9 @@ export default class Comment extends Component {
 									<option>5</option>
 								</select>
 							</div>
-							<div class="form-group">
-								<label for="comment">Comment</label>
-								<textarea class="form-control" id="comment" rows="5" />
+							<div className="form-group">
+								<label for="comment">Comment:</label>
+								<textarea className="form-control" id="comment" rows="3" />
 							</div>
 						</form>
 					</div>
