@@ -46,6 +46,7 @@ img {
 
 .profile-header {
 	background-color: rgba(0, 0, 0, 0.4);
+	margin-bottom: 50px;
 }
 
 .dashboard-bg {
@@ -70,4 +71,6 @@ img {
 
 .card {
 	margin-bottom: 10px;
+	margin-right: 14px;
+	margin-left: 14px;
 }

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import handleClick from "./Dashboard";
 
 export default class DashboardContent extends Component {
 	render() {
@@ -21,8 +22,9 @@ export default class DashboardContent extends Component {
 							</div>
 							<hr className="m-2" />
 							<div className="row">
-								<div className="col-6">Users You Follow ▼</div>
-								<div className="col-6">Your Reviews ▶</div>
+								<a className="col-md-6" href="#" onClick={handleClick}>
+									Your Reviews ▶
+								</a>
 							</div>
 						</div>
 						<div className="col-md-2" />
