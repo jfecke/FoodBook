@@ -18,7 +18,7 @@ export default class UserReview extends Component {
 						<div># of Reviews by Follows</div>
 						<div>Yelp Rating</div>
 						<div>Foodbook Rating</div>
-						<a href="javascript:alert('Expand!');"># of Comments</a>
+						<div># of Comments ▼</div>
 					</div>
 				</div>
 			</div>
