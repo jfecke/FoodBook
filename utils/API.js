@@ -2,19 +2,28 @@ import axios from "axios";
 
 export default {
   // Gets all books
-  queryRestaurants: function() {
+  queryRestaurants: function(query) {
     return axios.put("/api/query", query);
   },
   // Gets the book with the given id
-  getfollowers: function() {
-    return axios.get("/api/followers/");
+  getfollowers: function(query) {
+    return axios.get("/api/followers/", query);
   },
   // Deletes the book with the given id
-  followUser : function() {
-    return axios.post("/api/followers/");
+  followUser : function(query) {
+    return axios.post("/api/followers/", query);
   },
   // Saves a book to the database
-  saveBook: function(bookData) {
-    return axios.post("/api/books", bookData);
+  addRestaurant: function(restaurantData) {
+    return axios.post("/api/restaurants", restaurantData);
+  },
+  getRestaraunt: function() {
+    return axios.get("/api/restaurants", restaurantData);
+  },
+  addReview: function(reviewData) {
+    return axios.post("/api/reviews", reviewData);
+  },
+  getReviews: function(reviewData) {
+    return axios.get("/api/reviews", reviewData);
   }
 };
