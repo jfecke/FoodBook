@@ -17,7 +17,7 @@ export default {
   addRestaurant: function(restaurantData) {
     return axios.post("/api/restaurants", restaurantData);
   },
-  getRestaraunt: function() {
+  getRestaurants: function(restaurantData) {
     return axios.get("/api/restaurants", restaurantData);
   },
   addReview: function(reviewData) {
@@ -25,5 +25,11 @@ export default {
   },
   getReviews: function(reviewData) {
     return axios.get("/api/reviews", reviewData);
+  },
+  deleteReview: function(reviewId) {
+      return axios.delete("/api/reviews/"+ reviewId);
+  },
+  deleteRestaurant: function(restaurantID) {
+    return axios.delete("/api/restaurants/"+ restaurantID);
   }
 };

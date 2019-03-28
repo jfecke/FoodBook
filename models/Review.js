@@ -8,16 +8,12 @@ var ReviewSchema = new Schema({
     ref: "User",
     required: true
   },
-  RestaurantYelpId: {
+  YelpId: {
     type: Schema.Types.ObjectId,
     ref: "Restaurant",
     required: true
   },
-  title: {
-    type: String,
-    required: true
-  },
-  body: {
+  review: {
     type: String,
     required: true
   },
