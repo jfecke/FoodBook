@@ -21,7 +21,7 @@ app.use(routes);
 // app.use('/api/posts', posts);
 
 // Connect to the Mongo DB
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/foodbook");
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/foodbook", { useNewUrlParser: true });
 
 //Passport Middleware
 app.use(passport.initialize());

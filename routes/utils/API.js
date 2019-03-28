@@ -3,7 +3,7 @@ FOR BUSINESS QUERIES : https://www.yelp.com/developers/documentation/v3/business
 FOR REVIEW QUERIES : https://www.yelp.com/developers/documentation/v3/business_reviews
 */
 
-// import axios from "axios";
+const axios = require("axios");
 require("dotenv").config()
 const yelp = require('yelp-fusion');
 const Api_Keys = {
@@ -29,6 +29,10 @@ module.exports = {
         console.log("Finding Reviews for id: "+id)
         return client.reviews(id)
     },
+    autocomp: function(input){
+        
+        return axios.get("https://api.yelp.com/v3/autocomplete?text="+input.text+"&latitude="+input.location.lat+"&longitude="+input.location.long,{ headers: { Authorization: "Bearer "+key} } )
+    }
 };
 
 
