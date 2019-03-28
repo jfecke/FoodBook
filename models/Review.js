@@ -3,21 +3,17 @@ var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 var ReviewSchema = new Schema({
   // `title` is of type String
-  _UserId: {
+  UserId: {
     type: Schema.Types.ObjectId,
     ref: "User",
     required: true
   },
-  _RestaurantId: {
+  YelpId: {
     type: Schema.Types.ObjectId,
     ref: "Restaurant",
     required: true
   },
-  title: {
-    type: String,
-    required: true
-  },
-  body: {
+  review: {
     type: String,
     required: true
   },
