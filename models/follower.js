@@ -7,7 +7,7 @@ var FollowerSchema = new Schema({
     ref: "User",
     required: true
   },
-  UserId: {
+  FollowingId: {
     type: Schema.Types.ObjectId,
     ref: "User",
     required: true
