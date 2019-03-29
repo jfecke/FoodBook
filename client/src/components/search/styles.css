@@ -1,0 +1,38 @@
+.card {
+    background: #fff;
+    height: 100;
+    width: 100%;
+    padding: 5px;
+    font-size: 14px;
+    flex: 1;
+    border-bottom: 1px solid lightgray;
+
+  }
+  
+  .card > img {
+    height: 90px;
+    width: 90px;
+  }
+
+
+.title {
+    font-size: 20px;
+}
+
+.muted {
+    font-size: 12;
+    color: rgb(145, 144, 144);
+}
+
+.form-group {
+  flex: 1 0 auto;
+  height:20px;
+}
+
+.search-btn {
+  color:grey;
+  height: 200px;
+}
+
+
+ 
