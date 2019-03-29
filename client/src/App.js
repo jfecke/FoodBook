@@ -18,6 +18,7 @@ import UserReview from "./components/review/UserReview";
 import CommentForm from "./components/comments/CommentForm";
 import { clearCurrentProfile } from "./actions/profileActions";
 import PrivateRoute from "./components/common/PrivateRoute";
+import Restaurants from './components/search/Restaurants';
 // import CreateProfile from "./components/create-profile/CreateProfile";
 
 import "./App.css";
@@ -53,14 +54,9 @@ class App extends Component {
 						<div className="container">
 							<Route exact path="/register" component={Register} />
 							<Route exact path="/login" component={Login} />
+							<Route exact path="/search" component={Restaurants} />
 
-							{/* <Switch>
-                <PrivateRoute
-                  exact
-                  path="/create-profile"
-                  component={CreateProfile}
-                />
-              </Switch> */}
+							
 							<Route path="/dashboard" component={Dashboard} />
 
 							<Switch>
