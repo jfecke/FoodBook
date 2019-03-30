@@ -2,10 +2,7 @@ import React from "react";
 import "../search/styles.css";
 import ph from "../../img/ph.png";
 
-const RestaurantCard = props => {
-	const star = <i className="fa fa-star" aria-hidden="true" />;
-	const halfstar = <i className="fas fa-star-half-alt" />;
-
+const ProfileCard = props => {
 	return (
 		<div className="card d-flex flex-row">
 			<div className="img-wrap d-flex justify-content-center">
@@ -17,43 +14,28 @@ const RestaurantCard = props => {
 			>
 				<div className="d-flex flex-row row1">
 					<div style={{ flex: 1 }}>
-						<p className="title">Chueys</p>
+						<p className="title">UserName</p>
 					</div>
 
 					<div
 						className="d-flex flex-row justify-content-md-end muted"
 						style={{ flex: 1 }}
 					>
-						<p>0.5 miles</p>
+						<button className="btn btn-primary">Follow</button>
 					</div>
 				</div>
 
-				<div className="d-flex flex-row" style={{ flex: 1 }}>
-					<div className="d-flex flex-row row2" style={{ flex: 1 }}>
-						{star}
-						{star}
-						{halfstar}
+				<p>Number of Followers</p>
+				<p>Number of Reviews</p>
 
-						<p style={{ marginLeft: 5 }}>59 reviews</p>
-						<div
-							className="d-flex flex-row justify-content-end muted"
-							style={{ flex: 1 }}
-						>
-							<p>$$$$</p>
-						</div>
-					</div>
-				</div>
-
-				<p>Italian</p>
-
-				<p className="muted">209 E 58 St, Eastside</p>
+				<p className="muted">Location</p>
 			</div>
 			<p />
 		</div>
 	);
 };
 
-export default RestaurantCard;
+export default ProfileCard;
 
 //removed so the page wouldn't break while designing
 
