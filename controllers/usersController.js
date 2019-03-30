@@ -37,7 +37,7 @@ module.exports = {
 					password: req.body.password,
 					city: req.body.city,
 					stateName: req.body.stateName,
-					profilepic: req.body.profilepic,
+					profilePic: req.body.profilePic,
 				};
 
 				bcrypt.genSalt(10, (error, salt) => {
@@ -50,7 +50,7 @@ module.exports = {
 								res.json({
 									name: user.name,
 									email: user.email,
-									profilepic: user.profilepic,
+									profilePic: user.profilePic,
 								});
 							})
 							.catch(error => console.log(error));
@@ -86,7 +86,7 @@ module.exports = {
 						const payload = {
 							id: user.id,
 							name: user.name,
-							profilepic: user.profilepic,
+							profilePic: user.profilePic,
 						};
 
 						//Sign Token

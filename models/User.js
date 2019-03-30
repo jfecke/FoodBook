@@ -23,14 +23,14 @@ var UserSchema = new Schema({
 		type: String,
 		required: true,
 	},
-	profilepic: {
+	profilePic: {
 		type: String,
-		default: "https://profiles.utdallas.edu/img/default.png"
+		default: "https://picsum.photos/200",
 	},
 	date: {
 		type: Date,
 		default: Date.now,
-	}	
+	},
 });
 
 var User = mongoose.model("User", UserSchema);

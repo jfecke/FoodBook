@@ -18,18 +18,24 @@ class Navbar extends Component {
 		const authLinks = (
 			<ul className="navbar-nav ml-auto">
 				<li className="nav-item">
+					<a href="/dashboard" className="nav-link">
+						{user.name + "'s Profile: "}
+						<img
+							className="rounded-circle"
+							src={user.profilePic}
+							alt={user.name}
+							style={{ width: "25px", marginRight: "5px" }}
+							title={user.name}
+						/>
+					</a>
+				</li>
+				<li>
 					<a
 						href="/"
 						onClick={this.onLogoutClick.bind(this)}
-						className="nav-link"
+						className="nav-link logout"
 					>
-						<img
-							className="rounded-circle"
-							src={user.avatar}
-							alt={user.name}
-							style={{ width: "25px", marginRight: "5px" }}
-							title="You must have a Gravatar connected to your email to display an image"
-						/>{" "}
+						{" "}
 						Logout
 					</a>
 				</li>
@@ -73,13 +79,10 @@ class Navbar extends Component {
 									Foodies
 								</Link>
 							</li>
-							<li className="Nav-item">
-								<input
-									type="text"
-									className="form-control-plaintext bg-light"
-									id="search"
-									placeholder="🔍 Search"
-								/>
+							<li className="nav-item">
+								<Link className="nav-link" to="/search">
+									Search
+								</Link>
 							</li>
 						</ul>
 						{isAuthenticated ? authLinks : guestLinks}
