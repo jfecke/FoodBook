@@ -20,6 +20,8 @@ import { clearCurrentProfile } from "./actions/profileActions";
 import PrivateRoute from "./components/common/PrivateRoute";
 import Restaurants from "./components/search/Restaurants";
 import Profiles from "./components/profiles/Profiles";
+import RestaurantReview from "./components/review/RestaurantReview.js";
+
 // import CreateProfile from "./components/create-profile/CreateProfile";
 
 import "./App.css";
@@ -55,10 +57,16 @@ class App extends Component {
 						<div className="container">
 							<Route exact path="/register" component={Register} />
 							<Route exact path="/login" component={Login} />
-							<Route exact path="/search" component={Restaurants} />
-							<Route exact path="/profiles" component={Profiles} />
 
-							<Route path="/dashboard" component={Dashboard} />
+							<PrivateRoute exact path="/search" component={Restaurants} />
+							<PrivateRoute
+								exact
+								path="/search/review"
+								component={RestaurantReview}
+							/>
+							<PrivateRoute exact path="/profiles" component={Profiles} />
+
+							<PrivateRoute path="/dashboard" component={Dashboard} />
 
 							<Switch>
 								<PrivateRoute
