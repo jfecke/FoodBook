@@ -24,7 +24,7 @@
     color: rgb(145, 144, 144);
 }
 
-.form-group {
+.form-flex {
   flex: 1 0 auto;
   height:20px;
 }
