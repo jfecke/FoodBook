@@ -112,7 +112,7 @@ function addRestaurant() {
         phonenumber: this.state.phonenumber,
         link: this.state.link
     };
-    API.getRestaraunts({yelpid: this.state.yelpid}).then(results => {
+    API.getRestaurants({yelpid: this.state.yelpid}).then(results => {
         if (results.data.length < 1) {
             API.addRestaurant(restaurantOBJ).then(resultObj => {
                 console.log(resultObj);
@@ -129,4 +129,22 @@ function deleteRestaurant() {
             });
         };
     });
-}
+};
+
+function getReviewFeed() {
+    let query = {
+        FollowerID: this.state.myUserID
+    };
+    let following = [];
+    API.findFollowing(query)
+    .then(results => {
+        for (let i of results.data) {
+            following.push(i);
+        }
+        API.getReviews({UserId: {$in: following} }).then(resultOBJ => {
+            if (resultOBJ.data.length < 1) {
+                console.log(resultOBJ.data);
+            };
+        });
+    });
+;}
