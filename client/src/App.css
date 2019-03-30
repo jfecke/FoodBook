@@ -71,3 +71,9 @@ img {
 .card {
 	margin-bottom: 10px;
 }
+
+.logout {
+	height: 100%;
+	line-height: 200%;
+	white-space: nowrap;
+}

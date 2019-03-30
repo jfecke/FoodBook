@@ -23,20 +23,13 @@ var UserSchema = new Schema({
 		type: String,
 		required: true,
 	},
-	profilepic: {
+	profilePic: {
 		type: String,
+		default: "https://picsum.photos/200",
 	},
 	date: {
 		type: Date,
 		default: Date.now,
-	},
-	following: {
-		type: Array,
-		default: [],
-	},
-	followedby: {
-		type: Array,
-		default: [],
 	},
 });
 
