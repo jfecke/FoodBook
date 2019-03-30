@@ -28,21 +28,25 @@ const RestaurantCard = props => {
           </div>
         </div>
 
-        <div className="d-flex flex-row" style={{ flex: 1 }}>
-          <div className="d-flex flex-row row2" style={{ flex: 1 }}>
-            {star}
-            {star}
-            {halfstar}
+				<div className="d-flex flex-row" style={{ flex: 1 }}>
+					<div className="d-flex flex-row row2" style={{ flex: 1 }}>
+						<a href="/search/review">
+							{star}
+							{star}
+							{halfstar}
+						</a>
+						<a href="/search/review" style={{ marginLeft: 5 }}>
+							59 reviews
+						</a>
 
-            <p style={{ marginLeft: 5 }}>59 reviews</p>
-            <div
-              className="d-flex flex-row justify-content-end muted"
-              style={{ flex: 1 }}
-            >
-              <p>$$$$</p>
-            </div>
-          </div>
-        </div>
+						<div
+							className="d-flex flex-row justify-content-end muted"
+							style={{ flex: 1 }}
+						>
+							<p>$$$$</p>
+						</div>
+					</div>
+				</div>
 
         <p>Italian</p>
 
