@@ -46,8 +46,19 @@ const RestaurantCard = props => {
 
 				<p>Italian</p>
 
-				<p className="muted">209 E 58 St, Eastside</p>
+				<div className="d-flex flex-row" style={{ flex: 1}}>
+			
+				<div className="d-flex flex-row" style={{ flex:1}}>
+				
+
+				<p className="muted" style={{width:100+'%'}}>209 E 58 St, Eastside</p>
+
+				<a href="/search/review" className="btn btn-dark justify-content-end" style={{float:"right", margin:1}}>Review</a>
 			</div>
+			</div>
+			</div>
+			
+			
 			<p />
 		</div>
 	);
