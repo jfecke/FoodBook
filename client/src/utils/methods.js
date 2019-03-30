@@ -16,7 +16,7 @@ function queryRestaurants() {
 function findFollowers() {
     let query = {
         FollowingId: this.state.myUserID
-    }
+    };
     API.findFollowers(query)
     .then(results => {
         let numfollowers = 0;
@@ -57,10 +57,12 @@ function followUser() {
         FollowingID: followObj.FollowerID
         })
         .then(results => {
+            let myfollowing = [];
             if (results.data.length == 0) {
-                API.followUser({followObj})
-                .then(resultObj => {
-                    console.log(resultObj);
+                API.followUser({followObj}).then(resultObj => {
+                    for (let i of resultObj.data) {
+                        myfollowing.push(i.FollowingID);
+                    }
                 })
             }     
         })
@@ -77,9 +79,10 @@ function addReview() {
     let reviewOBJ = {
         YelpId: this.state.yelpid,
         UserId: this.state.myUserID,
-        review: this.state.myReview
+        review: this.state.myReview,
+        rating: this.state.rating
     };
-    API.getReviews({YelpId: reviewOBJ.YelpId, UserId: reviewOBJ.UserId}).then(results => {
+    API.getReviews({YelpId: reviewOBJ.yelpid, UserId: reviewOBJ.UserId}).then(results => {
         if (results.data.length < 1) {
             API.addReview(reviewOBJ).then(resultObj => {
                 console.log(resultObj);
@@ -147,4 +150,52 @@ function getReviewFeed() {
             };
         });
     });
-;}
+};
+
+function getRating(yelpid) {
+    let ratingTotal = 0;
+    let counter = 0;
+    let myfollowing = [];
+    API.getfollowers({FollowerID: this.state.myUserID}).then(results => {
+        for (let i of results.data) {
+            myfollowing.push(i.FollowingID);
+        }
+        API.getReviews({YelpId: yelpid, UserId: {$in:myfollowing}}).then(reviews => {
+            for (let j of reviews.data) {
+                ratingTotal += j.rating;
+                counter++
+            }
+            let avgRating = ratingTotal/counter;
+            return avgRating;
+        })
+    })
+};
+
+function updateUser() {
+    API.getUser({UserId: this.state.myUserID}).then(results => {
+        let userOBJ = results.data[0];
+        //restaurantOBJ.rating = ????
+        API.updateRestaurant(userOBJ).then(updated => {
+            console.log(updated);
+        })
+    })
+};
+
+function updateRestaurant() {
+    API.getRestaurants({YelpId: this.state.yelpid}).then(results => {
+        let restaurantOBJ = results.data[0];
+        //restaurantOBJ.rating = ????
+        API.updateRestaurant(restaurantOBJ).then(updated => {
+            console.log(updated);
+        })
+    })
+};
+
+function updateReview(){
+    API.getReviews({YelpId: this.state.yelpid, UserId: this.state.myUserID}).then(results => {
+        let reviewOBJ = results.data[0];
+        API.updateRestaurant(reviewOBJ).then(updated => {
+            console.log(updated);
+        })
+    })
+};
