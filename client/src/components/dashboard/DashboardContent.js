@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 export default class DashboardContent extends Component {
 	render() {
@@ -21,12 +22,13 @@ export default class DashboardContent extends Component {
 							</div>
 							<hr className="m-2" />
 							<div className="row">
-								<a href="/dashboard/review" className="col-6">
+								<div className="col-6" />
+								<Link className="nav-link" to="/dashboard/review">
 									Users You Follow ▼
-								</a>
-								<a href="/dashboard/userReview" className="col-6">
+								</Link>
+								<Link className="nav-link" to="/dashboard/userReview">
 									Your Reviews ▶
-								</a>
+								</Link>
 							</div>
 						</div>
 						<div className="col-md-2" />

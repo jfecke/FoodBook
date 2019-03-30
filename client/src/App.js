@@ -55,51 +55,39 @@ class App extends Component {
 						<Navbar />
 						<Route exact path="/" component={Landing} />
 						<div className="container">
-							<Route exact path="/register" component={Register} />
-							<Route exact path="/login" component={Login} />
-
-							<PrivateRoute exact path="/search" component={Restaurants} />
-							<PrivateRoute
-								exact
-								path="/search/review"
-								component={RestaurantReview}
-							/>
-							<PrivateRoute exact path="/profiles" component={Profiles} />
-
-							<PrivateRoute path="/dashboard" component={Dashboard} />
-
 							<Switch>
+								<Route exact path="/register" component={Register} />
+								<Route exact path="/login" component={Login} />
+
+								<PrivateRoute exact path="/search" component={Restaurants} />
+								<PrivateRoute
+									exact
+									path="/search/review"
+									component={RestaurantReview}
+								/>
+								<PrivateRoute exact path="/profiles" component={Profiles} />
+
+								<PrivateRoute path="/dashboard" component={Dashboard} />
+
 								<PrivateRoute
 									exact
 									path="/dashboard/review"
 									component={FollowReview}
 								/>
-							</Switch>
-
-							<Switch>
 								<PrivateRoute
 									exact
 									path="/dashboard/review/comment"
 									component={CommentCard}
 								/>
-							</Switch>
-
-							<Switch>
 								<PrivateRoute
 									path="/dashboard/userreview"
 									component={UserReview}
 								/>
-							</Switch>
-
-							<Switch>
 								<PrivateRoute
 									exact
 									path="/dashboard/userreview/comment"
 									component={CommentCard}
 								/>
-							</Switch>
-
-							<Switch>
 								<PrivateRoute
 									exact
 									path="/comment/commentform"
