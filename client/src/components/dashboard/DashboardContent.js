@@ -21,8 +21,12 @@ export default class DashboardContent extends Component {
 							</div>
 							<hr className="m-2" />
 							<div className="row">
-								<div className="col-6">Users You Follow ▼</div>
-								<div className="col-6">Your Reviews ▶</div>
+								<a href="/dashboard/review" className="col-6">
+									Users You Follow ▼
+								</a>
+								<a href="/dashboard/userReview" className="col-6">
+									Your Reviews ▶
+								</a>
 							</div>
 						</div>
 						<div className="col-md-2" />
