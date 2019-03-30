@@ -31,7 +31,12 @@ module.exports = {
     },
     autocomp: function(input){
         
-        return axios.get("https://api.yelp.com/v3/autocomplete?text="+input.text+"&latitude="+input.location.lat+"&longitude="+input.location.long,{ headers: { Authorization: "Bearer "+key} } )
+        return axios.get("https://api.yelp.com/v3/autocomplete?text="+input.text+"&latitude="+input.location.lat+"&longitude="+input.location.lng,{ headers: { Authorization: "Bearer "+key} } )
+    },
+    geocode: function(address) {
+        let addr = address.split(" ").join("+")
+        return axios.get("https://maps.googleapis.com/maps/api/geocode/json?address="+addr+"&key=AIzaSyD7AZm1j8orywLpOn0ZfrvZ1vJIglPliZ0")
+
     }
 };
 
