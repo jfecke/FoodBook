@@ -1,8 +1,3 @@
-img {
-	width: 100%;
-	margin: 2px;
-}
-
 .landing {
 	position: relative;
 	background: url("./img/showcase.jpg") no-repeat;
@@ -55,7 +50,6 @@ img {
 	background-position: center;
 	height: auto;
 	margin-top: -24px;
-	margin-bottom: -50px;
 }
 
 .text-bg {
@@ -76,4 +70,7 @@ img {
 	height: 100%;
 	line-height: 200%;
 	white-space: nowrap;
+}
+.card-display {
+	margin-top: 5px;
 }

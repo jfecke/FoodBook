@@ -12,14 +12,20 @@ import Landing from "./components/layout/Landing";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import Dashboard from "./components/dashboard/Dashboard";
-import FollowReview from "./components/review/FollowReview";
-import CommentCard from "./components/comments/CommentCard";
-import UserReview from "./components/review/UserReview";
-import CommentForm from "./components/comments/CommentForm";
+
 import { clearCurrentProfile } from "./actions/profileActions";
 import PrivateRoute from "./components/common/PrivateRoute";
 import Restaurants from "./components/search/Restaurants";
 import Profiles from "./components/profiles/Profiles";
+import NoMatch from "./components/nomatch/NoMatch";
+
+// Change for simpler routing
+import RestaurantReview from "./components/review/RestaurantReview.js";
+import FollowReview from "./components/review/FollowReview";
+import UserReview from "./components/review/UserReview";
+import CommentForm from "./components/comments/CommentForm";
+import CommentCard from "./components/comments/CommentCard";
+
 // import CreateProfile from "./components/create-profile/CreateProfile";
 
 import "./App.css";
@@ -51,47 +57,42 @@ class App extends Component {
 				<Router>
 					<div className="App">
 						<Navbar />
-						<Route exact path="/" component={Landing} />
 						<div className="container">
-							<Route exact path="/register" component={Register} />
-							<Route exact path="/login" component={Login} />
-							<Route exact path="/search" component={Restaurants} />
-							<Route exact path="/profiles" component={Profiles} />
-
-							<Route path="/dashboard" component={Dashboard} />
-
 							<Switch>
+								<Route exact path="/" component={Landing} />
+								<Route exact path="/register" component={Register} />
+								<Route exact path="/login" component={Login} />
+								<PrivateRoute exact path="/search" component={Restaurants} />
+								<PrivateRoute exact path="/profiles" component={Profiles} />
+								<PrivateRoute path="/dashboard" component={Dashboard} />
+								{/* <PrivateRoute path="/search/:id" component={CommentForm} /> */}
+								<Route component={NoMatch} />
+
+								{/* Change to simplify routing */}
+								<PrivateRoute
+									exact
+									path="/search/review"
+									component={RestaurantReview}
+								/>
 								<PrivateRoute
 									exact
 									path="/dashboard/review"
 									component={FollowReview}
 								/>
-							</Switch>
-
-							<Switch>
 								<PrivateRoute
 									exact
 									path="/dashboard/review/comment"
 									component={CommentCard}
 								/>
-							</Switch>
-
-							<Switch>
 								<PrivateRoute
 									path="/dashboard/userreview"
 									component={UserReview}
 								/>
-							</Switch>
-
-							<Switch>
 								<PrivateRoute
 									exact
 									path="/dashboard/userreview/comment"
 									component={CommentCard}
 								/>
-							</Switch>
-
-							<Switch>
 								<PrivateRoute
 									exact
 									path="/comment/commentform"
