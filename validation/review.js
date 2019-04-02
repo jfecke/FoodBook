@@ -4,19 +4,15 @@ const isEmpty =  require("./is-empty.js");
 module.exports = function validateReviewInput(data) {
     let errors = {};
 
-    data.title = !isEmpty(data.title) ? data.title : "";
-    data.body = !isEmpty(data.body) ? data.body : "";
+    //data.rating = !isEmpty(data.rating) ? data.rating : "";
+    data.review = !isEmpty(data.review) ? data.review : "";
 
-    if (Validator.isEmpty(data.title)) {
-        errors.title = "Title field is required";
-    }
+    // if (Validator.isEmpty(data.rating)) {
+    //     errors.rating = "Rating field is required";
+    // }
 
-    if (Validator.isEmpty(data.body)) {
-        errors.body = "Revkew field is required";
-    }
-
-    if (!Validator.isLength(data.body.trim(), {min: 20, max: 100})) {
-        errors.password = "Review must be at least 20 characters";
+    if (Validator.isEmpty(data.review)) {
+        errors.review = "Review field is required";
     }
     
     return {

@@ -39,9 +39,6 @@ var RestaurantSchema = new Schema({
   phonenumber: {
     type: String,
     required: true
-  },
-  link: {
-    type: String
   }
 });
 

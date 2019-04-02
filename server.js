@@ -16,9 +16,6 @@ if (process.env.NODE_ENV === "production") {
 }
 // Add routes, both API and view
 app.use(routes);
-// app.use('/api/users', users);
-// app.use('/api/profile', profile);
-// app.use('/api/posts', posts);
 
 // Connect to the Mongo DB
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/foodbook", { useNewUrlParser: true });

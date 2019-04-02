@@ -31,5 +31,20 @@ export default {
   },
   deleteRestaurant: function(restaurantID) {
     return axios.delete("/api/restaurants/"+ restaurantID);
+  },
+  updateReview: function(reviewOBJ) {
+    return axios.put("/api/reviews/"+ reviewOBJ._id, reviewOBJ);
+  },
+  updateRestaurant: function(restaurantOBJ) {
+    return axios.put("/api/restaurants/"+ restaurantOBJ._id, restaurantOBJ);
+  },
+  updateUser: function(userOBJ) {
+    return axios.put("/api/users/"+ userOBJ._id, userOBJ);
+  },
+  getUsers: function(userOBJ) {
+    return axios.get("/api/users/", userOBJ);
+  },
+  getOneUser: function(userOBJ) {
+    return axios.get("/api/users/"+ userOBJ._id);
   }
 };
