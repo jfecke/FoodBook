@@ -65,10 +65,9 @@ class App extends Component {
 								<PrivateRoute exact path="/search" component={Restaurants} />
 								<PrivateRoute exact path="/profiles" component={Profiles} />
 								<PrivateRoute path="/dashboard" component={Dashboard} />
-								{/* <PrivateRoute path="/search/:id" component={CommentForm} /> */}
+								<PrivateRoute path="/search/id" component={RestaurantReview} />
 								<Route component={NoMatch} />
 
-								{/* Change to simplify routing */}
 								<PrivateRoute
 									exact
 									path="/search/review"
@@ -93,7 +92,7 @@ class App extends Component {
 									path="/dashboard/userreview/comment"
 									component={CommentCard}
 								/>
-								<PrivateRoute
+								<Route
 									exact
 									path="/comment/commentform"
 									component={CommentForm}
