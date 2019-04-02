@@ -199,3 +199,15 @@ function updateReview(){
         })
     })
 };
+
+function getUsers() {
+    API.getUsers({name: {$regex: "/"+this.state.usersearch+"/" }}).then(results => {
+        console.log(results.data);
+    })
+};
+
+function getOneUser() {
+    API.getOneUser({UserId: this.state.UserId}).then(results => {
+        console.log(results.data);
+    })
+};

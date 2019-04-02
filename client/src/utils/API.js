@@ -39,6 +39,12 @@ export default {
     return axios.put("/api/restaurants/"+ restaurantOBJ._id, restaurantOBJ);
   },
   updateUser: function(userOBJ) {
-    return axios.put("/api/restaurants/"+ userOBJ._id, userOBJ);
+    return axios.put("/api/users/"+ userOBJ._id, userOBJ);
+  },
+  getUsers: function(userOBJ) {
+    return axios.get("/api/users/", userOBJ);
+  },
+  getOneUser: function(userOBJ) {
+    return axios.get("/api/users/"+ userOBJ._id);
   }
 };

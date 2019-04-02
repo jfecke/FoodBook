@@ -30,7 +30,16 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   update: function(req, res) {
-    db.Review.findOneAndUpdate({ _id: req.params.id }, req.body)
+    db.Review.findOneAndUpdate(
+      { _id: req.params.id },
+      {
+        YelpId: req.body.YelpId,
+        UserId: req.body.UserId,
+        review: req.body.review,
+        rating: req.body.rating,
+        changedate: Date.now()
+      }
+      )
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
