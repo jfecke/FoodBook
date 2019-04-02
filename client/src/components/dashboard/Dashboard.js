@@ -20,7 +20,7 @@ class Dashboard extends Component {
 
 	componentDidMount() {
 		this.props.getCurrentProfile();
-		// this.props.findFollowers();
+		// this.props.findFollowers({this.props.auth.user.id});
 	}
 
 	handleSwitch() {
