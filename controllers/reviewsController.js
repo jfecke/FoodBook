@@ -1,13 +1,12 @@
 const db = require("../models");
-const validateReviewInput = require("../validation/login");
+const validateReviewInput = require("../validation/review");
 
 // Defining methods for the booksController
 module.exports = {
   findAll: function(req, res) {
-    db.Review
-      .find(req.query)
+    db.Review.find(req.query)
       .sort({ date: -1 })
-      .then(function(dbModel) {
+      .then(dbModel => {
         res.json(dbModel)
       })
       .catch(err => res.status(422).json(err));
@@ -31,8 +30,7 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   update: function(req, res) {
-    db.Review
-      .findOneAndUpdate({ _id: req.params.id }, req.body)
+    db.Review.findOneAndUpdate({ _id: req.params.id }, req.body)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },

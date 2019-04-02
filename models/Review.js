@@ -12,7 +12,7 @@ var ReviewSchema = new Schema({
     ref: "Restaurant",
     required: true
   },
-  reviewtext: {
+  review: {
     type: String,
     required: true
   },
@@ -20,7 +20,11 @@ var ReviewSchema = new Schema({
     type: Number,
     required: true
   },
-  date: {
+  createdate: {
+    type: Date,
+    default: Date.now
+  },
+  changedate: {
     type: Date,
     default: Date.now
   }
