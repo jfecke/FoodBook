@@ -4,11 +4,20 @@ import API from "../../utils/API";
 import { FormBtn } from "../Form/index";
 
 export default class Comment extends Component {
-	state = {
-		title: "",
-		rating: "",
-		comment: "",
-	};
+	constructor(props) {
+		super(props);
+		this.state = {
+			title: "",
+			rating: 0,
+			comment: "",
+		};
+		this.handleInputChange = this.handleInputChange.bind(this);
+	}
+	// state = {
+	// 	title: "",
+	// 	rating: "",
+	// 	comment: "",
+	// };
 
 	componentDidMount() {
 		this.loadReviews();
@@ -75,6 +84,7 @@ export default class Comment extends Component {
 									value={this.state.rating}
 									onChange={this.handleInputChange}
 								>
+									<option>0</option>
 									<option>1</option>
 									<option>2</option>
 									<option>3</option>
