@@ -24,7 +24,6 @@ import RestaurantReview from "./components/review/RestaurantReview.js";
 import FollowReview from "./components/review/FollowReview";
 import UserReview from "./components/review/UserReview";
 import CommentForm from "./components/comments/CommentForm";
-import CommentCard from "./components/comments/CommentCard";
 
 // import CreateProfile from "./components/create-profile/CreateProfile";
 
@@ -79,23 +78,8 @@ class App extends Component {
 									component={FollowReview}
 								/>
 								<PrivateRoute
-									exact
-									path="/dashboard/review/comment"
-									component={CommentCard}
-								/>
-								<PrivateRoute
 									path="/dashboard/userreview"
 									component={UserReview}
-								/>
-								<PrivateRoute
-									exact
-									path="/dashboard/userreview/comment"
-									component={CommentCard}
-								/>
-								<Route
-									exact
-									path="/comment/commentform"
-									component={CommentForm}
 								/>
 							</Switch>
 						</div>

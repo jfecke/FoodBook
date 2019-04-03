@@ -2,47 +2,46 @@ import React, { Component } from "react";
 import { Col, Row } from "../grid";
 import API from "../../utils/API";
 import { FormBtn } from "../Form/index";
+import { getCurrentProfile } from "../../actions/profileActions";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
-export default class Comment extends Component {
+class CommentForm extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			title: "",
 			rating: 0,
 			comment: "",
 		};
 		this.handleInputChange = this.handleInputChange.bind(this);
 	}
-	// state = {
-	// 	title: "",
-	// 	rating: "",
-	// 	comment: "",
-	// };
 
 	componentDidMount() {
+		this.props.getCurrentProfile();
 		this.loadReviews();
 	}
 
 	loadReviews = () => {
 		API.getReviews()
 			.then(res =>
-				this.setState({ reviews: res.data, title: "", rating: "", comment: "" })
+				this.setState({ reviews: res.data, rating: "", comment: "" })
 			)
 			.catch(err => console.log(err));
 	};
 
-	handleInputChange = event => {
-		const { name, value } = event.target;
-		this.setState({
-			[name]: value,
-		});
-	};
+	handleInputChange(event) {
+		return function(e) {
+			var state = {};
+			state[event] = e.target.value;
+			this.setState(state);
+		}.bind(this);
+	}
 
 	handleFormSubmit = event => {
 		event.preventDefault();
-		if (this.state.title && this.state.comment) {
+		if (this.state.comment) {
 			API.addReview({
-				title: this.state.title,
+				id: this.props.auth.user.id,
 				rating: this.state.rating,
 				comment: this.state.comment,
 			})
@@ -52,37 +51,23 @@ export default class Comment extends Component {
 	};
 
 	render() {
+		const { user } = this.props.auth;
 		return (
 			<div className="card">
 				<Row>
 					<Col size="md-2">
-						<img
-							className="comment-pic"
-							src="https://picsum.photos/160"
-							alt="profile"
-						/>
-						<div className="text-center">User Name</div>
+						<img className="comment-pic" src={user.profilePic} alt="profile" />
+						<div className="text-center">{user.id}</div>
 					</Col>
 					<div className="col-md">
 						<form>
-							<div className="form-group">
-								<label for="title">Post Title:</label>
-								<input
-									type="text"
-									className="form-control"
-									id="title"
-									placeholder="Title (Required)"
-									value={this.state.title}
-									onChange={this.handleInputChange}
-								/>
-							</div>
 							<div className="form-group">
 								<label for="rating">Rating:</label>
 								<select
 									className="form-control"
 									id="rating"
 									value={this.state.rating}
-									onChange={this.handleInputChange}
+									onChange={this.handleInputChange("rating")}
 								>
 									<option>0</option>
 									<option>1</option>
@@ -105,11 +90,11 @@ export default class Comment extends Component {
 									rows="3"
 									placeholder="Comment (Required)"
 									value={this.state.comment}
-									onChange={this.handleInputChange}
+									onChange={this.handleInputChange("comment")}
 								/>
 							</div>
 							<FormBtn
-								disabled={!(this.state.author && this.state.title)}
+								disabled={!this.state.comment}
 								onClick={this.handleFormSubmit}
 							>
 								Submit Review
@@ -121,3 +106,17 @@ export default class Comment extends Component {
 		);
 	}
 }
+CommentForm.propTypes = {
+	getCurrentProfile: PropTypes.func.isRequired,
+	auth: PropTypes.object.isRequired,
+	profile: PropTypes.object.isRequired,
+};
+const mapStateToProps = state => ({
+	profile: state.profile,
+	auth: state.auth,
+});
+
+export default connect(
+	mapStateToProps,
+	{ getCurrentProfile }
+)(CommentForm);
