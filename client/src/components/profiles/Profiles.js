@@ -11,6 +11,7 @@ class Restaurants extends Component {
     super();
     this.state = {
       query: "",
+      myuserid: "5c9ab6d46456d58048f82526",
       users: []
     };
     this.findReviews = this.findReviews.bind(this);
@@ -28,7 +29,8 @@ class Restaurants extends Component {
 
   handleClick = (event) => {
     event.preventDefault();
-    API.getUsers({name: {$regex: "/"+this.state.query+"/" }}).then(results => {
+    API.getUsers({name: {$regex: this.state.query} }).then(results => {
+      //{$regex: new RegExp (this.state.query, "i") }
       this.findFollowers(results.data);
     })
   };
@@ -49,7 +51,6 @@ class Restaurants extends Component {
       })
   })
     Promise.all(userdata).then(alldata => {
-      //console.log(this.state.query);
       this.findReviews(alldata);
     })
   }
@@ -60,9 +61,36 @@ class Restaurants extends Component {
           API.getReviews({
             UserId: user._id
           }).then(function(resultsOBJ) {
-            console.log(resultsOBJ.data)
             let numReviews = resultsOBJ.data.length;
             user["reviews"] = numReviews;
+            res(user)
+          });
+      })
+  })
+    Promise.all(userdata).then(alldata => {
+      this.findIfFollowing(alldata);
+    })
+  }
+
+  findIfFollowing = (results) => {
+    let userdata = results.map((user) => {
+      return new Promise((res) => { 
+          API.getfollowers({
+            FollowerId: this.state.myuserid,
+            FollowingId: user._id
+          }).then((resultsOBJ) => {
+            let isFollowing = "Follow";
+            let className = "btn btn-primary"
+            if (user._id === this.state.myuserid) {
+              isFollowing = "Me";
+              className = "d-none"
+            }
+            else if (resultsOBJ.data.length> 0) {
+              isFollowing = "Unfollow";
+              className = "btn btn-danger"
+            }
+            user["isFollowing"] = isFollowing;
+            user["className"] = className;
             res(user)
           });
       })
@@ -74,7 +102,39 @@ class Restaurants extends Component {
 
   handleFollow = event => {
     event.preventDefault();
-    console.log(event.target)
+    let userid = event.target.getAttribute("userid");
+    let usernum = null;
+    let tempusers = this.state.users;
+    for (let num in this.state.users) {
+      if (this.state.users[num]._id === userid) {
+        usernum = num;
+      };
+    };
+    API.getfollowers({
+      FollowerId: this.state.myuserid,
+      FollowingId: userid
+    }).then(results => {
+      if (results.data.length > 0) {
+        API.deleteFollower(results.data[0]._id).then(resultsOBJ => {
+          console.log(resultsOBJ.data);
+          tempusers[usernum].followers -= 1;
+          tempusers[usernum].isFollowing = "Follow";
+          tempusers[usernum].className = "btn btn-primary";
+          this.setState({users: tempusers});
+          })
+      } else {
+        API.addFollower({
+          FollowerId: this.state.myuserid,
+          FollowingId: userid
+        }).then(resultsOBJ => {
+          console.log(resultsOBJ.data);
+          tempusers[usernum].followers += 1;
+          tempusers[usernum].isFollowing = "Unfollow";
+          tempusers[usernum].className = "btn btn-danger";
+          this.setState({users: tempusers});
+        })
+      }
+    })
   }
 
  
@@ -110,7 +170,9 @@ class Restaurants extends Component {
                   followers={user.followers}
                   reviews={user.reviews}
                   follow={this.handleFollow}
-                  location={user.city + ", "+user.stateName}>
+                  location={user.city + ", "+user.stateName}
+                  isFollowing={user.isFollowing}
+                  className={user.className}>
 
                 </ProfileCard>
               ))}
