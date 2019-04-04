@@ -2,9 +2,16 @@ import React, { Component } from "react";
 import RestaurantCard from "../cards/RestaurantCard";
 import "../search/styles.css";
 import CommentForm from "../comments/CommentForm";
-import CommentCard from "../comments/CommentCard";
+import { List, ListItem } from "../comments/CommentCard";
+import API from "../../utils/API";
 
 class Restaurants extends Component {
+	getReviews = () => {
+		API.getReviews({ YelpId: this.state.yelpid }).then(reviews => {
+			console.log(reviews);
+		});
+	};
+
 	render() {
 		return (
 			<div>
@@ -17,7 +24,9 @@ class Restaurants extends Component {
 						<div className="col-md-12">
 							<RestaurantCard />
 							<CommentForm />
-							<CommentCard />
+							<List>
+								<ListItem>f</ListItem>
+							</List>
 						</div>
 					</div>
 				</div>
