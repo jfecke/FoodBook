@@ -6,10 +6,24 @@ import { List, ListItem } from "../comments/CommentCard";
 import API from "../../utils/API";
 
 class Restaurants extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			rating: 0,
+			comment: "",
+		};
+	}
 	getReviews = () => {
 		API.getReviews({ YelpId: this.state.yelpid }).then(reviews => {
 			console.log(reviews);
 		});
+	};
+	loadReviews = () => {
+		API.getReviews()
+			.then(res =>
+				this.setState({ reviews: res.data, rating: "", comment: "" })
+			)
+			.catch(err => console.log(err));
 	};
 
 	render() {
@@ -25,7 +39,7 @@ class Restaurants extends Component {
 							<RestaurantCard />
 							<CommentForm />
 							<List>
-								<ListItem>f</ListItem>
+								<ListItem> Test </ListItem>
 							</List>
 						</div>
 					</div>

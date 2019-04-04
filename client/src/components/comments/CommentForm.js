@@ -57,7 +57,7 @@ class CommentForm extends Component {
 				<Row>
 					<Col size="md-2">
 						<img className="comment-pic" src={user.profilePic} alt="profile" />
-						<div className="text-center">{user.id}</div>
+						<div className="text-center">{user.name}</div>
 					</Col>
 					<div className="col-md">
 						<form>
