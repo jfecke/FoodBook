@@ -2,7 +2,6 @@ var mongoose = require("mongoose");
 
 var Schema = mongoose.Schema;
 var ReviewSchema = new Schema({
-  // `title` is of type String
   UserId: {
     type: Schema.Types.ObjectId,
     ref: "User",
@@ -17,7 +16,15 @@ var ReviewSchema = new Schema({
     type: String,
     required: true
   },
-  date: {
+  rating: {
+    type: Number,
+    required: true
+  },
+  createdate: {
+    type: Date,
+    default: Date.now
+  },
+  changedate: {
     type: Date,
     default: Date.now
   }

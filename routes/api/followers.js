@@ -4,6 +4,7 @@ const followersController = require("../../controllers/followersController");
 // Matches with "/api/followers"
 router.route("/")
   .get(followersController.findAll)
+  .put(followersController.findAll)
   .post(followersController.create);
 
 // Matches with "/api/followers/:id"

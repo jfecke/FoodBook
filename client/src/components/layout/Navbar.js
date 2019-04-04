@@ -22,7 +22,7 @@ class Navbar extends Component {
 						{user.name + "'s Profile: "}
 						<img
 							className="rounded-circle"
-							src={user.profilePic}
+							src={user.profilePic || "https://picsum.photos/250/?random"}
 							alt={user.name}
 							style={{ width: "25px", marginRight: "5px" }}
 							title={user.name}

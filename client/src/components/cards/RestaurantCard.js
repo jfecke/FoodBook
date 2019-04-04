@@ -38,9 +38,14 @@ export function RestaurantCard (props)  {
 
 				<div className="d-flex flex-row" style={{ flex: 1 }}>
 					<div className="d-flex flex-row row2" style={{ flex: 1 }}>
-						{star}
-						{star}
-						{halfstar}
+						<a href="/search/review">
+							{star}
+							{star}
+							{halfstar}
+						</a>
+						<a href="/search/review" style={{ marginLeft: 5 }}>
+							59 reviews
+						</a>
 
 						<p style={{ marginLeft: 5 }}> {props.rating}</p>
 						<div
@@ -54,8 +59,23 @@ export function RestaurantCard (props)  {
 
 				<p>{props.category}</p>
 
-				<p className="muted">{props.address}</p>
+				<div className="d-flex flex-row" style={{ flex: 1 }}>
+					<div className="d-flex flex-row" style={{ flex: 1 }}>
+						<p className="muted" style={{ width: 100 + "%" }}>
+						{props.address}
+						</p>
+
+						<a
+							href="/search/id"
+							className="btn btn-dark justify-content-end"
+							style={{ float: "right", margin: 1 }}
+						>
+							Review
+						</a>
+					</div>
+				</div>
 			</div>
+
 			<p />
 		</div>
 	);
