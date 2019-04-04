@@ -7,11 +7,10 @@ import "./styles.css";
 // localhost:3000/search
 
 class Restaurants extends Component {
-  constructor () {
-    super();
+  constructor (props) {
+    super(props);
     this.state = {
       query: "",
-      myuserid: "5c9ab6d46456d58048f82526",
       users: []
     };
     this.findReviews = this.findReviews.bind(this);
@@ -19,6 +18,10 @@ class Restaurants extends Component {
     this.findFollowers = this.findFollowers.bind(this);
   }
 
+  componentDidMount() {
+		this.props.getCurrentProfile();
+		this.loadReviews();
+	}
 
   handleInputChange = event => {
     const { name, value } = event.target;
@@ -76,12 +79,12 @@ class Restaurants extends Component {
     let userdata = results.map((user) => {
       return new Promise((res) => { 
           API.getfollowers({
-            FollowerId: this.state.myuserid,
+            FollowerId: this.props.auth.user.id,
             FollowingId: user._id
           }).then((resultsOBJ) => {
             let isFollowing = "Follow";
             let className = "btn btn-primary"
-            if (user._id === this.state.myuserid) {
+            if (user._id === this.props.auth.user.id) {
               isFollowing = "Me";
               className = "d-none"
             }
@@ -111,7 +114,7 @@ class Restaurants extends Component {
       };
     };
     API.getfollowers({
-      FollowerId: this.state.myuserid,
+      FollowerId: this.props.auth.user.id,
       FollowingId: userid
     }).then(results => {
       if (results.data.length > 0) {
@@ -124,7 +127,7 @@ class Restaurants extends Component {
           })
       } else {
         API.addFollower({
-          FollowerId: this.state.myuserid,
+          FollowerId: this.props.auth.user.id,
           FollowingId: userid
         }).then(resultsOBJ => {
           console.log(resultsOBJ.data);
