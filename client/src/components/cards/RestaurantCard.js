@@ -2,14 +2,22 @@ import React from "react";
 import "../search/styles.css";
 import ph from "../../img/ph.png";
 
-const RestaurantCard = props => {
+export function RestaurantContainer ({children}){
+	return (
+		<div className="col-md-6"> {children} </div>
+	)
+
+}
+export function RestaurantCard (props)  {
 	const star = <i className="fa fa-star" aria-hidden="true" />;
 	const halfstar = <i className="fas fa-star-half-alt" />;
+
+	
 
 	return (
 		<div className="card d-flex flex-row">
 			<div className="img-wrap d-flex justify-content-center">
-				<img id={props.id} alt={props.id} src={ph} />
+				<img style ={{height: 75 +"px", width: 75 +"px"}}id={props.id} alt={props.id} src={props.image} />
 			</div>
 			<div
 				className="main-content d-flex flex-column justify-content-between"
@@ -17,7 +25,7 @@ const RestaurantCard = props => {
 			>
 				<div className="d-flex flex-row row1">
 					<div style={{ flex: 1 }}>
-						<p className="title">Chueys</p>
+						<p className="title">{props.name}</p>
 					</div>
 
 					<div
@@ -39,21 +47,22 @@ const RestaurantCard = props => {
 							59 reviews
 						</a>
 
+						<p style={{ marginLeft: 5 }}> {props.rating}</p>
 						<div
 							className="d-flex flex-row justify-content-end muted"
 							style={{ flex: 1 }}
 						>
-							<p>$$$$</p>
+							<p>{props.price}</p>
 						</div>
 					</div>
 				</div>
 
-				<p>Italian</p>
+				<p>{props.category}</p>
 
 				<div className="d-flex flex-row" style={{ flex: 1 }}>
 					<div className="d-flex flex-row" style={{ flex: 1 }}>
 						<p className="muted" style={{ width: 100 + "%" }}>
-							209 E 58 St, Eastside
+						{props.address}
 						</p>
 
 						<a
@@ -72,7 +81,7 @@ const RestaurantCard = props => {
 	);
 };
 
-export default RestaurantCard;
+
 
 //removed so the page wouldn't break while designing
 
