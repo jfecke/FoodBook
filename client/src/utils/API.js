@@ -46,7 +46,14 @@ export default {
   deleteFollower: function(followerId) {
     return axios.delete("/api/followers/"+ followerId);
   },
+  autocomplete: function(searchTxt) {
+    return axios.post("/api/autocomp", searchTxt)
+  },
+  geocode: function(location) {
+    return axios.post("/api/geocode" , location )
+  },
   addFollower: function(followerOBJ) {
     return axios.post("/api/followers", followerOBJ);
+
   }
 };

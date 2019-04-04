@@ -6,15 +6,10 @@ FOR REVIEW QUERIES : https://www.yelp.com/developers/documentation/v3/business_r
 const axios = require("axios");
 require("dotenv").config()
 const yelp = require('yelp-fusion');
-const Api_Keys = {
-    YelpKey: process.env.YelpAPI_KEY,
-    MapsKey: process.env.MapsAPI_KEY,
-    ClientID: process.env.YelpCLIENT_ID
-}
-const key = "hjzawpNl48mrUUwiJ0_8vXq2C5aEgwpmJrsmOOpxlLc1pNvJuJOAgkifVDdKc5lR1GNEK0U8L1ofpZxRnrBXypzCCcrCIR8M0Df73-uLZpv6i_uagjIY-dx9UVOIXHYx"
+const keys = require('../../config/keys')
 //Trouble getting the response to work with an ENV variable so this is what im using for now.""
 
-const client = yelp.client(key);
+const client = yelp.client(keys.secrets.YelpAPI_KEY);
 
 module.exports = {
     Query : {
@@ -31,7 +26,11 @@ module.exports = {
     },
     autocomp: function(input){
         
-        return axios.get("https://api.yelp.com/v3/autocomplete?text="+input.text+"&latitude="+input.location.lat+"&longitude="+input.location.long,{ headers: { Authorization: "Bearer "+key} } )
+        return axios.get("https://api.yelp.com/v3/autocomplete?text="+input.text+"&latitude="+input.lat+"&longitude="+input.lng,{ headers: { Authorization: "Bearer "+keys.secrets.YelpAPI_KEY} } )
+    },
+    geocode: function(address) {
+        
+        return axios.get("https://maps.googleapis.com/maps/api/geocode/json?address="+address.address+"&key="+keys.secrets.GoogleAPI_KEY)
     }
 };
 
