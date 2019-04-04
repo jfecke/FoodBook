@@ -1,12 +1,15 @@
 import React, { Component } from "react";
 import ProfileCard from "../cards/ProfileCard";
 import { FormBtn, Input } from "./Search";
-import API from "../../utils/API"
+import API from "../../utils/API";
+import { getCurrentProfile } from "../../actions/profileActions";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import "./styles.css";
 
 // localhost:3000/search
 
-class Restaurants extends Component {
+class Profiles extends Component {
   constructor (props) {
     super(props);
     this.state = {
@@ -20,7 +23,6 @@ class Restaurants extends Component {
 
   componentDidMount() {
 		this.props.getCurrentProfile();
-		this.loadReviews();
 	}
 
   handleInputChange = event => {
@@ -184,4 +186,18 @@ class Restaurants extends Component {
   }
 }
 
-export default Restaurants;
+Profiles.propTypes = {
+	getCurrentProfile: PropTypes.func.isRequired,
+	auth: PropTypes.object.isRequired,
+	profile: PropTypes.object.isRequired,
+};
+const mapStateToProps = state => ({
+	profile: state.profile,
+	auth: state.auth,
+});
+
+
+export default connect(
+	mapStateToProps,
+	{ getCurrentProfile }
+)(Profiles);
