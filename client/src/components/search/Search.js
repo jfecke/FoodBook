@@ -1,4 +1,5 @@
 import React from "react";
+import { PromiseProvider } from "mongoose";
 
 // This file exports the Input, TextArea, and FormBtn components
 
@@ -19,6 +20,7 @@ export function TextArea(props) {
 }
 
 export function FormBtn(props) {
+
 	return (
 		<button
 			{...props}
@@ -30,3 +32,20 @@ export function FormBtn(props) {
 		</button>
 	);
 }
+
+export function AutoCompBox(props){
+	if(!props.terms){return <div></div>}
+	return (
+	<div {...props}>
+	{props.children}
+	</div>
+
+	)
+}
+
+export function AutoCompItem(props){
+	return(
+	<span {...props}>{props.text}</span>
+	)
+}
+

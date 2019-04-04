@@ -31,5 +31,11 @@ export default {
   },
   deleteRestaurant: function(restaurantID) {
     return axios.delete("/api/restaurants/"+ restaurantID);
+  },
+  autocomplete: function(searchTxt) {
+    return axios.post("/api/autocomp", searchTxt)
+  },
+  geocode: function(location) {
+    return axios.post("/api/geocode" , location )
   }
 };

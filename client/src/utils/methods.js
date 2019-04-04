@@ -130,3 +130,7 @@ function deleteRestaurant() {
         };
     });
 }
+
+function autoComplete(){
+    API.autocomplete()
+}

@@ -9,7 +9,7 @@ const yelp = require('yelp-fusion');
 const keys = require('../../config/keys')
 //Trouble getting the response to work with an ENV variable so this is what im using for now.""
 
-const client = yelp.client(key);
+const client = yelp.client(keys.secrets.YelpAPI_KEY);
 
 module.exports = {
     Query : {
@@ -26,12 +26,11 @@ module.exports = {
     },
     autocomp: function(input){
         
-        return axios.get("https://api.yelp.com/v3/autocomplete?text="+input.text+"&latitude="+input.location.lat+"&longitude="+input.location.lng,{ headers: { Authorization: "Bearer "+keys.secrets.YelpAPI_KEY} } )
+        return axios.get("https://api.yelp.com/v3/autocomplete?text="+input.text+"&latitude="+input.lat+"&longitude="+input.lng,{ headers: { Authorization: "Bearer "+keys.secrets.YelpAPI_KEY} } )
     },
     geocode: function(address) {
-        let addr = address.split(" ").join("+")
-        return axios.get("https://maps.googleapis.com/maps/api/geocode/json?address="+addr+"&key="+keys.secrets.GoogleAPI_KEY)
-
+        
+        return axios.get("https://maps.googleapis.com/maps/api/geocode/json?address="+address.address+"&key="+keys.secrets.GoogleAPI_KEY)
     }
 };
 

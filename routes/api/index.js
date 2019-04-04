@@ -5,6 +5,7 @@ const userRoutes = require("./users");
 const queryRoutes = require("./query");
 const followerRoutes = require("./followers");
 const autocompRoutes = require("./autocomp");
+const geocodeRoutes = require("./geocode")
 
 router.use("/restaurants", restaurantRoutes);
 router.use("/users", userRoutes);
@@ -12,5 +13,6 @@ router.use("/reviews", reviewRoutes);
 router.use("/query", queryRoutes);
 router.use("/followers", followerRoutes);
 router.use("/autocomp", autocompRoutes);
+router.use("/geocode", geocodeRoutes)
 
 module.exports = router;
