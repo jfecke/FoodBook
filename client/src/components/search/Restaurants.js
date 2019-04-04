@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {RestaurantCard, RestaurantContainer} from '../cards/RestaurantCard';
+import RestaurantCard from '../cards/RestaurantCard';
 import { FormBtn, Input, AutoCompBox, AutoCompItem } from './Search';
 import './styles.css';
 import API from "../../utils/API"
@@ -112,7 +112,7 @@ class Restaurants extends Component {
               </div>
               <Input className="d-flex flex-row" style={{ flex: 1, width: 100 + '%' }}
                 value={this.state.searchVal}
-                // onChange={this.handleAutocomp}
+                onChange={this.handleInputChange}
               name="searchVal"
               placeholder="Search for restuarants, bars..."
               disabled = {!this.state.stateVal || !this.state.cityVal}
@@ -137,7 +137,7 @@ class Restaurants extends Component {
             <div className="col-md-2">Sidebar filter searches, navigate to other pages..something
         </div>
         {this.state.restaurants.length ? (            
-            <RestaurantContainer>
+            <div className="col-md-6">
                 {this.state.restaurants.map((restaurant,index) => {
                   return(
                   <RestaurantCard 
@@ -158,7 +158,7 @@ class Restaurants extends Component {
                   )
                 })}
 
-            </RestaurantContainer>
+            </div>
             
             ): <div className="col-md-6"/>}
 
