@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {RestaurantCard} from "../cards/RestaurantCard";
+import RestaurantCard from "../cards/RestaurantCard";
 import "../search/styles.css";
 import CommentForm from "../comments/CommentForm";
 import { List, ListItem } from "../comments/CommentCard";
