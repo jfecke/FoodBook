@@ -1,19 +1,11 @@
 import React from "react";
 import "../search/styles.css";
-import ph from "../../img/ph.png";
+//import ph from "../../img/ph.png";
 
-export function RestaurantContainer ({children}){
-	return (
-		<div className="col-md-6"> {children} </div>
-	)
 
-}
-export function RestaurantCard (props)  {
+const RestaurantCard = props =>   {
 	const star = <i className="fa fa-star" aria-hidden="true" />;
 	const halfstar = <i className="fas fa-star-half-alt" />;
-
-	
-
 	return (
 		<div className="card d-flex flex-row">
 			<div className="img-wrap d-flex justify-content-center">
@@ -81,7 +73,7 @@ export function RestaurantCard (props)  {
 	);
 };
 
-
+export default RestaurantCard;
 
 //removed so the page wouldn't break while designing
 
