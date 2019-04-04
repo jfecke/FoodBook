@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 // Matches with "/api/users"
 router.route("/")
   .get(usersController.findAll)
+  .put(usersController.findAll);
 
 // Matches with "/api/users/current"
 router.route("/current")

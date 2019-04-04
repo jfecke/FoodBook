@@ -4,6 +4,7 @@ const reviewsController = require("../../controllers/reviewsController");
 // Matches with "/api/books"
 router.route("/")
   .get(reviewsController.findAll)
+  .put(reviewsController.findAll)
   .post(reviewsController.create);
 
 // Matches with "/api/books/:id"

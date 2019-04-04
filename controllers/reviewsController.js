@@ -4,8 +4,8 @@ const validateReviewInput = require("../validation/review");
 // Defining methods for the booksController
 module.exports = {
   findAll: function(req, res) {
-    db.Review.find(req.query)
-      .sort({ date: -1 })
+    db.Review.find(req.body)
+      .sort({ changedate: -1 })
       .then(dbModel => {
         res.json(dbModel)
       })
