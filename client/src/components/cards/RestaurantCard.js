@@ -1,15 +1,20 @@
 import React from "react";
 import "../search/styles.css";
+import { Link } from "react-router-dom";
 //import ph from "../../img/ph.png";
 
-
-const RestaurantCard = props =>   {
+const RestaurantCard = props => {
 	const star = <i className="fa fa-star" aria-hidden="true" />;
 	const halfstar = <i className="fas fa-star-half-alt" />;
 	return (
 		<div className="card d-flex flex-row">
 			<div className="img-wrap d-flex justify-content-center">
-				<img style ={{height: 75 +"px", width: 75 +"px"}}id={props.id} alt={props.id} src={props.image} />
+				<img
+					style={{ height: 75 + "px", width: 75 + "px" }}
+					id={props.id}
+					alt={props.id}
+					src={props.image}
+				/>
 			</div>
 			<div
 				className="main-content d-flex flex-column justify-content-between"
@@ -54,16 +59,19 @@ const RestaurantCard = props =>   {
 				<div className="d-flex flex-row" style={{ flex: 1 }}>
 					<div className="d-flex flex-row" style={{ flex: 1 }}>
 						<p className="muted" style={{ width: 100 + "%" }}>
-						{props.address}
+							{props.address}
 						</p>
 
-						<a
-							href="/search/id"
+						<Link
+							to={{
+								pathname: "/search/id",
+								state: { yelpId: props.id },
+							}}
 							className="btn btn-dark justify-content-end"
 							style={{ float: "right", margin: 1 }}
 						>
 							Review
-						</a>
+						</Link>
 					</div>
 				</div>
 			</div>

@@ -10,6 +10,7 @@ class CommentForm extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			// YelpId: "",
 			rating: 0,
 			comment: "",
 		};
@@ -41,7 +42,8 @@ class CommentForm extends Component {
 		event.preventDefault();
 		if (this.state.comment) {
 			API.addReview({
-				id: this.props.auth.user.id,
+				UserId: this.props.auth.user.id,
+				// YelpId: this.state.YelpId
 				rating: this.state.rating,
 				comment: this.state.comment,
 			})
@@ -57,7 +59,7 @@ class CommentForm extends Component {
 				<Row>
 					<Col size="md-2">
 						<img className="comment-pic" src={user.profilePic} alt="profile" />
-						<div className="text-center">{user.id}</div>
+						<div className="text-center">{user.name}</div>
 					</Col>
 					<div className="col-md">
 						<form>
@@ -70,16 +72,16 @@ class CommentForm extends Component {
 									onChange={this.handleInputChange("rating")}
 								>
 									<option>0</option>
+									<option>0.5</option>
 									<option>1</option>
+									<option>1.5</option>
 									<option>2</option>
+									<option>2.5</option>
 									<option>3</option>
+									<option>3.5</option>
 									<option>4</option>
+									<option>4.5</option>
 									<option>5</option>
-									<option>6</option>
-									<option>7</option>
-									<option>8</option>
-									<option>9</option>
-									<option>10</option>
 								</select>
 							</div>
 							<div className="form-group">
