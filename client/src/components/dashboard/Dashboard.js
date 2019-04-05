@@ -47,7 +47,7 @@ class Dashboard extends Component {
         let numfollowers = 0;
         for (let i in results.data) {
           numfollowers++;
-          console.log(results.data);
+		  console.log(results.data);
         }
         this.setState({
           followers: results.data,
@@ -67,7 +67,7 @@ class Dashboard extends Component {
         let numfollowing = 0;
         for (let i in results.data) {
           numfollowing++;
-          console.log(numfollowing);
+		  console.log(numfollowing);
         }
         this.setState({
           followers: results.data,

@@ -23,7 +23,7 @@ import NoMatch from "./components/nomatch/NoMatch";
 import RestaurantReview from "./components/review/RestaurantReview.js";
 import FollowReview from "./components/review/FollowReview";
 import UserReview from "./components/review/UserReview";
-import CommentForm from "./components/comments/CommentForm";
+// import CommentForm from "./components/comments/CommentForm";
 
 // import CreateProfile from "./components/create-profile/CreateProfile";
 
