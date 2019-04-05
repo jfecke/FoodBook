@@ -40,7 +40,8 @@ class Restaurants extends Component {
 	};
 
 	render() {
-		const passYelpId = this.state.yelpId;
+		const passProp = this.props.location.state.yelpId;
+
 		return (
 			<div>
 				<form className="d-flex flex-column" style={{ width: 100 + "%" }}>
@@ -74,7 +75,9 @@ class Restaurants extends Component {
 						) : (
 							<div className="col-md-12">No data found.</div>
 						)}
-						<CommentForm yelpId={passYelpId} />
+
+						<CommentForm passProp={passProp} />
+
 						<List>
 							<ListItem> Test </ListItem>
 						</List>

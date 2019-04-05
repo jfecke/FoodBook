@@ -56,6 +56,6 @@ export default {
 		return axios.post("/api/followers", followerOBJ);
 	},
 	searchId: function(yelpId) {
-		return axios.put("/api/searchId", yelpId);
+		return axios.post("/api/searchId", yelpId);
 	},
 };

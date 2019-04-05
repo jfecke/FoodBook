@@ -20,7 +20,7 @@ class CommentForm extends Component {
 	componentDidMount() {
 		this.props.getCurrentProfile();
 		this.loadReviews();
-		console.log(this.props.passYelpId);
+		console.log("yelpId: " + this.props.passProp);
 	}
 
 	loadReviews = () => {
