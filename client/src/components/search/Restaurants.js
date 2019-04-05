@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import RestaurantCard from "../cards/RestaurantCard";
-import { FormBtn, Input, AutoCompBox, AutoCompItem } from "./Search";
+import { FormBtn, Input } from "./Search";
 import "./styles.css";
 import API from "../../utils/API";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 // localhost:3000/search
 
 class Restaurants extends Component {
