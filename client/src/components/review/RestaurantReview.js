@@ -21,8 +21,8 @@ class Restaurants extends Component {
 		};
 	}
 	componentDidMount() {
-		var received = this.props.location.state.yelpId;
-		console.log(received);
+		var temp = { id: this.props.location.state.yelpId };
+		API.searchId(temp).then(console.log(temp));
 	}
 	getReviews = () => {
 		API.getReviews({ YelpId: this.props.location.state.yelpId }).then(
