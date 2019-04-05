@@ -31,6 +31,9 @@ module.exports = {
     geocode: function(address) {
         
         return axios.get("https://maps.googleapis.com/maps/api/geocode/json?address="+address.address+"&key="+keys.secrets.GoogleAPI_KEY)
+    },
+    searchById: function(input) {
+        return axios.get("https://api.yelp.com/v3/businesses/"+input.id,{ headers: { Authorization: "Bearer "+keys.secrets.YelpAPI_KEY} } )
     }
 };
 
