@@ -7,8 +7,6 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import "./styles.css";
 
-// localhost:3000/search
-
 class Profiles extends Component {
   constructor (props) {
     super(props);
@@ -35,7 +33,6 @@ class Profiles extends Component {
   handleClick = (event) => {
     event.preventDefault();
     API.getUsers({name: {$regex: this.state.query} }).then(results => {
-      //{$regex: new RegExp (this.state.query, "i") }
       this.findFollowers(results.data);
     })
   };
@@ -146,7 +143,7 @@ class Profiles extends Component {
 
   render() {
     return (
-      <div>
+      <div className="profiles">
         <form className="d-flex flex-column" style={{ width: 100 + "%" }}>
           <h1>Foodies</h1>
           <div className="d-flex flex-row" style={{ flex: 1 }}>
