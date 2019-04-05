@@ -6,6 +6,7 @@
   font-size: 14px;
   flex: 1;
   border-bottom: 1px solid lightgray;
+  font-family: "Courier New", Courier, monospace;
 }
 
 .card > img {
@@ -42,4 +43,8 @@
 .search-btn {
   color: grey;
   height: 200px;
+}
+
+.d-flex {
+  font-family: "Courier New", Courier, monospace;
 }

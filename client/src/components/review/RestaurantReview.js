@@ -25,7 +25,7 @@ class Restaurants extends Component {
 							<RestaurantCard />
 							<CommentForm />
 							<List>
-								<ListItem>f</ListItem>
+								
 							</List>
 						</div>
 					</div>

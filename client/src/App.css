@@ -6,9 +6,46 @@
 	height: 100vh;
 	margin-top: -24px;
 	margin-bottom: -50px;
+	font-family: 'Courier New', Courier, monospace;
 }
 
 .landing-inner {
+	padding-top: 80px;
+}
+
+.navbar {
+	font-family: 'Courier New', Courier, monospace;
+}
+
+.login {
+	position: relative;
+	background: url("./img/coffee.jpg") no-repeat;
+	background-size: cover;
+	background-position: center;
+	height: 100vh;
+	margin-top: -24px;
+	margin-bottom: -50px;
+	color: whitesmoke;
+	font-family: 'Courier New', Courier, monospace;
+}
+
+.login-inner {
+	padding-top: 80px;
+}
+
+.register {
+	position: relative;
+	background: url("./img/burger.jpeg") no-repeat;
+	background-size: cover;
+	background-position: center;
+	height: 100vh;
+	margin-top: -24px;
+	margin-bottom: -50px;
+	color: whitesmoke;
+	font-family: 'Courier New', Courier, monospace;
+}
+
+.register-inner {
 	padding-top: 80px;
 }
 
@@ -50,8 +87,8 @@
 	background-position: center;
 	height: auto;
 	margin-top: -24px;
+	font-family: 'Courier New', Courier, monospace;
 }
-
 .text-bg {
 	background-size: cover;
 	background-color: rgba(255, 255, 255, 0.7);
@@ -80,5 +117,6 @@
 }
 
 .footer {
+	font-family: 'Courier New', Courier, monospace;
 	bottom: 0px;
 }
