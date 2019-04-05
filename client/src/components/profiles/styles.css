@@ -1,5 +1,6 @@
 .card {
   background: #fff;
+  color: black;
   height: 100;
   width: 100%;
   padding: 5px;
@@ -7,6 +8,23 @@
   flex: 1;
   border-bottom: 1px solid lightgray;
 }
+
+
+.profiles {
+	position: relative;
+	background: url("../../img/allfood2.jpeg") no-repeat;
+	background-size: cover;
+	background-position: center;
+	height: 100vh;
+	margin-top: -24px;
+  margin-bottom: -50px;
+  color: black;
+  text-align: center;
+  font-family: 'Courier New', Courier, monospace;
+}
+/* .profile-inner {
+	padding-top: 80px;
+} */
 
 .card > img {
   height: 90px;
