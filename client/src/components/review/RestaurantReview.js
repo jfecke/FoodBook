@@ -11,12 +11,25 @@ class Restaurants extends Component {
 		this.state = {
 			rating: 0,
 			comment: "",
+			restaurants: [],
+			searchObj: {},
+			searchVal: "",
+			stateVal: "",
+			cityVal: "",
+			locationVal: {},
+			yelpId: "",
 		};
 	}
+	componentDidMount() {
+		var received = this.props.location.state.yelpId;
+		console.log(received);
+	}
 	getReviews = () => {
-		API.getReviews({ YelpId: this.state.yelpid }).then(reviews => {
-			console.log(reviews);
-		});
+		API.getReviews({ YelpId: this.props.location.state.yelpId }).then(
+			reviews => {
+				console.log(reviews);
+			}
+		);
 	};
 	loadReviews = () => {
 		API.getReviews()
@@ -35,13 +48,35 @@ class Restaurants extends Component {
 				</form>
 				<div className="container">
 					<div className="row">
-						<div className="col-md-12">
-							<RestaurantCard />
-							<CommentForm />
-							<List>
-								<ListItem> Test </ListItem>
-							</List>
-						</div>
+						{this.state.restaurants.length ? (
+							<div className="col-md-12">
+								{this.state.restaurants.map((restaurant, index) => {
+									return (
+										<RestaurantCard
+											key={restaurant.id}
+											id={restaurant.id}
+											name={restaurant.name}
+											link={restaurant.url}
+											image={restaurant.image_url}
+											rating={restaurant.rating}
+											location={restaurant.coordinates}
+											price={restaurant.price}
+											address={restaurant.location.display_address}
+											phone={restaurant.display_phone}
+											distance={restaurant.distance}
+											idx={index}
+											category={restaurant.categories[0].title}
+										/>
+									);
+								})}
+							</div>
+						) : (
+							<div className="col-md-12">No data found.</div>
+						)}
+						<CommentForm />
+						<List>
+							<ListItem> Test </ListItem>
+						</List>
 					</div>
 				</div>
 			</div>
