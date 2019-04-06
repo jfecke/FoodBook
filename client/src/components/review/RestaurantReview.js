@@ -4,6 +4,7 @@ import "../search/styles.css";
 import CommentForm from "../comments/CommentForm";
 import { List, ListItem } from "../comments/CommentCard";
 import API from "../../utils/API";
+import { Row, Col, Container } from "../grid/index";
 
 class Restaurants extends Component {
 	constructor(props) {
@@ -22,7 +23,13 @@ class Restaurants extends Component {
 	}
 	componentDidMount() {
 		var temp = { id: this.props.location.state.yelpId };
-		API.searchId(temp).then(res => this.setState({ restaurant: res.data }));
+		API.searchId(temp).then(res =>
+			this.setState({
+				restaurant: res.data,
+				category: res.data.categories[0].title,
+				address: res.data.location.display_address,
+			})
+		);
 	}
 
 	getReviews = () => {
@@ -42,47 +49,45 @@ class Restaurants extends Component {
 
 	render() {
 		const passProp = this.props.location.state.yelpId;
-
+		const restaurant = this.state.restaurant;
 		return (
 			<div>
 				<form className="d-flex flex-column" style={{ width: 100 + "%" }}>
 					<h1>Add New Review</h1>
 					<div className="d-flex flex-row" style={{ flex: 1 }} />
 				</form>
-				<div className="container">
-					<div className="row">
-						{this.state.restaurant.length ? (
-							<div className="col-md-12">
-								{this.state.restaurant.map(restaurant => {
-									return (
-										<RestaurantCard
-											key={restaurant.id}
-											id={restaurant.id}
-											name={restaurant.name}
-											link={restaurant.url}
-											image={restaurant.image_url}
-											rating={restaurant.rating}
-											location={restaurant.coordinates}
-											price={restaurant.price}
-											address={restaurant.location.display_address}
-											phone={restaurant.display_phone}
-											distance={restaurant.distance}
-											category={restaurant.categories[0].title}
-										/>
-									);
-								})}
-							</div>
-						) : (
-							<div className="col-md-12">No data found.</div>
-						)}
-
-						<CommentForm passProp={passProp} />
-
-						<List>
-							<ListItem> Test </ListItem>
-						</List>
-					</div>
-				</div>
+				<Container>
+					<Row>
+						<Col size="md-12">
+							<RestaurantCard
+								key={restaurant.id}
+								id={restaurant.id}
+								name={restaurant.name}
+								link={restaurant.url}
+								image={restaurant.image_url}
+								rating={restaurant.rating}
+								location={restaurant.coordinates}
+								price={restaurant.price}
+								address={this.state.address}
+								phone={restaurant.display_phone}
+								distance={restaurant.distance}
+								category={this.state.category}
+							/>
+						</Col>
+					</Row>
+					<Row>
+						<Col size="md-12">
+							<CommentForm passProp={passProp} />
+						</Col>
+					</Row>
+					<Row>
+						<Col size="md-12">
+							<List>
+								<ListItem> Test </ListItem>
+							</List>
+						</Col>
+					</Row>
+				</Container>
 			</div>
 		);
 	}

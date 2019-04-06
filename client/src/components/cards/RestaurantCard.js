@@ -2,7 +2,6 @@ import React from "react";
 import "../search/styles.css";
 import { Link } from "react-router-dom";
 //import ph from "../../img/ph.png";
-
 const RestaurantCard = props => {
 	const star = <i className="fa fa-star" aria-hidden="true" />;
 	const halfstar = <i className="fas fa-star-half-alt" />;
