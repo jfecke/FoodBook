@@ -2,9 +2,10 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getCurrentProfile } from "../../actions/profileActions";
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../grid";
 import API from "../../utils/API";
+import ReviewCard from "../cards/ReviewCard";
 import { List, ListItem } from "../list";
 // import { findFollowers, findFollowing } from "../../utils/methods";
 
@@ -13,7 +14,7 @@ class Dashboard extends Component {
     super(props);
     this.state = {
       switch: true,
-      reviewFeed: [],
+      reviews: [],
       yourReviews: [],
       followers: [{}],
       numfollowing: "",
@@ -83,7 +84,8 @@ class Dashboard extends Component {
     API.getReviews({UserId: user.id}).then(reviews => {
       console.log(reviews.data)
       this.setState({
-        numReviews: reviews.data.length
+        numReviews: reviews.data.length,
+        yourReviews: reviews.data
       });
     })
     .catch(error => console.log(error));
@@ -97,8 +99,19 @@ class Dashboard extends Component {
     }));
   }
 
+//   Array(1)
+// 0:
+// UserId: "5c93bca53833b966732e646d"
+// YelpId: "PrWSjn4a8o4dHoqKs53GBA"
+// changedate: "2019-04-06T00:24:33.263Z"
+// createdate: "2019-04-06T00:24:33.263Z"
+// rating: 3
+// review: "Soo good"
+
   render() {
     const { user } = this.props.auth;
+    // const { yourReviews } = this.state.yourReviews;
+    // console.log(yourReviews);
     return (
       <Container>
         <div className="dashboard-bg">
@@ -135,7 +148,7 @@ class Dashboard extends Component {
                   <button onClick={this.handleSwitch}>Review Feed ▶</button>
                 )}
               </Col>
-              <Col size="md-6">
+              <Col size="md-6" value={this.state.numfollowing}>
                 {this.state.switch ? (
                   <button onClick={this.handleSwitch}>Your Reviews ▶</button>
                 ) : (
@@ -169,11 +182,22 @@ class Dashboard extends Component {
               <List>
                 <ListItem key={user.name}>
                   <strong>{user.name + "'s Reviews"}</strong>
+                  
                 </ListItem>
+               
               </List>
+              
             )}
           </Col>
         </Row>
+        {this.state.yourReviews.map(yourReview => (
+              		<ReviewCard
+                  id={yourReview.UserId}
+                  key={yourReview._id}
+                  rating={yourReview.rating}
+                  review={yourReview.review}>
+                  </ReviewCard>
+              		))}
       </Container>
     );
   }
