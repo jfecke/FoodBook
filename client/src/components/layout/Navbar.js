@@ -36,7 +36,7 @@ class Navbar extends Component {
 						className="nav-link logout"
 					>
 						{" "}
-						Logout
+						<strong>Logout</strong>
 					</a>
 				</li>
 			</ul>
@@ -51,7 +51,7 @@ class Navbar extends Component {
 				</li>
 				<li className="nav-item">
 					<Link className="nav-link" to="/login">
-						Login
+						<strong>Login</strong>
 					</Link>
 				</li>
 			</ul>
