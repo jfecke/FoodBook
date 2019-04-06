@@ -34,7 +34,7 @@ class Dashboard extends Component {
     this.props.getCurrentProfile();
     this.findFollowers();
     this.findFollowing();
-    this.getReviews();
+    this.getFeed();
     // this.getReviewFeed();
   }
 
