@@ -43,7 +43,7 @@ class Restaurants extends Component {
 
 	getReviews = () => {
 		const { user } = this.props.auth;
-		API.getReviews({ UserId: user.id })
+		API.getReviews({ YelpId: this.props.location.state.yelpId })
 			.then(reviews => {
 				this.getUserNames(reviews.data);
 				

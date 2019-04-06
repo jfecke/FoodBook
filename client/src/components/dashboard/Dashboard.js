@@ -87,7 +87,7 @@ class Dashboard extends Component {
   };
 
   getUserName = (reviews) => {
-		let restaurantreviews = reviews.map((review) => {
+    let restaurantreviews = reviews.map((review) => {
 			return new Promise(function(res) { 
 				API.getUsers({
 				  _id: review.UserId
