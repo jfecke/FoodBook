@@ -2,9 +2,10 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getCurrentProfile } from "../../actions/profileActions";
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../grid";
 import API from "../../utils/API";
+import ReviewCard from "../cards/ReviewCard";
 import { List, ListItem } from "../list";
 // import { findFollowers, findFollowing } from "../../utils/methods";
 
@@ -13,19 +14,19 @@ class Dashboard extends Component {
     super(props);
     this.state = {
       switch: true,
-      reviewFeed: [],
+      reviews: [],
       yourReviews: [],
       followers: [{}],
       numfollowing: "",
       numfollowers: "",
       rating: 0,
       comment: "",
-      numReviews: ""
+      numReviews: "", 
     };
     this.handleSwitch = this.handleSwitch.bind(this);
     this.findFollowers = this.findFollowers.bind(this);
     this.findFollowing = this.findFollowing.bind(this);
-    // this.getReviews = this.getReviews.bind(this);
+    this.getReviews = this.getReviews.bind(this);
     // this.getReviewFeed = this.getReviewFeed.bind(this);
   }
 
@@ -33,7 +34,7 @@ class Dashboard extends Component {
     this.props.getCurrentProfile();
     this.findFollowers();
     this.findFollowing();
-    // this.getReviews();
+    this.getReviews();
     // this.getReviewFeed();
   }
 
@@ -67,7 +68,7 @@ class Dashboard extends Component {
         let numfollowing = 0;
         for (let i in results.data) {
           numfollowing++;
-		  console.log(numfollowing);
+		  console.log(results.data);
         }
         this.setState({
           followers: results.data,
@@ -77,45 +78,20 @@ class Dashboard extends Component {
       .catch(error => console.log(error));
   };
 
-  //Get Reviews (not sure it works)
-//   getReviews = () => {
-//     let query = {
-//       YelpId: this.state.yelpid
-//     };
-//     API.getReviews(query)
-//       .then(results => {
-//         let numReviews = 0;
-//         for (let i in results.data) {
-//           numReviews++;
-//           console.log(numReviews);
-//           console.log(results);
-//         }
-//         this.setState({
-//           reviews: results.data,
-//           numReviews: numReviews
-//         });
-//       })
+  // Get Reviews for User
+  getReviews = () => {
+    const { user } = this.props.auth;
+    API.getReviews({UserId: user.id}).then(reviews => {
+      console.log(reviews.data)
+      this.setState({
+        numReviews: reviews.data.length,
+        yourReviews: reviews.data
+      });
+    })
+    .catch(error => console.log(error));
+  };
 
-//       .catch(err => console.log(err));
-//   };
 
-  // Get review feed (not sure if it works)
-//   getReviewFeed = () => {
-//     let query = {
-//       FollowerID: this.props.auth.user.id
-//     };
-//     let following = [];
-//     API.findFollowing(query).then(results => {
-//       for (let i of results.data) {
-//         following.push(i);
-//       }
-//       API.getReviews({ UserId: { $in: following } }).then(resultOBJ => {
-//         if (resultOBJ.data.length < 1) {
-//           console.log(resultOBJ.data);
-//         }
-//       });
-//     });
-//   };
 
   handleSwitch() {
     this.setState(state => ({
@@ -123,8 +99,19 @@ class Dashboard extends Component {
     }));
   }
 
+//   Array(1)
+// 0:
+// UserId: "5c93bca53833b966732e646d"
+// YelpId: "PrWSjn4a8o4dHoqKs53GBA"
+// changedate: "2019-04-06T00:24:33.263Z"
+// createdate: "2019-04-06T00:24:33.263Z"
+// rating: 3
+// review: "Soo good"
+
   render() {
     const { user } = this.props.auth;
+    // const { yourReviews } = this.state.yourReviews;
+    // console.log(yourReviews);
     return (
       <Container>
         <div className="dashboard-bg">
@@ -140,14 +127,14 @@ class Dashboard extends Component {
             </Row>
             <div className="row text-bg">
               <Col size="md-4" value={this.state.numReviews}>
-                # of Reviews
-                {this.state.numReviews}
+                # of Reviews  
+                <strong> {this.state.numReviews}</strong>
               </Col>
               <Col size="md-4" value={this.state.numfollowers}>
-                # of Followers {this.state.numfollowers}
+                # of Followers <strong>{this.state.numfollowers}</strong>
               </Col>
               <Col size="md-4" value={this.state.numfollowing}>
-                # Following {this.state.numfollowing}
+                # Following <strong>{this.state.numfollowing}</strong>
               </Col>
             </div>
             <div className="row text-bg">
@@ -161,7 +148,7 @@ class Dashboard extends Component {
                   <button onClick={this.handleSwitch}>Review Feed ▶</button>
                 )}
               </Col>
-              <Col size="md-6">
+              <Col size="md-6" value={this.state.numfollowing}>
                 {this.state.switch ? (
                   <button onClick={this.handleSwitch}>Your Reviews ▶</button>
                 ) : (
@@ -172,7 +159,7 @@ class Dashboard extends Component {
           </div>
         </div>
         <Row>
-          <Col size="md-12">
+          <Col size ="md-12">
             {/* Need to populate list here. Review Feed(findFollowing?) in the second arg, the user's reviews(getReviews?) in the third. */}
             {this.state.switch ? (
               <List>
@@ -195,11 +182,22 @@ class Dashboard extends Component {
               <List>
                 <ListItem key={user.name}>
                   <strong>{user.name + "'s Reviews"}</strong>
+                  
                 </ListItem>
+               
               </List>
+              
             )}
           </Col>
         </Row>
+        {this.state.yourReviews.map(yourReview => (
+              		<ReviewCard
+                  id={yourReview.UserId}
+                  key={yourReview._id}
+                  rating={yourReview.rating}
+                  review={yourReview.review}>
+                  </ReviewCard>
+              		))}
       </Container>
     );
   }
