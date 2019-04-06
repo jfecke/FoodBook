@@ -7,7 +7,7 @@ const RestaurantCard = props => {
 	const star = <i className="fa fa-star" aria-hidden="true" />;
 	const halfstar = <i className="fas fa-star-half-alt" />;
 	return (
-		<div className="card d-flex flex-row">
+		<div className="card d-flex flex-row whiteback">
 			<div className="img-wrap d-flex justify-content-center">
 				<img
 					style={{ height: 75 + "px", width: 75 + "px" }}
