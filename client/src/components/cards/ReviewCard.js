@@ -11,11 +11,10 @@ const ReviewCard = props => {
 	return (
 		<div className="card d-flex flex-row">
 			<div className="rating">
-				<h5>Restaurant: {props.id}</h5>
+				<h5>Restaurant: {props.name}</h5>
 				<h5>Rating: {props.rating}</h5>
 				<h5>Review: {props.review}</h5>
-				<h5>{props.key}</h5>
-				<h5>{props.name}</h5>
+				<h5>Review By: {props.username}</h5>
 				<h5>{props.reviews}</h5>
 				<h5>{props.yourReviews}</h5>
 			</div>

@@ -11,7 +11,8 @@ const validateLoginInput = require("../validation/login");
 // Defining methods for the booksController
 module.exports = {
 	findAll: function(req, res) {
-		if (req.body.name['$regex']) {
+		console.log();
+		if (Object.keys(req.body).indexOf("name")>= 0 && req.body.name['$regex']) {
 			req.body.name['$regex'] = new RegExp(req.body.name['$regex'], "i");		
 		}
 		db.User.find(req.body)

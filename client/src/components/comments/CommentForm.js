@@ -64,7 +64,7 @@ class CommentForm extends Component {
 					<div className="col-md">
 						<form>
 							<div className="form-group">
-								<label for="rating">Rating:</label>
+								<label htmlFor="rating">Rating:</label>
 								<select
 									className="form-control"
 									id="rating"
@@ -85,7 +85,7 @@ class CommentForm extends Component {
 								</select>
 							</div>
 							<div className="form-group">
-								<label for="comment">Comment:</label>
+								<label htmlFor="comment">Comment:</label>
 								<textarea
 									className="form-control"
 									id="comment"
