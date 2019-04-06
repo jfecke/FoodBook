@@ -34,6 +34,7 @@ class Dashboard extends Component {
     this.props.getCurrentProfile();
     this.findFollowers();
     this.findFollowing();
+    this.getReviewCount();
     this.getFeed();
     // this.getReviewFeed();
   }
@@ -48,7 +49,6 @@ class Dashboard extends Component {
         let numfollowers = 0;
         for (let i in results.data) {
           numfollowers++;
-		  console.log(results.data);
         }
         this.setState({
           followers: results.data,
@@ -68,7 +68,6 @@ class Dashboard extends Component {
         let numfollowing = 0;
         for (let i in results.data) {
           numfollowing++;
-		  console.log(results.data);
         }
         this.setState({
           followers: results.data,
@@ -82,7 +81,6 @@ class Dashboard extends Component {
   getReviews = () => {
     const { user } = this.props.auth;
     API.getReviews({UserId: user.id}).then(reviews => {
-      console.log(reviews.data)
       this.getUserName(reviews.data);
     })
     .catch(error => console.log(error));
@@ -105,6 +103,16 @@ class Dashboard extends Component {
 		  })
   };
   
+  getReviewCount = () => {
+    const { user } = this.props.auth;
+    API.getReviews({UserId: user.id}).then(reviews => {
+      this.setState({
+				numReviews: reviews.data.length
+			});
+    })
+    .catch(error => console.log(error));
+  };
+
   getRestaurantNames =(reviews) => {
     let restaurantreviews = reviews.map((review) => {
 			return new Promise(function(res) { 
@@ -112,14 +120,13 @@ class Dashboard extends Component {
 				  id: review.YelpId
 				}).then(function(resultsOBJ) {
           review["restaurantname"] = resultsOBJ.data.name;
-				  res(review)
+          res(review)
 				});
 			})
 		})
 		  Promise.all(restaurantreviews).then(alldata => {
-			this.setState({
-				numReviews: alldata.length,
-				yourReviews: alldata,
+        this.setState({
+				yourReviews: alldata
 			});
 		  })
   }
@@ -138,7 +145,6 @@ class Dashboard extends Component {
 
   findReviewsofFollowers = (followers) => {
     API.getReviews({UserId: {$in : followers}}).then(reviews => {
-      console.log(reviews.data);
       this.getUserName(reviews.data);
     })
   }
