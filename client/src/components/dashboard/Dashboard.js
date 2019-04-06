@@ -129,7 +129,7 @@ class Dashboard extends Component {
       .then(results => {
         let tempFollowers = [];
         for (let followOBJ of results.data) {
-          tempFollowers.push(followOBJ.FollowerId)
+          tempFollowers.push(followOBJ.FollowingId)
         }
         this.findReviewsofFollowers(tempFollowers);
       })
