@@ -20,7 +20,7 @@ class Dashboard extends Component {
       numfollowers: "",
       rating: 0,
       comment: "",
-      numReviews: ""
+      numReviews: "", 
     };
     this.handleSwitch = this.handleSwitch.bind(this);
     this.findFollowers = this.findFollowers.bind(this);
@@ -77,12 +77,19 @@ class Dashboard extends Component {
       .catch(error => console.log(error));
   };
 
-  // Get Reviews 
+  // Get Reviews for User
   getReviews = () => {
-    API.getReviews({UserId: this.state.UserId}).then(reviews => {
-      console.log(reviews.data);
-  });
-};
+    const { user } = this.props.auth;
+    API.getReviews({UserId: user.id}).then(reviews => {
+      console.log(reviews.data)
+      this.setState({
+        numReviews: reviews.data.length
+      });
+    })
+    .catch(error => console.log(error));
+  };
+
+
 
   handleSwitch() {
     this.setState(state => ({
@@ -107,8 +114,8 @@ class Dashboard extends Component {
             </Row>
             <div className="row text-bg">
               <Col size="md-4" value={this.state.numReviews}>
-                # of Reviews
-                {this.state.numReviews}
+                # of Reviews  
+                <strong> {this.state.numReviews}</strong>
               </Col>
               <Col size="md-4" value={this.state.numfollowers}>
                 # of Followers <strong>{this.state.numfollowers}</strong>
