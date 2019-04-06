@@ -2,7 +2,6 @@ import React from "react";
 import "../search/styles.css";
 import { Link } from "react-router-dom";
 //import ph from "../../img/ph.png";
-var Rating = require("react-rating");
 const RestaurantCard = props => {
 	const star = <i className="fa fa-star" aria-hidden="true" />;
 	const halfstar = <i className="fas fa-star-half-alt" />;
@@ -44,17 +43,7 @@ const RestaurantCard = props => {
 							59 reviews
 						</a>
 
-						{/* <p style={{ marginLeft: 5 }}> {props.rating}</p> */}
-						<Rating
-							stop="10"
-							step="2"
-							fractions="2"
-							readonly
-							emptySymbol="fa fa-star-o fa-2x"
-							fullSymbol="fa fa-star fa-2x"
-						>
-							{props.rating}
-						</Rating>
+						<p style={{ marginLeft: 5 }}> {props.rating}</p>
 						<div
 							className="d-flex flex-row justify-content-end muted"
 							style={{ flex: 1 }}
