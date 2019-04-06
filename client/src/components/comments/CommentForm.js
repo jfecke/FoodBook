@@ -10,7 +10,6 @@ class CommentForm extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			// YelpId: "",
 			rating: 0,
 			comment: "",
 		};
@@ -46,7 +45,7 @@ class CommentForm extends Component {
 				UserId: this.props.auth.user.id,
 				YelpId: this.props.passProp,
 				rating: this.state.rating,
-				comment: this.state.comment,
+				review: this.state.comment,
 			})
 				.then(res => this.loadReviews())
 				.catch(err => console.log(err));
