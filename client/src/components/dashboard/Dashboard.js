@@ -125,7 +125,7 @@ class Dashboard extends Component {
   }
 
   getFeed = () => {
-    API.getfollowers({FollowingId: this.props.auth.user.id})
+    API.getfollowers({FollowerId: this.props.auth.user.id})
       .then(results => {
         let tempFollowers = [];
         for (let followOBJ of results.data) {
