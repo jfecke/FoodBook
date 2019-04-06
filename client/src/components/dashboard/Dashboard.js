@@ -83,15 +83,77 @@ class Dashboard extends Component {
     const { user } = this.props.auth;
     API.getReviews({UserId: user.id}).then(reviews => {
       console.log(reviews.data)
-      this.setState({
-        numReviews: reviews.data.length,
-        yourReviews: reviews.data
-      });
+      this.getUserName(reviews.data);
     })
     .catch(error => console.log(error));
   };
 
+  getUserName = (reviews) => {
+		let restaurantreviews = reviews.map((review) => {
+			return new Promise(function(res) { 
+				API.getUsers({
+				  _id: review.UserId
+				}).then(function(resultsOBJ) {
+					review["username"] = resultsOBJ.data[0].name;
+				  	res(review)
+				});
+			})
+		})
+		  Promise.all(restaurantreviews).then(alldata => {
+        this.getRestaurantNames(alldata)
 
+		  })
+  };
+  
+  getRestaurantNames =(reviews) => {
+    let restaurantreviews = reviews.map((review) => {
+			return new Promise(function(res) { 
+				API.searchId({
+				  id: review.YelpId
+				}).then(function(resultsOBJ) {
+          review["restaurantname"] = resultsOBJ.data.name;
+				  res(review)
+				});
+			})
+		})
+		  Promise.all(restaurantreviews).then(alldata => {
+			this.setState({
+				numReviews: alldata.length,
+				yourReviews: alldata,
+			});
+		  })
+  }
+
+  getFeed = () => {
+    API.getfollowers({FollowingId: this.props.auth.user.id})
+      .then(results => {
+        let tempFollowers = [];
+        for (let followOBJ of results.data) {
+          tempFollowers.push(followOBJ.FollowerId)
+        }
+        this.findReviewsofFollowers(tempFollowers);
+      })
+      .catch(error => console.log(error));
+  }
+
+  findReviewsofFollowers = (followers) => {
+    API.getReviews({UserId: {$in : followers}}).then(reviews => {
+      console.log(reviews.data);
+      this.getUserName(reviews.data);
+    })
+  }
+
+
+
+  handleSwitchToReviews = () => {
+    this.handleSwitch();
+    this.getReviews();
+  }
+
+  handleSwitchToFeed = () => {
+    this.handleSwitch();
+    this.getFeed();
+  }
 
   handleSwitch() {
     this.setState(state => ({
@@ -145,12 +207,12 @@ class Dashboard extends Component {
                 {this.state.switch ? (
                   <button>Review Feed ▼</button>
                 ) : (
-                  <button onClick={this.handleSwitch}>Review Feed ▶</button>
+                  <button onClick={this.handleSwitchToFeed}>Review Feed ▶</button>
                 )}
               </Col>
               <Col size="md-6" value={this.state.numfollowing}>
                 {this.state.switch ? (
-                  <button onClick={this.handleSwitch}>Your Reviews ▶</button>
+                  <button onClick={this.handleSwitchToReviews}>Your Reviews ▶</button>
                 ) : (
                   <button>Your Reviews ▼</button>
                 )}
@@ -193,9 +255,11 @@ class Dashboard extends Component {
         {this.state.yourReviews.map(yourReview => (
               		<ReviewCard
                   id={yourReview.UserId}
+                  name={yourReview.restaurantname}
                   key={yourReview._id}
                   rating={yourReview.rating}
-                  review={yourReview.review}>
+                  review={yourReview.review}
+                  username={yourReview.username}>
                   </ReviewCard>
               		))}
       </Container>

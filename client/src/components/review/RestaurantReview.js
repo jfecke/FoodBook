@@ -5,6 +5,9 @@ import "../search/styles.css";
 import CommentForm from "../comments/CommentForm";
 import API from "../../utils/API";
 import { Row, Col, Container } from "../grid/index";
+import { getCurrentProfile } from "../../actions/profileActions";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
 class Restaurants extends Component {
 	constructor(props) {
@@ -25,13 +28,16 @@ class Restaurants extends Component {
 		this.getReviews = this.getReviews.bind(this);
 	}
 	componentDidMount() {
+		this.props.getCurrentProfile();
 		var temp = { id: this.props.location.state.yelpId };
-		API.searchId(temp).then(res =>
+		API.searchId(temp).then(res => {
+			this.getReviews();
 			this.setState({
 				restaurant: res.data,
 				category: res.data.categories[0].title,
 				address: res.data.location.display_address,
 			})
+			}
 		);
 	}
 
@@ -39,14 +45,31 @@ class Restaurants extends Component {
 		const { user } = this.props.auth;
 		API.getReviews({ UserId: user.id })
 			.then(reviews => {
-				console.log(reviews.data);
-				this.setState({
-					numReviews: reviews.data.length,
-					yourReviews: reviews.data,
-				});
+				this.getUserNames(reviews.data);
+				
 			})
 			.catch(error => console.log(error));
 	};
+
+	getUserNames = (reviews) => {
+		let restaurantreviews = reviews.map((review) => {
+			return new Promise(function(res) { 
+				API.getUsers({
+				  _id: review.UserId
+				}).then(function(resultsOBJ) {
+					review["username"] = resultsOBJ.data[0].name;
+				  	res(review)
+				});
+			})
+		})
+		  Promise.all(restaurantreviews).then(alldata => {
+			this.setState({
+				numReviews: alldata.length,
+				yourReviews: alldata,
+			});
+		  })
+	}
+
 
 	render() {
 		const passProp = this.props.location.state.yelpId;
@@ -86,7 +109,9 @@ class Restaurants extends Component {
 							{this.state.yourReviews.map(yourReview => (
 								<ReviewCard
 									id={yourReview.UserId}
+									name={restaurant.name}
 									key={yourReview._id}
+									username = {yourReview.username}
 									rating={yourReview.rating}
 									review={yourReview.review}
 								/>
@@ -99,4 +124,20 @@ class Restaurants extends Component {
 	}
 }
 
-export default Restaurants;
+Restaurants.propTypes = {
+	getCurrentProfile: PropTypes.func.isRequired,
+	auth: PropTypes.object.isRequired,
+	profile: PropTypes.object.isRequired,
+};
+const mapStateToProps = state => ({
+	profile: state.profile,
+	auth: state.auth,
+});
+
+
+export default connect(
+	mapStateToProps,
+	{ getCurrentProfile }
+)(Restaurants);
+
+
