@@ -11,7 +11,7 @@ class Restaurants extends Component {
 		this.state = {
 			rating: 0,
 			comment: "",
-			restaurants: [],
+			restaurant: {},
 			searchObj: {},
 			searchVal: "",
 			stateVal: "",
@@ -22,8 +22,9 @@ class Restaurants extends Component {
 	}
 	componentDidMount() {
 		var temp = { id: this.props.location.state.yelpId };
-		API.searchId(temp).then(console.log(temp));
+		API.searchId(temp).then(res => this.setState({ restaurant: res.data }));
 	}
+
 	getReviews = () => {
 		API.getReviews({ YelpId: this.props.location.state.yelpId }).then(
 			reviews => {
@@ -40,7 +41,8 @@ class Restaurants extends Component {
 	};
 
 	render() {
-		const passYelpId = this.state.yelpId;
+		const passProp = this.props.location.state.yelpId;
+
 		return (
 			<div>
 				<form className="d-flex flex-column" style={{ width: 100 + "%" }}>
@@ -49,9 +51,9 @@ class Restaurants extends Component {
 				</form>
 				<div className="container">
 					<div className="row">
-						{this.state.restaurants.length ? (
+						{this.state.restaurant.length ? (
 							<div className="col-md-12">
-								{this.state.restaurants.map((restaurant, index) => {
+								{this.state.restaurant.map(restaurant => {
 									return (
 										<RestaurantCard
 											key={restaurant.id}
@@ -65,7 +67,6 @@ class Restaurants extends Component {
 											address={restaurant.location.display_address}
 											phone={restaurant.display_phone}
 											distance={restaurant.distance}
-											idx={index}
 											category={restaurant.categories[0].title}
 										/>
 									);
@@ -74,7 +75,9 @@ class Restaurants extends Component {
 						) : (
 							<div className="col-md-12">No data found.</div>
 						)}
-						<CommentForm yelpId={passYelpId} />
+
+						<CommentForm passProp={passProp} />
+
 						<List>
 							<ListItem> Test </ListItem>
 						</List>
