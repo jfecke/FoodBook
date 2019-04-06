@@ -1,15 +1,14 @@
 import React from "react";
 import "../search/styles.css";
 import { Link } from "react-router-dom";
+import StarRatings from "react-star-ratings";
 //import ph from "../../img/ph.png";
 const RestaurantCard = props => {
-	const star = <i className="fa fa-star" aria-hidden="true" />;
-	const halfstar = <i className="fas fa-star-half-alt" />;
 	return (
 		<div className="card d-flex flex-row whiteback">
 			<div className="img-wrap d-flex justify-content-center">
 				<img
-					style={{ height: 75 + "px", width: 75 + "px" }}
+					style={{ height: 100 + "px", width: 100 + "px" }}
 					id={props.id}
 					alt={props.id}
 					src={props.image}
@@ -34,16 +33,15 @@ const RestaurantCard = props => {
 
 				<div className="d-flex flex-row" style={{ flex: 1 }}>
 					<div className="d-flex flex-row row2" style={{ flex: 1 }}>
-						<a href="/search/review">
-							{star}
-							{star}
-							{halfstar}
-						</a>
-						<a href="/search/review" style={{ marginLeft: 5 }}>
-							59 reviews
-						</a>
+						<StarRatings
+							rating={props.rating}
+							starRatedColor="yellow"
+							numberOfStars={5}
+							name="rating"
+							starDimension="25px"
+							starSpacing="5px"
+						/>
 
-						<p style={{ marginLeft: 5 }}> {props.rating}</p>
 						<div
 							className="d-flex flex-row justify-content-end muted"
 							style={{ flex: 1 }}

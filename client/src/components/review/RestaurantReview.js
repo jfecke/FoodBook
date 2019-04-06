@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import RestaurantCard from "../cards/RestaurantCard";
+import ReviewCard from "../cards/ReviewCard";
 import "../search/styles.css";
 import CommentForm from "../comments/CommentForm";
-import { List, ListItem } from "../comments/CommentCard";
 import API from "../../utils/API";
 import { Row, Col, Container } from "../grid/index";
 
@@ -19,7 +19,10 @@ class Restaurants extends Component {
 			cityVal: "",
 			locationVal: {},
 			yelpId: "",
+			reviews: [],
+			yourReviews: [],
 		};
+		this.getReviews = this.getReviews.bind(this);
 	}
 	componentDidMount() {
 		var temp = { id: this.props.location.state.yelpId };
@@ -33,18 +36,16 @@ class Restaurants extends Component {
 	}
 
 	getReviews = () => {
-		API.getReviews({ YelpId: this.props.location.state.yelpId }).then(
-			reviews => {
-				console.log(reviews);
-			}
-		);
-	};
-	loadReviews = () => {
-		API.getReviews()
-			.then(res =>
-				this.setState({ reviews: res.data, rating: "", comment: "" })
-			)
-			.catch(err => console.log(err));
+		const { user } = this.props.auth;
+		API.getReviews({ UserId: user.id })
+			.then(reviews => {
+				console.log(reviews.data);
+				this.setState({
+					numReviews: reviews.data.length,
+					yourReviews: reviews.data,
+				});
+			})
+			.catch(error => console.log(error));
 	};
 
 	render() {
@@ -82,9 +83,14 @@ class Restaurants extends Component {
 					</Row>
 					<Row>
 						<Col size="md-12">
-							<List>
-								<ListItem> Test </ListItem>
-							</List>
+							{this.state.yourReviews.map(yourReview => (
+								<ReviewCard
+									id={yourReview.UserId}
+									key={yourReview._id}
+									rating={yourReview.rating}
+									review={yourReview.review}
+								/>
+							))}
 						</Col>
 					</Row>
 				</Container>
