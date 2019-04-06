@@ -56,7 +56,7 @@ class Login extends Component {
 				<div className="container">
 					<div className="row">
 						<div className="col-md-8 m-auto">
-							<h1 className="display-4 text-center">Log In</h1>
+							<h1 className="display-4 text-center font-weight-bold">Log In</h1>
 							<p className="lead text-center">
 								Sign in to your FoodBook account
 							</p>

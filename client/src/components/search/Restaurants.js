@@ -84,8 +84,8 @@ class Restaurants extends Component {
 	render() {
 		return (
 			<div>
-				<form className="d-flex flex-column" style={{ width: 100 + "%" }}>
-					<h1>Restaurants</h1>
+				<form className="d-flex flex-column" style={{ width: 100 + "%", textAlign: "center" }}>
+					<h1><strong>Restaurants</strong></h1>
 					<div className="d-flex flex-row" style={{ flex: 1 }}>
 						<div
 							className="d-flex flex-row"
