@@ -23,7 +23,7 @@ class Restaurants extends Component {
 			locationVal: {},
 			yelpId: "",
 			reviews: [],
-			yourReviews: [],
+			yourReviews: []
 		};
 		this.getReviews = this.getReviews.bind(this);
 	}
@@ -35,7 +35,7 @@ class Restaurants extends Component {
 			this.setState({
 				restaurant: res.data,
 				category: res.data.categories[0].title,
-				address: res.data.location.display_address,
+				address: res.data.location.display_address
 			})
 			}
 		);
@@ -101,7 +101,9 @@ class Restaurants extends Component {
 					</Row>
 					<Row>
 						<Col size="md-12">
-							<CommentForm passProp={passProp} />
+							<CommentForm
+							restaurantName = {this.state.restaurant.name}
+							passProp={passProp} />
 						</Col>
 					</Row>
 					<Row>

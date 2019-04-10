@@ -81,28 +81,13 @@ class Dashboard extends Component {
   getReviews = () => {
     const { user } = this.props.auth;
     API.getReviews({UserId: user.id}).then(reviews => {
-      this.getUserName(reviews.data);
+      this.setState({
+				yourReviews: reviews.data
+			});
     })
     .catch(error => console.log(error));
   };
-
-  getUserName = (reviews) => {
-    let restaurantreviews = reviews.map((review) => {
-			return new Promise(function(res) { 
-				API.getUsers({
-				  _id: review.UserId
-				}).then(function(resultsOBJ) {
-					review["username"] = resultsOBJ.data[0].name;
-				  	res(review)
-				});
-			})
-		})
-		  Promise.all(restaurantreviews).then(alldata => {
-        this.getRestaurantNames(alldata)
-
-		  })
-  };
-  
+   
   getReviewCount = () => {
     const { user } = this.props.auth;
     API.getReviews({UserId: user.id}).then(reviews => {
@@ -113,23 +98,6 @@ class Dashboard extends Component {
     .catch(error => console.log(error));
   };
 
-  getRestaurantNames =(reviews) => {
-    let restaurantreviews = reviews.map((review) => {
-			return new Promise(function(res) { 
-				API.getRestaurants({
-				  yelpid: review.YelpId
-				}).then(function(resultsOBJ) {
-          review["restaurantname"] = resultsOBJ.data.name;
-          res(review)
-				});
-			})
-		})
-		  Promise.all(restaurantreviews).then(alldata => {
-        this.setState({
-				yourReviews: alldata
-			});
-		  })
-  }
 
   getFeed = () => {
     API.getfollowers({FollowerId: this.props.auth.user.id})
@@ -145,7 +113,9 @@ class Dashboard extends Component {
 
   findReviewsofFollowers = (followers) => {
     API.getReviews({UserId: {$in : followers}}).then(reviews => {
-      this.getUserName(reviews.data);
+      this.setState({
+				yourReviews: reviews.data
+			});
     })
   }
 
