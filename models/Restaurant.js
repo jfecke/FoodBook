@@ -13,12 +13,19 @@ var RestaurantSchema = new Schema({
   },
   imageurl: {
     type: String,
+    required: true
   },
   url: {
-    type: String
+    type: String,
+    required: true    
   },
   yelprating: {
-    type: String
+    type: String,
+    required: true
+  },
+  yelpreviewcount: {
+    type: String,
+    required: true
   },
   latitude: {
     type: String,
@@ -37,6 +44,10 @@ var RestaurantSchema = new Schema({
     required: true
   },
   phonenumber: {
+    type: String,
+    required: true
+  },
+  category: {
     type: String,
     required: true
   }

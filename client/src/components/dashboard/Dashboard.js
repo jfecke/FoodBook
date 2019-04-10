@@ -116,8 +116,8 @@ class Dashboard extends Component {
   getRestaurantNames =(reviews) => {
     let restaurantreviews = reviews.map((review) => {
 			return new Promise(function(res) { 
-				API.searchId({
-				  id: review.YelpId
+				API.getRestaurants({
+				  yelpid: review.YelpId
 				}).then(function(resultsOBJ) {
           review["restaurantname"] = resultsOBJ.data.name;
           res(review)
@@ -150,7 +150,6 @@ class Dashboard extends Component {
   }
 
 
-
   handleSwitchToReviews = () => {
     this.handleSwitch();
     this.getReviews();
@@ -167,19 +166,8 @@ class Dashboard extends Component {
     }));
   }
 
-//   Array(1)
-// 0:
-// UserId: "5c93bca53833b966732e646d"
-// YelpId: "PrWSjn4a8o4dHoqKs53GBA"
-// changedate: "2019-04-06T00:24:33.263Z"
-// createdate: "2019-04-06T00:24:33.263Z"
-// rating: 3
-// review: "Soo good"
-
   render() {
     const { user } = this.props.auth;
-    // const { yourReviews } = this.state.yourReviews;
-    // console.log(yourReviews);
     return (
       <Container>
         <div className="dashboard-bg">
@@ -236,17 +224,6 @@ class Dashboard extends Component {
                 </ListItem>
               </List>
             ) : (
-              // 	<List>
-              // 		{this.state.books.map(book => (
-              // 			<ListItem key={book._id}>
-              // 				<Link to={"/books/" + book._id}>
-              // 					<strong>
-              // 						{book.title} by {book.author}
-              // 					</strong>
-              // 				</Link>
-              // 			</ListItem>
-              // 		))}
-              // 	</List>
               <List>
                 <ListItem key={user.name}>
                   <strong>{user.name + "'s Reviews"}</strong>
@@ -254,7 +231,6 @@ class Dashboard extends Component {
                 </ListItem>
                
               </List>
-              
             )}
           </Col>
         </Row>

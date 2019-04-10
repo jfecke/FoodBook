@@ -41,16 +41,51 @@ class CommentForm extends Component {
 	handleFormSubmit = event => {
 		event.preventDefault();
 		if (this.state.comment) {
-			API.addReview({
-				UserId: this.props.auth.user.id,
-				YelpId: this.props.passProp,
-				rating: this.state.rating,
-				review: this.state.comment,
-			})
-				.then(res => this.loadReviews())
-				.catch(err => console.log(err));
+			API.searchId(this.props.passProp).then(restaurantinfo => {
+				let restaurantOBJ = {
+					yelpid: this.props.passProp,
+					name: restaurantinfo.name,
+					imageurl: restaurantinfo.image_url,
+					url: restaurantinfo.url,
+					phonenumber: restaurantinfo.display_phone,
+					yelprating: restaurantinfo.rating,
+					yelpreviewcount: restaurantinfo.review_count,
+					address: restaurantinfo.display_address.join(" "),
+					longitude: restaurantinfo.coordinates.longitude,
+					latitude: restaurantinfo.coordinates.latitude,
+					price: restaurantinfo.price,
+					category: restaurantinfo.categories[0].title
+				};
+				API.getRestaurants({YelpId: this.props.passProp}).then(results => {
+					if (results.data.length === 0) {
+						API.addRestaurant(restaurantOBJ)
+							.then(success => {
+								this.addReview();
+							})
+							.catch(error => console.log(error))
+					} else {
+						API.updateRestaurant(restaurantOBJ)
+						.then(success => {
+							this.addReview();
+						})
+						.catch(error => console.log(error))
+					}
+				})
+				.catch(error => console.log(error))
+			}).catch(error => console.log(error))
 		}
 	};
+
+	addReview = () => {
+		API.addReview({
+			UserId: this.props.auth.user.id,
+			YelpId: this.props.passProp,
+			rating: this.state.rating,
+			review: this.state.comment,
+		})
+			.then(res => this.loadReviews())
+			.catch(err => console.log(err));
+	}
 
 	render() {
 		const { user } = this.props.auth;
