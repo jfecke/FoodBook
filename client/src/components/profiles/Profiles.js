@@ -150,7 +150,7 @@ class Profiles extends Component {
               value={this.state.query}
               onChange={this.handleInputChange}
               name="query"
-              placeholder="Search for users..."
+              placeholder="Search by username..."
             />
             <FormBtn
               className="d-flex flex-row justify-content-end search-btn"
