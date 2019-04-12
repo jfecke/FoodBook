@@ -141,7 +141,7 @@ class Profiles extends Component {
   render() {
     return (
       <div className="profiles">
-        <form className="d-flex flex-column" style={{ width: 100 + "%" }}>
+        <form className="d-flex flex-column" type="submit" style={{ width: 100 + "%" }}>
           <h1><strong>Foodies</strong></h1>
           <div className="d-flex flex-row" style={{ flex: 1 }}>
             <Input
