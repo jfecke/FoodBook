@@ -40,7 +40,6 @@ class Register extends Component {
 		e.preventDefault();
 		this.setState({ [e.target.name]: e.target.value });
 		if (e.target.name === "username") {
-			console.log(e.target.value)
 			API.getUsers({username:e.target.value}).then(user => {
 				if (user.data.length>0) {
 					let temperrors = this.state.errors;
@@ -53,7 +52,6 @@ class Register extends Component {
 				}
 			})
 		} else if (e.target.name === "email") {
-			console.log(e.target.value)
 			API.getUsers({email: e.target.value}).then(user => {
 				if (user.data.length>0) {
 					let temperrors = this.state.errors;
@@ -78,10 +76,11 @@ class Register extends Component {
 			password: this.state.password,
 			password2: this.state.password2,
 			city: this.state.city,
-			stateName: this.state.stateName,
-			profilePic: this.state.profilePic,
+			stateName: this.state.stateName
 		};
-
+		if (this.state.profilePic.length > 0) {
+			newUser.profilePic = this.state.profilePic;
+		};
 		this.props.registerUser(newUser, this.props.history);
 	};
 

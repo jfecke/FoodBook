@@ -58,7 +58,8 @@ module.exports = {
 						db.User.create(newUser)
 							.then(user => {
 								res.json({
-									name: user.name,
+									username: user.username,
+									displayname: user.displayname,
 									email: user.email,
 									profilePic: user.profilePic,
 								});
@@ -95,7 +96,8 @@ module.exports = {
 						//Create JWT Payload
 						const payload = {
 							id: user.id,
-							name: user.name,
+							username: user.username,
+							displayname: user.displayname,
 							profilePic: user.profilePic,
 						};
 

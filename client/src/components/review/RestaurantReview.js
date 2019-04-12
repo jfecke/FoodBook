@@ -27,6 +27,7 @@ class Restaurants extends Component {
 		};
 		this.getReviews = this.getReviews.bind(this);
 	}
+	
 	componentDidMount() {
 		this.props.getCurrentProfile();
 		var temp = { id: this.props.location.state.yelpId };
@@ -42,7 +43,6 @@ class Restaurants extends Component {
 	}
 
 	getReviews = () => {
-		const { user } = this.props.auth;
 		API.getReviews({ YelpId: this.props.location.state.yelpId })
 			.then(reviews => {
 				this.getUserNames(reviews.data);

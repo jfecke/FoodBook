@@ -19,7 +19,6 @@ class CommentForm extends Component {
 	componentDidMount() {
 		this.props.getCurrentProfile();
 		this.loadReviews();
-		console.log("yelpId: " + this.props.passProp);
 	}
 
 	loadReviews = () => {
@@ -41,14 +40,14 @@ class CommentForm extends Component {
 	handleFormSubmit = event => {
 		event.preventDefault();
 		if (this.state.comment) {
-
+			this.addReview();
 		}
 	};
 
 	addReview = () => {
 		API.addReview({
 			UserId: this.props.auth.user.id,
-			username: this.props.auth.user.name,
+			username: this.props.auth.user.username,
 			YelpId: this.props.passProp,
 			restaurantname: this.props.restaurantName,
 			rating: this.state.rating,

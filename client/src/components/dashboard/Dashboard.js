@@ -2,12 +2,10 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getCurrentProfile } from "../../actions/profileActions";
-import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../grid";
 import API from "../../utils/API";
 import ReviewCard from "../cards/ReviewCard";
 import { List, ListItem } from "../list";
-// import { findFollowers, findFollowing } from "../../utils/methods";
 
 class Dashboard extends Component {
   constructor(props) {
@@ -46,10 +44,7 @@ class Dashboard extends Component {
     };
     API.getfollowers(query)
       .then(results => {
-        let numfollowers = 0;
-        for (let i in results.data) {
-          numfollowers++;
-        }
+        let numfollowers = results.data.length;
         this.setState({
           followers: results.data,
           numfollowers: numfollowers
@@ -65,10 +60,7 @@ class Dashboard extends Component {
     };
     API.getfollowers(query)
       .then(results => {
-        let numfollowing = 0;
-        for (let i in results.data) {
-          numfollowing++;
-        }
+        let numfollowing = results.data.length;
         this.setState({
           followers: results.data,
           numfollowing: numfollowing
@@ -189,14 +181,14 @@ class Dashboard extends Component {
             {/* Need to populate list here. Review Feed(findFollowing?) in the second arg, the user's reviews(getReviews?) in the third. */}
             {this.state.switch ? (
               <List>
-                <ListItem key={user.name}>
-                  <strong>{user.name + "'s Review Feed"}</strong>
+                <ListItem key={user.username}>
+                  <strong>{user.displayname + "'s Review Feed"}</strong>
                 </ListItem>
               </List>
             ) : (
               <List>
-                <ListItem key={user.name}>
-                  <strong>{user.name + "'s Reviews"}</strong>
+                <ListItem key={user.username}>
+                  <strong>{user.displayname + "'s Reviews"}</strong>
                   
                 </ListItem>
                
@@ -211,7 +203,8 @@ class Dashboard extends Component {
                   key={yourReview._id}
                   rating={yourReview.rating}
                   review={yourReview.review}
-                  username={yourReview.username}>
+                  username={yourReview.username}
+                  displayname={yourReview.displayname}>
                   </ReviewCard>
               		))}
       </Container>

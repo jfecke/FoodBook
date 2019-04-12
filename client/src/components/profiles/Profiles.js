@@ -32,7 +32,7 @@ class Profiles extends Component {
 
   handleClick = (event) => {
     event.preventDefault();
-    API.getUsers({name: {$regex: this.state.query} }).then(results => {
+    API.getUsers({username: {$regex: this.state.query} }).then(results => {
       this.findFollowers(results.data);
     })
   };
@@ -43,10 +43,7 @@ class Profiles extends Component {
           API.getfollowers({
             FollowingId: user._id
           }).then(function(resultsOBJ) {
-            let numfollowers = 0;
-            for (let i in resultsOBJ.data) {
-              numfollowers++
-            }
+            let numfollowers = resultsOBJ.data.length;
             user["followers"] = numfollowers;
             res( user )
           });
@@ -167,7 +164,8 @@ class Profiles extends Component {
                 <ProfileCard
                   id={user._id}
                   imageurl={user.profilePic}
-                  name={user.name}
+                  name={user.displayname}
+                  username={user.username}
                   key={user._id}
                   followers={user.followers}
                   reviews={user.reviews}
