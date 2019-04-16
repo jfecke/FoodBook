@@ -45,29 +45,32 @@ class Restaurants extends Component {
 	getReviews = () => {
 		API.getReviews({ YelpId: this.props.location.state.yelpId })
 			.then(reviews => {
-				this.getUserNames(reviews.data);
+				for (let i in reviews.data) {
+					if (reviews.data[i].UserId === this.props.auth.user.id) {
+						reviews.data[i]["className"] = "deletebtn"
+					} else {
+						reviews.data[i]["className"] = "d-none"
+					}
+				}
+				this.setState({
+					numReviews: reviews.data.length,
+					yourReviews: reviews.data
+				});
 				
 			})
 			.catch(error => console.log(error));
 	};
 
-	getUserNames = (reviews) => {
-		let restaurantreviews = reviews.map((review) => {
-			return new Promise(function(res) { 
-				API.getUsers({
-				  _id: review.UserId
-				}).then(function(resultsOBJ) {
-					review["username"] = resultsOBJ.data[0].name;
-				  	res(review)
-				});
-			})
-		})
-		  Promise.all(restaurantreviews).then(alldata => {
+	deleteReview = event => {
+		event.preventDefault();
+		let reviewID = event.target.getAttribute("reviewid")
+		API.deleteReview(reviewID).then(() => {
 			this.setState({
-				numReviews: alldata.length,
-				yourReviews: alldata,
+				yourReviews: []
 			});
-		  })
+			this.getReviews();
+		}
+			)
 	}
 
 
@@ -116,6 +119,9 @@ class Restaurants extends Component {
 									username = {yourReview.username}
 									rating={yourReview.rating}
 									review={yourReview.review}
+									myClass={yourReview.className}
+									deletebtn={this.deleteReview}
+									reviewid={yourReview._id}
 								/>
 							))}
 						</Col>

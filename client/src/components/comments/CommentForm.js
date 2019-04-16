@@ -53,7 +53,7 @@ class CommentForm extends Component {
 			rating: this.state.rating,
 			review: this.state.comment,
 		})
-			.then(res => this.loadReviews())
+			.then(this.loadReviews())
 			.catch(err => console.log(err));
 	}
 
@@ -64,7 +64,7 @@ class CommentForm extends Component {
 				<Row>
 					<Col size="md-2">
 						<img className="comment-pic" src={user.profilePic} alt="profile" />
-						<div className="text-center">{user.name}</div>
+						<div className="text-center">{user.username}</div>
 					</Col>
 					<div className="col-md">
 						<form>
@@ -113,11 +113,13 @@ class CommentForm extends Component {
 		);
 	}
 }
+
 CommentForm.propTypes = {
 	getCurrentProfile: PropTypes.func.isRequired,
 	auth: PropTypes.object.isRequired,
 	profile: PropTypes.object.isRequired,
 };
+
 const mapStateToProps = state => ({
 	profile: state.profile,
 	auth: state.auth,

@@ -11,7 +11,6 @@ const validateLoginInput = require("../validation/login");
 // Defining methods for the booksController
 module.exports = {
 	findAll: function(req, res) {
-		console.log();
 		if (Object.keys(req.body).indexOf("username")>= 0 && req.body.username['$regex']) {
 			req.body.username['$regex'] = new RegExp(req.body.username['$regex'], "i");		
 		}
@@ -54,7 +53,6 @@ module.exports = {
 					bcrypt.hash(newUser.password, salt, (error, hash) => {
 						if (error) throw error;
 						newUser.password = hash;
-						console.log(newUser);
 						db.User.create(newUser)
 							.then(user => {
 								res.json({

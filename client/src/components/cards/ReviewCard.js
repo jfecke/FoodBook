@@ -31,6 +31,7 @@ const ReviewCard = props => {
 				<h5>Review By: {props.username}</h5>
 				<h5>{props.reviews}</h5>
 				<h5>{props.yourReviews}</h5>
+				<div className={props.myClass} onClick={props.deletebtn} reviewid={props.reviewid}>X</div>
 			</div>
 		</div>
 	);
