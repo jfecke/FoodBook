@@ -4,7 +4,8 @@ const isEmpty = require("./is-empty.js");
 module.exports = function validateRegisterInput(data) {
 	let errors = {};
 
-	data.name = !isEmpty(data.name) ? data.name : "";
+	data.username = !isEmpty(data.username) ? data.username : "";
+	data.displayname = !isEmpty(data.displayname) ? data.displayname : "";
 	data.email = !isEmpty(data.email) ? data.email : "";
 	data.password = !isEmpty(data.password) ? data.password : "";
 	data.password2 = !isEmpty(data.password2) ? data.password2 : "";
@@ -12,12 +13,20 @@ module.exports = function validateRegisterInput(data) {
 	data.stateName = !isEmpty(data.stateName) ? data.stateName : "";
 
 
-	if (!Validator.isLength(data.name, { min: 2, max: 30 })) {
-		errors.name = "Name must be between 2 and 30 characters";
+	if (!Validator.isLength(data.username, { min: 2, max: 30 })) {
+		errors.username = "User Name must be between 2 and 30 characters";
 	}
 
-	if (Validator.isEmpty(data.name)) {
-		errors.name = "Name field is required";
+	if (Validator.isEmpty(data.username)) {
+		errors.username = "User Name field is required";
+	}
+
+	if (!Validator.isLength(data.displayname, { min: 2, max: 30 })) {
+		errors.displayname = "Display Name must be between 2 and 30 characters";
+	}
+
+	if (Validator.isEmpty(data.displayname)) {
+		errors.displayname = "Display Name field is required";
 	}
 
 	if (Validator.isEmpty(data.email)) {

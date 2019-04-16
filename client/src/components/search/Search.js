@@ -30,6 +30,7 @@ export function FormBtn(props) {
 			<i className="fa fa-search" />
 			{props.children}
 		</button>
+
 	);
 }
 

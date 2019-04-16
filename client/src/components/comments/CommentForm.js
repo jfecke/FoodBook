@@ -19,7 +19,6 @@ class CommentForm extends Component {
 	componentDidMount() {
 		this.props.getCurrentProfile();
 		this.loadReviews();
-		console.log("yelpId: " + this.props.passProp);
 	}
 
 	loadReviews = () => {
@@ -41,16 +40,22 @@ class CommentForm extends Component {
 	handleFormSubmit = event => {
 		event.preventDefault();
 		if (this.state.comment) {
-			API.addReview({
-				UserId: this.props.auth.user.id,
-				YelpId: this.props.passProp,
-				rating: this.state.rating,
-				review: this.state.comment,
-			})
-				.then(res => this.loadReviews())
-				.catch(err => console.log(err));
+			this.addReview();
 		}
 	};
+
+	addReview = () => {
+		API.addReview({
+			UserId: this.props.auth.user.id,
+			username: this.props.auth.user.username,
+			YelpId: this.props.passProp,
+			restaurantname: this.props.restaurantName,
+			rating: this.state.rating,
+			review: this.state.comment,
+		})
+			.then(this.loadReviews())
+			.catch(err => console.log(err));
+	}
 
 	render() {
 		const { user } = this.props.auth;
@@ -59,7 +64,7 @@ class CommentForm extends Component {
 				<Row>
 					<Col size="md-2">
 						<img className="comment-pic" src={user.profilePic} alt="profile" />
-						<div className="text-center">{user.name}</div>
+						<div className="text-center">{user.username}</div>
 					</Col>
 					<div className="col-md">
 						<form>
@@ -108,11 +113,13 @@ class CommentForm extends Component {
 		);
 	}
 }
+
 CommentForm.propTypes = {
 	getCurrentProfile: PropTypes.func.isRequired,
 	auth: PropTypes.object.isRequired,
 	profile: PropTypes.object.isRequired,
 };
+
 const mapStateToProps = state => ({
 	profile: state.profile,
 	auth: state.auth,

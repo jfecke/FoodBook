@@ -32,7 +32,7 @@ class Profiles extends Component {
 
   handleClick = (event) => {
     event.preventDefault();
-    API.getUsers({name: {$regex: this.state.query} }).then(results => {
+    API.getUsers({username: {$regex: this.state.query} }).then(results => {
       this.findFollowers(results.data);
     })
   };
@@ -43,10 +43,7 @@ class Profiles extends Component {
           API.getfollowers({
             FollowingId: user._id
           }).then(function(resultsOBJ) {
-            let numfollowers = 0;
-            for (let i in resultsOBJ.data) {
-              numfollowers++
-            }
+            let numfollowers = resultsOBJ.data.length;
             user["followers"] = numfollowers;
             res( user )
           });
@@ -144,7 +141,7 @@ class Profiles extends Component {
   render() {
     return (
       <div className="profiles">
-        <form className="d-flex flex-column" style={{ width: 100 + "%" }}>
+        <form className="d-flex flex-column" type="submit" style={{ width: 100 + "%" }}>
           <h1><strong>Foodies</strong></h1>
           <div className="d-flex flex-row" style={{ flex: 1 }}>
             <Input
@@ -153,7 +150,7 @@ class Profiles extends Component {
               value={this.state.query}
               onChange={this.handleInputChange}
               name="query"
-              placeholder="Search for users..."
+              placeholder="Search by username..."
             />
             <FormBtn
               className="d-flex flex-row justify-content-end search-btn"
@@ -167,7 +164,8 @@ class Profiles extends Component {
                 <ProfileCard
                   id={user._id}
                   imageurl={user.profilePic}
-                  name={user.name}
+                  name={user.displayname}
+                  username={user.username}
                   key={user._id}
                   followers={user.followers}
                   reviews={user.reviews}

@@ -8,6 +8,7 @@ class Login extends Component {
 	state = {
 		name: "",
 		email: "",
+		password: "",
 		errors: {},
 	};
 

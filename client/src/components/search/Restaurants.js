@@ -24,11 +24,8 @@ class Restaurants extends Component {
 			location: location,
 			categories: "restaurants",
 		};
-		console.log(query);
 		API.queryRestaurants(query).then(res => {
-			console.log(res.data);
 			this.setState({ restaurants: res.data });
-			console.log(this.state.restaurants);
 		});
 	};
 
@@ -38,7 +35,6 @@ class Restaurants extends Component {
 		this.setState({
 			[name]: value,
 		});
-		console.log(this.state.searchVal);
 	};
 
 	// takes state and city value and geocodes it to lat long

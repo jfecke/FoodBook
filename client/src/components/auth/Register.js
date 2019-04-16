@@ -5,10 +5,12 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { registerUser } from "../../actions/authActions";
 import TextFieldGroup from "../common/TextFieldGroup";
+import API from "../../utils/API"
 
 class Register extends Component {
 	state = {
-		name: "",
+		username: "",
+		displayname: "",
 		email: "",
 		password: "",
 		password2: "",
@@ -37,24 +39,48 @@ class Register extends Component {
 	onChange = e => {
 		e.preventDefault();
 		this.setState({ [e.target.name]: e.target.value });
+		if (e.target.name === "username") {
+			API.getUsers({username:e.target.value}).then(user => {
+				if (user.data.length>0) {
+					let temperrors = this.state.errors;
+					temperrors.username = "Username unavailable";
+					this.setState({ errors: temperrors });
+				} else {
+					let temperrors = this.state.errors;
+					temperrors.username = "";
+					this.setState({ errors: temperrors });
+				}
+			})
+		} else if (e.target.name === "email") {
+			API.getUsers({email: e.target.value}).then(user => {
+				if (user.data.length>0) {
+					let temperrors = this.state.errors;
+					temperrors.email = "Account already exists";
+					this.setState({ errors: temperrors });
+				} else {
+					let temperrors = this.state.errors;
+					temperrors.email = "";
+					this.setState({ errors: temperrors });
+				}
+			})
+		}
 	};
+
 	//onSubmit
 	onSubmit = e => {
 		e.preventDefault();
 		const newUser = {
-			name: this.state.name,
+			username: this.state.username,
+			displayname: this.state.displayname,
 			email: this.state.email,
 			password: this.state.password,
 			password2: this.state.password2,
 			city: this.state.city,
-			stateName: this.state.stateName,
-			profilePic: this.state.profilePic,
+			stateName: this.state.stateName
 		};
-		// axios call to be replaced in /authAction.js
-		// axios
-		//   .post("/api/users/register", newUser)
-		//   .then(res => console.log(res.data))
-		//   .catch(err => this.setState({ errors: err.response.data }));
+		if (this.state.profilePic.length > 0) {
+			newUser.profilePic = this.state.profilePic;
+		};
 		this.props.registerUser(newUser, this.props.history);
 	};
 
@@ -71,12 +97,21 @@ class Register extends Component {
 							<form noValidate onSubmit={this.onSubmit}>
 								<div className="form-group">
 									<TextFieldGroup
-										placeholder="Name"
-										name="name"
+										placeholder="Username"
+										name="username"
 										type="name"
-										value={this.state.name}
+										value={this.state.username}
 										onChange={this.onChange}
-										error={errors.name}
+										error={errors.username}
+									/>
+									
+									<TextFieldGroup
+										placeholder="Display Name"
+										name="displayname"
+										type="name"
+										value={this.state.displayname}
+										onChange={this.onChange}
+										error={errors.displayname}
 									/>
 
 									<TextFieldGroup

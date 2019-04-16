@@ -11,9 +11,8 @@ const validateLoginInput = require("../validation/login");
 // Defining methods for the booksController
 module.exports = {
 	findAll: function(req, res) {
-		console.log();
-		if (Object.keys(req.body).indexOf("name")>= 0 && req.body.name['$regex']) {
-			req.body.name['$regex'] = new RegExp(req.body.name['$regex'], "i");		
+		if (Object.keys(req.body).indexOf("username")>= 0 && req.body.username['$regex']) {
+			req.body.username['$regex'] = new RegExp(req.body.username['$regex'], "i");		
 		}
 		db.User.find(req.body)
 			.then(dbModel => {res.json(dbModel)})
@@ -21,6 +20,7 @@ module.exports = {
 	},
 	create: function(req, res) {
 		const { errors, isValid } = validateRegisterInput(req.body);
+		
 
 		//Check Validation
 		if (!isValid) {
@@ -32,10 +32,16 @@ module.exports = {
 				errors.email = "Email already exists";
 				return res.status(400).json(errors);
 			} else {
-				console.log(req.body);
+				db.User.findOne({ username: req.body.username }).then(user => {
+					if (user) {
+						errors.username = "Username already taken";
+						return res.status(400).json(errors);
+					}
+				})
 				//Create object of new user using info received from front end
 				const newUser = {
-					name: req.body.name,
+					username: req.body.username,
+					displayname: req.body.displayname,
 					email: req.body.email,
 					password: req.body.password,
 					city: req.body.city,
@@ -47,11 +53,11 @@ module.exports = {
 					bcrypt.hash(newUser.password, salt, (error, hash) => {
 						if (error) throw error;
 						newUser.password = hash;
-						console.log(newUser);
 						db.User.create(newUser)
 							.then(user => {
 								res.json({
-									name: user.name,
+									username: user.username,
+									displayname: user.displayname,
 									email: user.email,
 									profilePic: user.profilePic,
 								});
@@ -88,7 +94,8 @@ module.exports = {
 						//Create JWT Payload
 						const payload = {
 							id: user.id,
-							name: user.name,
+							username: user.username,
+							displayname: user.displayname,
 							profilePic: user.profilePic,
 						};
 

@@ -2,12 +2,10 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getCurrentProfile } from "../../actions/profileActions";
-import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../grid";
 import API from "../../utils/API";
 import ReviewCard from "../cards/ReviewCard";
 import { List, ListItem } from "../list";
-// import { findFollowers, findFollowing } from "../../utils/methods";
 
 class Dashboard extends Component {
   constructor(props) {
@@ -46,10 +44,7 @@ class Dashboard extends Component {
     };
     API.getfollowers(query)
       .then(results => {
-        let numfollowers = 0;
-        for (let i in results.data) {
-          numfollowers++;
-        }
+        let numfollowers = results.data.length;
         this.setState({
           followers: results.data,
           numfollowers: numfollowers
@@ -65,10 +60,7 @@ class Dashboard extends Component {
     };
     API.getfollowers(query)
       .then(results => {
-        let numfollowing = 0;
-        for (let i in results.data) {
-          numfollowing++;
-        }
+        let numfollowing = results.data.length;
         this.setState({
           followers: results.data,
           numfollowing: numfollowing
@@ -81,28 +73,13 @@ class Dashboard extends Component {
   getReviews = () => {
     const { user } = this.props.auth;
     API.getReviews({UserId: user.id}).then(reviews => {
-      this.getUserName(reviews.data);
+      this.setState({
+				yourReviews: reviews.data
+			});
     })
     .catch(error => console.log(error));
   };
-
-  getUserName = (reviews) => {
-    let restaurantreviews = reviews.map((review) => {
-			return new Promise(function(res) { 
-				API.getUsers({
-				  _id: review.UserId
-				}).then(function(resultsOBJ) {
-					review["username"] = resultsOBJ.data[0].name;
-				  	res(review)
-				});
-			})
-		})
-		  Promise.all(restaurantreviews).then(alldata => {
-        this.getRestaurantNames(alldata)
-
-		  })
-  };
-  
+   
   getReviewCount = () => {
     const { user } = this.props.auth;
     API.getReviews({UserId: user.id}).then(reviews => {
@@ -113,23 +90,6 @@ class Dashboard extends Component {
     .catch(error => console.log(error));
   };
 
-  getRestaurantNames =(reviews) => {
-    let restaurantreviews = reviews.map((review) => {
-			return new Promise(function(res) { 
-				API.searchId({
-				  id: review.YelpId
-				}).then(function(resultsOBJ) {
-          review["restaurantname"] = resultsOBJ.data.name;
-          res(review)
-				});
-			})
-		})
-		  Promise.all(restaurantreviews).then(alldata => {
-        this.setState({
-				yourReviews: alldata
-			});
-		  })
-  }
 
   getFeed = () => {
     API.getfollowers({FollowerId: this.props.auth.user.id})
@@ -145,10 +105,11 @@ class Dashboard extends Component {
 
   findReviewsofFollowers = (followers) => {
     API.getReviews({UserId: {$in : followers}}).then(reviews => {
-      this.getUserName(reviews.data);
+      this.setState({
+				yourReviews: reviews.data
+			});
     })
   }
-
 
 
   handleSwitchToReviews = () => {
@@ -167,19 +128,8 @@ class Dashboard extends Component {
     }));
   }
 
-//   Array(1)
-// 0:
-// UserId: "5c93bca53833b966732e646d"
-// YelpId: "PrWSjn4a8o4dHoqKs53GBA"
-// changedate: "2019-04-06T00:24:33.263Z"
-// createdate: "2019-04-06T00:24:33.263Z"
-// rating: 3
-// review: "Soo good"
-
   render() {
     const { user } = this.props.auth;
-    // const { yourReviews } = this.state.yourReviews;
-    // console.log(yourReviews);
     return (
       <Container>
         <div className="dashboard-bg">
@@ -231,30 +181,18 @@ class Dashboard extends Component {
             {/* Need to populate list here. Review Feed(findFollowing?) in the second arg, the user's reviews(getReviews?) in the third. */}
             {this.state.switch ? (
               <List>
-                <ListItem key={user.name}>
-                  <strong>{user.name + "'s Review Feed"}</strong>
+                <ListItem key={user.username}>
+                  <strong>{user.displayname + "'s Review Feed"}</strong>
                 </ListItem>
               </List>
             ) : (
-              // 	<List>
-              // 		{this.state.books.map(book => (
-              // 			<ListItem key={book._id}>
-              // 				<Link to={"/books/" + book._id}>
-              // 					<strong>
-              // 						{book.title} by {book.author}
-              // 					</strong>
-              // 				</Link>
-              // 			</ListItem>
-              // 		))}
-              // 	</List>
               <List>
-                <ListItem key={user.name}>
-                  <strong>{user.name + "'s Reviews"}</strong>
+                <ListItem key={user.username}>
+                  <strong>{user.displayname + "'s Reviews"}</strong>
                   
                 </ListItem>
                
               </List>
-              
             )}
           </Col>
         </Row>
@@ -265,7 +203,8 @@ class Dashboard extends Component {
                   key={yourReview._id}
                   rating={yourReview.rating}
                   review={yourReview.review}
-                  username={yourReview.username}>
+                  username={yourReview.username}
+                  displayname={yourReview.displayname}>
                   </ReviewCard>
               		))}
       </Container>

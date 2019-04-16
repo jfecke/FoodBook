@@ -19,13 +19,13 @@ class Navbar extends Component {
 			<ul className="navbar-nav ml-auto">
 				<li className="nav-item">
 					<a href="/dashboard" className="nav-link">
-						{user.name + "'s Profile: "}
+						{user.displayname + "'s Profile: "}
 						<img
 							className="rounded-circle"
 							src={user.profilePic || "https://picsum.photos/250/?random"}
-							alt={user.name}
+							alt={user.displayname}
 							style={{ width: "25px", marginRight: "5px" }}
-							title={user.name}
+							title={user.username}
 						/>
 					</a>
 				</li>
