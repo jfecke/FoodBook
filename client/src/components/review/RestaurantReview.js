@@ -38,8 +38,7 @@ class Restaurants extends Component {
 				category: res.data.categories[0].title,
 				address: res.data.location.display_address
 			})
-			}
-		);
+		});
 	}
 
 	getReviews = () => {
@@ -69,8 +68,7 @@ class Restaurants extends Component {
 				yourReviews: []
 			});
 			this.getReviews();
-		}
-			)
+		});
 	}
 
 
