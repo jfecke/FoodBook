@@ -74,7 +74,7 @@ class Dashboard extends Component {
     const { user } = this.props.auth;
     API.getReviews({UserId: user.id}).then(reviews => {
       for (let i in reviews.data) {
-        reviews.data[i]["className"] = "d-none"
+        reviews.data[i]["className"] = "deletebtn"
       };
       this.setState({
 				yourReviews: reviews.data
@@ -82,7 +82,18 @@ class Dashboard extends Component {
     })
     .catch(error => console.log(error));
   };
-   
+  
+  deleteReview = event => {
+		event.preventDefault();
+		let reviewID = event.target.getAttribute("reviewid")
+		API.deleteReview(reviewID).then(() => {
+			this.setState({
+				yourReviews: []
+			});
+			this.getReviews();
+		});
+	}
+
   getReviewCount = () => {
     const { user } = this.props.auth;
     API.getReviews({UserId: user.id}).then(reviews => {
@@ -212,6 +223,8 @@ class Dashboard extends Component {
                   username={yourReview.username}
                   displayname={yourReview.displayname}
                   myClass={yourReview.className}
+                  deletebtn={this.deleteReview}
+									reviewid={yourReview._id}
                   />
               		))}
       </Container>
