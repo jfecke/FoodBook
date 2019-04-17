@@ -48,6 +48,7 @@ class CommentForm extends Component {
 		API.addReview({
 			UserId: this.props.auth.user.id,
 			username: this.props.auth.user.username,
+			displayname: this.props.auth.user.displayname,
 			YelpId: this.props.passProp,
 			restaurantname: this.props.restaurantName,
 			rating: this.state.rating,
