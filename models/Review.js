@@ -11,6 +11,10 @@ var ReviewSchema = new Schema({
     type: String,
     required: true
   },
+  displayname: {
+    type: String,
+    required: true
+  },
   username: {
     type: String,
     required: true

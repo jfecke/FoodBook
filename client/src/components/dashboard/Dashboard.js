@@ -34,7 +34,7 @@ class Dashboard extends Component {
     this.findFollowing();
     this.getReviewCount();
     this.getFeed();
-    // this.getReviewFeed();
+    console.log(this.props.auth.user)
   }
 
   // Find Followers
@@ -73,6 +73,9 @@ class Dashboard extends Component {
   getReviews = () => {
     const { user } = this.props.auth;
     API.getReviews({UserId: user.id}).then(reviews => {
+      for (let i in reviews.data) {
+        reviews.data[i]["className"] = "d-none"
+      };
       this.setState({
 				yourReviews: reviews.data
 			});
@@ -105,6 +108,9 @@ class Dashboard extends Component {
 
   findReviewsofFollowers = (followers) => {
     API.getReviews({UserId: {$in : followers}}).then(reviews => {
+      for (let i in reviews.data) {
+        reviews.data[i]["className"] = "d-none"
+      };
       this.setState({
 				yourReviews: reviews.data
 			});
@@ -204,8 +210,9 @@ class Dashboard extends Component {
                   rating={yourReview.rating}
                   review={yourReview.review}
                   username={yourReview.username}
-                  displayname={yourReview.displayname}>
-                  </ReviewCard>
+                  displayname={yourReview.displayname}
+                  myClass={yourReview.className}
+                  />
               		))}
       </Container>
     );
