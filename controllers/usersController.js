@@ -80,7 +80,7 @@ module.exports = {
 											if (error) { 
 												return res.json(error); 
 											};
-											res.status(200).send("A verification email has been sent to: " + user.email + ".");
+											res.status(200).send("A verification email has been sent to: " + user.email);
 										});
 									})
 									.catch(error => console.log(error));

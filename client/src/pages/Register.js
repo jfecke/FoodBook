@@ -18,6 +18,8 @@ class Register extends Component {
 		stateName: "",
 		profilePic: "",
 		errors: {},
+		modalState: "hide-modal",
+		message: ""
 	};
 
 	// Check to see if logged in
@@ -81,8 +83,22 @@ class Register extends Component {
 		if (this.state.profilePic.length > 0) {
 			newUser.profilePic = this.state.profilePic;
 		};
-		this.props.registerUser(newUser, this.props.history);
+		this.props.registerUser(newUser, this.props.history).then(results => {
+			console.log(results);
+			this.setState({
+				modalState: "show-modal",
+				message: results.data
+			})
+		})
 	};
+
+	closeModal = (event) => { 
+		if (event.target.id === "closeme") {
+			event.preventDefault();
+			this.setState({modalState: "hide-modal"});
+			this.props.history.push('/login');
+		}
+	}
 
 	render() {
 		const { errors } = this.state;
@@ -177,6 +193,14 @@ class Register extends Component {
 						</div>
 					</div>
 				</div>
+				<div id="modal" className={this.state.modalState} onClick={this.closeModal}>
+          			<div id="portfolioscreen" className="modal-content">
+              		<div>
+						<h2 className="message">{this.state.message}</h2>
+					</div>
+             	 	<button id="closeme" className="btn btn-outline-danger closebtn" onClick={this.closeModal}>Close</button>
+          			</div>
+        		</div>
 			</div>
 		);
 	}
