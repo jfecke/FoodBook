@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { getCurrentProfile } from "../../actions/profileActions";
-import { Col, Row, Container } from "../grid";
-import API from "../../utils/API";
-import ReviewCard from "../cards/ReviewCard";
-import { List, ListItem } from "../list";
+import { getCurrentProfile } from "../actions/profileActions";
+import { Col, Row, Container } from "../components/grid";
+import API from "../utils/API";
+import ReviewCard from "../components/cards/ReviewCard";
+import { List, ListItem } from "../components/list";
 
 class Dashboard extends Component {
   constructor(props) {

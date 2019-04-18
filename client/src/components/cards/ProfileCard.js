@@ -1,6 +1,4 @@
 import React from "react";
-import "../search/styles.css";
-//import ph from "../../img/ph.png";
 
 const ProfileCard = props => {
   return (

@@ -3,29 +3,25 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Provider } from "react-redux";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
-import { setCurrentUser, logoutUser } from "./actions/authActions";
 import store from "./store";
+
+import { setCurrentUser, logoutUser } from "./actions/authActions";
+import { clearCurrentProfile } from "./actions/profileActions";
+import PrivateRoute from "./components/common/PrivateRoute";
 
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
 import Landing from "./components/layout/Landing";
-import Register from "./components/auth/Register";
-import Login from "./components/auth/Login";
-import Dashboard from "./components/dashboard/Dashboard";
-
-import { clearCurrentProfile } from "./actions/profileActions";
-import PrivateRoute from "./components/common/PrivateRoute";
-import Restaurants from "./components/search/Restaurants";
-import Profiles from "./components/profiles/Profiles";
 import NoMatch from "./components/nomatch/NoMatch";
-
-// Change for simpler routing
-import RestaurantReview from "./components/review/RestaurantReview.js";
 import FollowReview from "./components/review/FollowReview";
 import UserReview from "./components/review/UserReview";
-// import CommentForm from "./components/comments/CommentForm";
 
-// import CreateProfile from "./components/create-profile/CreateProfile";
+import Register from "./pages/Register";
+import Login from "./pages/Login";
+import Dashboard from "./pages/Dashboard";
+import Restaurants from "./pages/Restaurants";
+import Profiles from "./pages/Profiles";
+import RestaurantReview from "./pages/RestaurantReview.js";
 
 import "./App.css";
 

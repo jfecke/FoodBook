@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import RestaurantCard from "../cards/RestaurantCard";
-import { FormBtn, Input } from "./Search";
+import RestaurantCard from "../components/cards/RestaurantCard";
+import { FormBtn, Input } from "../components/search/Search";
 import "./styles.css";
-import API from "../../utils/API";
+import API from "../utils/API";
 // import { Link } from "react-router-dom";
 // localhost:3000/search
 

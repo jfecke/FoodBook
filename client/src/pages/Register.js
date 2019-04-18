@@ -3,9 +3,9 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { registerUser } from "../../actions/authActions";
-import TextFieldGroup from "../common/TextFieldGroup";
-import API from "../../utils/API"
+import { registerUser } from "../actions/authActions";
+import TextFieldGroup from "../components/common/TextFieldGroup";
+import API from "../utils/API"
 
 class Register extends Component {
 	state = {

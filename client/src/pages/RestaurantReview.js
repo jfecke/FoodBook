@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import RestaurantCard from "../cards/RestaurantCard";
-import ReviewCard from "../cards/ReviewCard";
-import "../search/styles.css";
-import CommentForm from "../comments/CommentForm";
-import API from "../../utils/API";
-import { Row, Col, Container } from "../grid/index";
-import { getCurrentProfile } from "../../actions/profileActions";
+import RestaurantCard from "../components/cards/RestaurantCard";
+import ReviewCard from "../components/cards/ReviewCard";
+import "./styles.css";
+import CommentForm from "../components/comments/CommentForm";
+import API from "../utils/API";
+import { Row, Col, Container } from "../components/grid/index";
+import { getCurrentProfile } from "../actions/profileActions";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
@@ -115,6 +115,7 @@ class Restaurants extends Component {
 									name={restaurant.name}
 									key={yourReview._id}
 									username = {yourReview.username}
+									displayname = {yourReview.displayname}
 									rating={yourReview.rating}
 									review={yourReview.review}
 									myClass={yourReview.className}
