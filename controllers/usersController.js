@@ -26,7 +26,7 @@ module.exports = {
 
 		//Check Validation
 		if (!isValid) {
-			return res.status(400).json(errors);
+			return res.status(400).send(errors);
 		}
 
 		db.User.findOne({ email: req.body.email }).then(user => {
@@ -85,7 +85,7 @@ module.exports = {
 									})
 									.catch(error => console.log(error));
 							})
-							.catch(error => console.log(error));
+							.catch(error => console.log("error"));
 					});
 				});
 			}

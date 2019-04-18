@@ -109,6 +109,11 @@ class Register extends Component {
 				message: results.data
 			})
 		})
+		.catch((error) => {
+			this.setState({
+				errors: error.response.data
+			})
+		})
 	};
 
 	closeModal = (event) => { 
