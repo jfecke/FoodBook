@@ -3,7 +3,7 @@ const db = require("../models");
 module.exports = {
     confirm: function(req, res) {
         const errors = {};
-      db.Token.findOne({token: req.params.token})
+        db.Token.findOne({token: req.params.token})
         .then(token => {
             if (!token) {
                 errors.token = "Token Invalid";
@@ -18,10 +18,10 @@ module.exports = {
                     errors.token = "User has already verified email.";
                     return res.status(400).json(errors);
                 }
-                user.isVerified - true;
+                user.isVerified = true;
                 db.User.findOneAndUpdate({_id: user._id}, user)
                     .then(dbModel => {
-                        res.status(200).send("Account has been verified");
+                        res.status(200).send("Account has been verified.");
                     })
                     .catch(err => res.status(422).json(err));
             })

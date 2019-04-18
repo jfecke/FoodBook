@@ -78,7 +78,7 @@ module.exports = {
 										};
 										   transporter.sendMail(mailOptions, error => {
 											if (error) { 
-												return res.status(500).send({ msg: err.message }); 
+												return res.json(error); 
 											};
 											res.status(200).send("A verification email has been sent to: " + user.email + ".");
 										});
