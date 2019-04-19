@@ -1,5 +1,4 @@
 import React from "react";
-import "../search/styles.css";
 import { Link } from "react-router-dom";
 import StarRatings from "react-star-ratings";
 //import ph from "../../img/ph.png";

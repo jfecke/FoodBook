@@ -36,6 +36,12 @@ var UserSchema = new Schema({
 		type: Date,
 		default: Date.now,
 	},
+	isVerified: {
+		type: Boolean,
+		default: false
+	},
+	passwordResetToken: String,
+	passwordResetExpires: Date
 });
 
 var User = mongoose.model("User", UserSchema);

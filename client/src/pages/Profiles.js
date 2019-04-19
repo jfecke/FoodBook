@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import ProfileCard from "../cards/ProfileCard";
+import ProfileCard from "../components/cards/ProfileCard";
 import { FormBtn, Input } from "./Search";
-import API from "../../utils/API";
-import { getCurrentProfile } from "../../actions/profileActions";
+import API from "../utils/API";
+import { getCurrentProfile } from "../actions/profileActions";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import "./styles.css";

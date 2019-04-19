@@ -3,9 +3,9 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { registerUser } from "../../actions/authActions";
-import TextFieldGroup from "../common/TextFieldGroup";
-import API from "../../utils/API"
+import { registerUser } from "../actions/authActions";
+import TextFieldGroup from "../components/common/TextFieldGroup";
+import API from "../utils/API"
 
 class Register extends Component {
 	state = {
@@ -18,6 +18,8 @@ class Register extends Component {
 		stateName: "",
 		profilePic: "",
 		errors: {},
+		modalState: "hide-modal",
+		message: ""
 	};
 
 	// Check to see if logged in
@@ -38,7 +40,14 @@ class Register extends Component {
 	// onChange
 	onChange = e => {
 		e.preventDefault();
-		this.setState({ [e.target.name]: e.target.value });
+		if (e.target.name === "username") {
+			if (/^([a-zA-Z0-9]){0,15}$/.test(e.target.value)) {
+				this.setState({ [e.target.name]: e.target.value });
+			}
+		}  else {
+			this.setState({ [e.target.name]: e.target.value });
+		}
+		
 		if (e.target.name === "username") {
 			API.getUsers({username:e.target.value}).then(user => {
 				if (user.data.length>0) {
@@ -51,19 +60,31 @@ class Register extends Component {
 					this.setState({ errors: temperrors });
 				}
 			})
-		} else if (e.target.name === "email") {
-			API.getUsers({email: e.target.value}).then(user => {
-				if (user.data.length>0) {
-					let temperrors = this.state.errors;
-					temperrors.email = "Account already exists";
-					this.setState({ errors: temperrors });
-				} else {
-					let temperrors = this.state.errors;
-					temperrors.email = "";
-					this.setState({ errors: temperrors });
-				}
-			})
-		}
+		} else if (e.target.name === "password") {
+			if (!/^([a-zA-Z0-9-_]){0,15}$/.test(e.target.value)) {
+				let temperrors = this.state.errors;
+				temperrors.password = "Invalid Characters. Use Only: a-z, A-Z, 0-9, '_', '-'";
+				this.setState({ errors: temperrors });
+			} else {
+				let temperrors = this.state.errors;
+				temperrors.password = "";
+				this.setState({ errors: temperrors });
+			}
+		} else if (e.target.name === "password2") {
+			if (!/^([a-zA-Z0-9-_]){0,15}$/.test(e.target.value)) {
+				let temperrors = this.state.errors;
+				temperrors.password2 = "Invalid Characters. Use Only: a-z, A-Z, 0-9, '_', '-'";
+				this.setState({ errors: temperrors });
+			} else if (e.target.value.length > 0 && e.target.value !== this.state.password) {
+				let temperrors = this.state.errors;
+				temperrors.password2 = "Passwords do not match";
+				this.setState({ errors: temperrors });
+			} else {
+				let temperrors = this.state.errors;
+				temperrors.password2 = "";
+				this.setState({ errors: temperrors });
+			}
+		} 
 	};
 
 	//onSubmit
@@ -71,18 +92,37 @@ class Register extends Component {
 		e.preventDefault();
 		const newUser = {
 			username: this.state.username,
-			displayname: this.state.displayname,
-			email: this.state.email,
-			password: this.state.password,
-			password2: this.state.password2,
-			city: this.state.city,
-			stateName: this.state.stateName
+			displayname: this.state.displayname.trim(),
+			email: this.state.email.trim(),
+			password: this.state.password.trim(),
+			password2: this.state.password2.trim(),
+			city: this.state.city.trim(),
+			stateName: this.state.stateName.trim()
 		};
 		if (this.state.profilePic.length > 0) {
 			newUser.profilePic = this.state.profilePic;
 		};
-		this.props.registerUser(newUser, this.props.history);
+		this.props.registerUser(newUser, this.props.history).then(results => {
+			console.log(results);
+			this.setState({
+				modalState: "show-modal",
+				message: results.data
+			})
+		})
+		.catch((error) => {
+			this.setState({
+				errors: error.response.data
+			})
+		})
 	};
+
+	closeModal = (event) => { 
+		if (event.target.id === "closeme") {
+			event.preventDefault();
+			this.setState({modalState: "hide-modal"});
+			this.props.history.push('/login');
+		}
+	}
 
 	render() {
 		const { errors } = this.state;
@@ -177,6 +217,14 @@ class Register extends Component {
 						</div>
 					</div>
 				</div>
+				<div id="modal" className={this.state.modalState} onClick={this.closeModal}>
+          			<div id="portfolioscreen" className="modal-content">
+              		<div>
+						<h2 className="message">{this.state.message}</h2>
+					</div>
+             	 	<button id="closeme" className="btn btn-outline-danger closebtn" onClick={this.closeModal}>Close</button>
+          			</div>
+        		</div>
 			</div>
 		);
 	}

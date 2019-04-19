@@ -3,6 +3,8 @@ const db = require("../models");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const keys = require("../config/keys.js");
+const crypto = require("crypto");
+const nodemailer = require("nodemailer");
 
 //Load Input Validation
 const validateRegisterInput = require("../validation/register");
@@ -24,7 +26,7 @@ module.exports = {
 
 		//Check Validation
 		if (!isValid) {
-			return res.status(400).json(errors);
+			return res.status(400).send(errors);
 		}
 
 		db.User.findOne({ email: req.body.email }).then(user => {
@@ -55,14 +57,35 @@ module.exports = {
 						newUser.password = hash;
 						db.User.create(newUser)
 							.then(user => {
-								res.json({
-									username: user.username,
-									displayname: user.displayname,
-									email: user.email,
-									profilePic: user.profilePic,
-								});
+								const token = {
+									UserId: user._id,
+									token: crypto.randomBytes(16).toString("hex")
+								}
+								db.Token.create(token)
+									.then((token) => {
+										const transporter = nodemailer.createTransport({
+											service: "Sendgrid",
+											 auth: {
+												user: keys.secrets.sendgridusername,
+												pass: keys.secrets.sendgridpass
+											}
+										});
+										var mailOptions = {
+											from: "no-reply@foodbook223.com",
+											to: user.email,
+											subject: "FoodBook Account Verification",
+											text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/api\/confirmation\/' + token.token + '.\n'
+										};
+										   transporter.sendMail(mailOptions, error => {
+											if (error) { 
+												return res.json(error); 
+											};
+											res.status(200).send("A verification email has been sent to: " + user.email);
+										});
+									})
+									.catch(error => console.log(error));
 							})
-							.catch(error => console.log(error));
+							.catch(error => console.log("error"));
 					});
 				});
 			}
@@ -88,8 +111,15 @@ module.exports = {
 
 				//Check password
 				bcrypt.compare(password, user.password).then(isMatch => {
-					if (isMatch) {
-						//User Matched
+					if (!isMatch) { 
+						errors.password = "Incorrect Password";
+						return res.status(400).json(errors);
+					};
+
+					if (!user.isVerified) {
+						errors.user = "Account has not been verified";
+						return res.status(400).json(errors);
+					};
 
 						//Create JWT Payload
 						const payload = {
@@ -111,10 +141,7 @@ module.exports = {
 								});
 							}
 						);
-					} else {
-						errors.password = "Incorrect Password";
-						return res.status(400).json(errors);
-					}
+					
 				});
 			})
 			.catch(errpr => res.status(422).json(error));

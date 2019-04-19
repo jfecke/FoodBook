@@ -7,6 +7,7 @@ const followerRoutes = require("./followers");
 const autocompRoutes = require("./autocomp");
 const geocodeRoutes = require("./geocode");
 const searchRoutes = require("./searchId");
+const confirmationRoutes = require("./confirmation");
 
 
 router.use("/restaurants", restaurantRoutes);
@@ -17,5 +18,6 @@ router.use("/followers", followerRoutes);
 router.use("/autocomp", autocompRoutes);
 router.use("/geocode", geocodeRoutes)
 router.use("/searchId",searchRoutes);
+router.use("/confirmation", confirmationRoutes);
 
 module.exports = router;
