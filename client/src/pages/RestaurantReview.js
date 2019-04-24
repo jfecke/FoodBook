@@ -23,7 +23,9 @@ class Restaurants extends Component {
 			locationVal: {},
 			yelpId: "",
 			reviews: [],
-			yourReviews: []
+			yourReviews: [],
+			editReview: {},
+			modalState: "hide-modal"
 		};
 		this.getReviews = this.getReviews.bind(this);
 	}
@@ -47,8 +49,11 @@ class Restaurants extends Component {
 				for (let i in reviews.data) {
 					if (reviews.data[i].UserId === this.props.auth.user.id) {
 						reviews.data[i]["className"] = "deletebtn"
+						reviews.data[i]["editClass"] = "editbtn"
+						
 					} else {
 						reviews.data[i]["className"] = "d-none"
+						reviews.data[i]["editClass"] = "d-none"
 					}
 				}
 				this.setState({
@@ -68,6 +73,17 @@ class Restaurants extends Component {
 				yourReviews: []
 			});
 			this.getReviews();
+		});
+	}
+
+	editreview = event => {
+		event.preventDefault();
+		let reviewID = event.target.getAttribute("reviewid");
+		API.getReviews({_id: reviewID}).then(review => {
+			this.setState({
+				editReview: review.data[0],
+				modalState: "show-modal"
+			})
 		});
 	}
 
@@ -121,6 +137,8 @@ class Restaurants extends Component {
 									myClass={yourReview.className}
 									deletebtn={this.deleteReview}
 									reviewid={yourReview._id}
+									editClass={yourReview.editClass}
+									editreview={this.editreview}
 								/>
 							))}
 						</Col>
