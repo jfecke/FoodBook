@@ -104,6 +104,7 @@ class CommentForm extends Component {
 							<FormBtn
 								disabled={!this.state.comment}
 								onClick={this.handleFormSubmit}
+								className="btn btn-success"
 							>
 								Submit Review
 							</FormBtn>

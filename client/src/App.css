@@ -121,6 +121,8 @@
 	bottom: 0px;
 }
 
+
+
 .card {
 	background: #fff;
 	color: black;
@@ -295,6 +297,28 @@
     border-radius: 25px;
 }
 
+.modal-content-edit {
+	display:block;
+	margin: 300px auto;
+	background-color: #fefefe;
+	border: 10px solid #0086F1;
+	min-height: 150px;
+	width: 40%;
+	text-align: center;
+	border-radius: 25px;
+}
+
+.modal-content-delete {
+	display:block;
+	margin: 300px auto;
+	background-color: #fefefe;
+	border: 10px solid #0086F1;
+	min-height: 150px;
+	width: 40%;
+	text-align: center;
+	border-radius: 25px;
+}
+
 .hide-modal {
 	display: none;
 }
@@ -308,12 +332,49 @@
 	margin: 20px auto;
 }
 
-@media screen and (max-width: 640px) {
+.btngroup {
+		width: 40%;
+		margin: 10px auto;
+}
+.btn-left {
+	float: left;
+}
+
+.btn-right {
+	float: right;
+}
+
+@media screen and (max-width: 1700px) {
+	.btngroup {
+		width: 60%;
+	}
+}
+
+@media screen and (max-width: 1200px) {
+	.modal-content-edit {
+			margin: 100px auto;
+			background-color: #fefefe;
+			min-height: 400px;
+			width: 70%;
+	}
+}
+
+@media screen and (max-width: 740px) {
 	.modal-content {
 			margin: 100px auto;
 			background-color: #fefefe;
-			border: 10px solid #0086F1;
 			min-height: 500px;
 			width: 90%;
+	}
+
+	.modal-content-edit {
+		margin: 100px auto;
+		background-color: #fefefe;
+		min-height: 400px;
+		width: 90%;
+	}
+
+	.btngroup {
+		width: 70%;
 	}
 }

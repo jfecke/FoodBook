@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Col, Row } from "../grid";
+import { Row } from "../grid";
 import API from "../../utils/API";
 import { FormBtn } from "../Form/index";
 import { getCurrentProfile } from "../../actions/profileActions";
@@ -69,14 +69,9 @@ class EditForm extends Component {
 	}
 
 	render() {
-		const { user } = this.props.auth;
 		return (
 			<div className="card">
 				<Row>
-					<Col size="md-2">
-						<img className="comment-pic" src={user.profilePic} alt="profile" />
-						<div className="text-center">{user.username}</div>
-					</Col>
 					<div className="col-md">
 						<form>
 							<div className="form-group">
@@ -84,7 +79,7 @@ class EditForm extends Component {
 								<select
 									className="form-control"
 									id="rating"
-									value={this.props.rating}
+									value={this.state.rating}
 									onChange={this.handleInputChange("rating")}
 								>
 									<option>0</option>
@@ -111,20 +106,25 @@ class EditForm extends Component {
 									onChange={this.handleInputChange("comment")}
 								/>
 							</div>
-							<FormBtn
-								onClick={this.props.closeModal}
-							>
-								Cancel
-							</FormBtn>
-							<FormBtn
-								disabled={!this.state.comment}
-								onClick={this.handleFormSubmit}
-							>
-								Submit Review
-							</FormBtn>
+							
 						</form>
 					</div>
 				</Row>
+				<div className="btngroup">
+					<FormBtn
+						disabled={!this.state.comment}
+						onClick={this.handleFormSubmit}
+						className="btn btn-success btn-left"
+					>
+						Submit Review
+					</FormBtn>
+					<FormBtn
+						onClick={this.props.closeModal}
+						className="btn btn-danger btn-right"
+					>
+						Cancel
+					</FormBtn>
+				</div>
 			</div>
 		);
 	}

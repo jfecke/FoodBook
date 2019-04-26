@@ -7,6 +7,7 @@ import API from "../utils/API";
 import ReviewCard from "../components/cards/ReviewCard";
 import { List, ListItem } from "../components/list";
 import EditForm from "../components/comments/EditForm";
+import { FormBtn } from "../components/Form/index";
 
 class Dashboard extends Component {
   constructor(props) {
@@ -22,12 +23,15 @@ class Dashboard extends Component {
       comment: "",
       numReviews: "", 
       thisReview: {},
-      modalState: "hide-modal"
+      modalState: "hide-modal",
+      editContentClass: "modal-content-edit d-none",
+      deleteContentClass: "modal-content-delete d-none"
     };
     this.handleSwitch = this.handleSwitch.bind(this);
     this.findFollowers = this.findFollowers.bind(this);
     this.findFollowing = this.findFollowing.bind(this);
     this.getReviews = this.getReviews.bind(this);
+    this.closeModal = this.closeModal.bind(this);
     // this.getReviewFeed = this.getReviewFeed.bind(this);
   }
 
@@ -89,13 +93,25 @@ class Dashboard extends Component {
   deleteReview = event => {
 		event.preventDefault();
 		let reviewID = event.target.getAttribute("reviewid")
-		API.deleteReview(reviewID).then(() => {
+    this.setState({
+      deleteContentClass: "modal-content-delete showContent",
+      modalState: "show-modal",
+      reviewID: reviewID
+    })
+	}
+
+  confirmDelete = (event) => {
+    event.preventDefault();
+    API.deleteReview(this.state.reviewID).then(() => {
 			this.setState({
-				yourReviews: []
-			});
+        yourReviews: [],
+        modalState: "hide-modal",
+        editContentClass: "modal-content-edit d-none",
+        deleteContentClass: "modal-content-delete d-none"
+      });
 			this.getReviews();
 		});
-	}
+  }
 
   getReviewCount = () => {
     const { user } = this.props.auth;
@@ -136,18 +152,22 @@ class Dashboard extends Component {
 		event.preventDefault();
 		let reviewID = event.target.getAttribute("reviewid");
 		API.getReviews({_id: reviewID}).then(review => {
-      console.log(review.data[0])
 			this.setState({
 				thisReview: review.data[0],
-				modalState: "show-modal"
+        modalState: "show-modal",
+        editContentClass: "modal-content-edit showContent"
 			})
 		});
   }
   
   closeModal = (event) => {
-    event.preventDefault();
+    if (typeof(event) !== "undefined") {
+      event.preventDefault();
+    }
     this.setState({
-      modalState: "hide-modal"
+      modalState: "hide-modal",
+      editContentClass: "modal-content-edit d-none",
+      deleteContentClass: "modal-content-delete d-none"
     })
     this.getReviews();
   };
@@ -254,14 +274,32 @@ class Dashboard extends Component {
                   />
                   ))}
         <div id="modal" className={this.state.modalState}>
-          <div id="dashboardmodel" className="modal-content">
+          <div id="dashboardmodel" className={this.state.editContentClass}>
             <Col size="md-12">
-              <h3>Restaurant: {this.state.thisReview.restaurantname}</h3>
+              <h3>{this.state.thisReview.restaurantname}</h3>
 							<EditForm
               review = {this.state.thisReview}
               closeModal={this.closeModal}
 							 />
 						</Col>
+          </div>
+          <div id="verifydelete" className={this.state.deleteContentClass}>
+          <h3>Delete Review?</h3>
+          <br/>
+          <div className="btngroup">
+					<FormBtn
+						onClick={this.confirmDelete}
+						className="btn btn-success btn-left"
+					>
+						Delete
+					</FormBtn>
+					<FormBtn
+						onClick={this.closeModal}
+						className="btn btn-danger btn-right"
+					>
+						Cancel
+					</FormBtn>
+				</div>
           </div>
         </div>
       </Container>
