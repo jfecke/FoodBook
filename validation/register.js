@@ -21,7 +21,7 @@ module.exports = function validateRegisterInput(data) {
 		errors.username = "User Name field is required";
 	}
 
-	if (Validator.isAlphanumeric(data.username)) {
+	if (!Validator.isAlphanumeric(data.username)) {
 		errors.username = "Username must not contain any special characters";
 	}
 
