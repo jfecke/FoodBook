@@ -261,6 +261,7 @@ class Dashboard extends Component {
               		<ReviewCard
                   id={yourReview.UserId}
                   name={yourReview.restaurantname}
+                  yelpid={yourReview.YelpId}
                   key={yourReview._id}
                   rating={yourReview.rating}
                   review={yourReview.review}
