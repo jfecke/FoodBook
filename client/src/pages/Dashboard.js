@@ -6,6 +6,8 @@ import { Col, Row, Container } from "../components/grid";
 import API from "../utils/API";
 import ReviewCard from "../components/cards/ReviewCard";
 import { List, ListItem } from "../components/list";
+import EditForm from "../components/comments/EditForm";
+import { FormBtn } from "../components/Form/index";
 
 class Dashboard extends Component {
   constructor(props) {
@@ -20,11 +22,16 @@ class Dashboard extends Component {
       rating: 0,
       comment: "",
       numReviews: "", 
+      thisReview: {},
+      modalState: "hide-modal",
+      editContentClass: "modal-content-edit d-none",
+      deleteContentClass: "modal-content-delete d-none"
     };
     this.handleSwitch = this.handleSwitch.bind(this);
     this.findFollowers = this.findFollowers.bind(this);
     this.findFollowing = this.findFollowing.bind(this);
     this.getReviews = this.getReviews.bind(this);
+    this.closeModal = this.closeModal.bind(this);
     // this.getReviewFeed = this.getReviewFeed.bind(this);
   }
 
@@ -34,7 +41,6 @@ class Dashboard extends Component {
     this.findFollowing();
     this.getReviewCount();
     this.getFeed();
-    console.log(this.props.auth.user)
   }
 
   // Find Followers
@@ -75,6 +81,7 @@ class Dashboard extends Component {
     API.getReviews({UserId: user.id}).then(reviews => {
       for (let i in reviews.data) {
         reviews.data[i]["className"] = "deletebtn"
+        reviews.data[i]["editClass"] = "editbtn"
       };
       this.setState({
 				yourReviews: reviews.data
@@ -86,13 +93,25 @@ class Dashboard extends Component {
   deleteReview = event => {
 		event.preventDefault();
 		let reviewID = event.target.getAttribute("reviewid")
-		API.deleteReview(reviewID).then(() => {
+    this.setState({
+      deleteContentClass: "modal-content-delete showContent",
+      modalState: "show-modal",
+      reviewID: reviewID
+    })
+	}
+
+  confirmDelete = (event) => {
+    event.preventDefault();
+    API.deleteReview(this.state.reviewID).then(() => {
 			this.setState({
-				yourReviews: []
-			});
+        yourReviews: [],
+        modalState: "hide-modal",
+        editContentClass: "modal-content-edit d-none",
+        deleteContentClass: "modal-content-delete d-none"
+      });
 			this.getReviews();
 		});
-	}
+  }
 
   getReviewCount = () => {
     const { user } = this.props.auth;
@@ -121,12 +140,37 @@ class Dashboard extends Component {
     API.getReviews({UserId: {$in : followers}}).then(reviews => {
       for (let i in reviews.data) {
         reviews.data[i]["className"] = "d-none"
+        reviews.data[i]["editClass"] = "d-none"
       };
       this.setState({
 				yourReviews: reviews.data
 			});
     })
   }
+
+  editReview = event => {
+		event.preventDefault();
+		let reviewID = event.target.getAttribute("reviewid");
+		API.getReviews({_id: reviewID}).then(review => {
+			this.setState({
+				thisReview: review.data[0],
+        modalState: "show-modal",
+        editContentClass: "modal-content-edit showContent"
+			})
+		});
+  }
+  
+  closeModal = (event) => {
+    if (typeof(event) !== "undefined") {
+      event.preventDefault();
+    }
+    this.setState({
+      modalState: "hide-modal",
+      editContentClass: "modal-content-edit d-none",
+      deleteContentClass: "modal-content-delete d-none"
+    })
+    this.getReviews();
+  };
 
 
   handleSwitchToReviews = () => {
@@ -217,6 +261,7 @@ class Dashboard extends Component {
               		<ReviewCard
                   id={yourReview.UserId}
                   name={yourReview.restaurantname}
+                  yelpid={yourReview.YelpId}
                   key={yourReview._id}
                   rating={yourReview.rating}
                   review={yourReview.review}
@@ -224,10 +269,43 @@ class Dashboard extends Component {
                   displayname={yourReview.displayname}
                   myClass={yourReview.className}
                   deletebtn={this.deleteReview}
-									reviewid={yourReview._id}
+                  reviewid={yourReview._id}
+                  editClass={yourReview.editClass}
+									editreview={this.editReview}
                   />
-              		))}
+                  ))}
+        <div id="modal" className={this.state.modalState}>
+          <div id="dashboardmodel" className={this.state.editContentClass}>
+            <Col size="md-12">
+              <h3>{this.state.thisReview.restaurantname}</h3>
+							<EditForm
+              review = {this.state.thisReview}
+              closeModal={this.closeModal}
+              refreshFunction={this.getReviews}
+							 />
+						</Col>
+          </div>
+          <div id="verifydelete" className={this.state.deleteContentClass}>
+          <h3>Delete Review?</h3>
+          <br/>
+          <div className="btngroup">
+					<FormBtn
+						onClick={this.confirmDelete}
+						className="btn btn-success btn-left"
+					>
+						Delete
+					</FormBtn>
+					<FormBtn
+						onClick={this.closeModal}
+						className="btn btn-danger btn-right"
+					>
+						Cancel
+					</FormBtn>
+				</div>
+          </div>
+        </div>
       </Container>
+      
     );
   }
 }

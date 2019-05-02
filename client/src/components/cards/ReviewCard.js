@@ -1,5 +1,6 @@
 import React from "react";
 import StarRatings from "react-star-ratings";
+import { Link } from "react-router-dom";
 
 //import ph from "../../img/ph.png";
 
@@ -12,7 +13,10 @@ const ReviewCard = props => {
 	return (
 		<div className="card d-flex flex-row">
 			<div className="rating">
-				<h5>Restaurant: {props.name}</h5>
+				<h5>Restaurant: <Link to={{
+								pathname: "/search/id",
+								state: { yelpId: props.yelpid },
+							}}>{props.name}</Link></h5>
 				<h5>
 					Rating:
 					<StarRatings
@@ -30,7 +34,8 @@ const ReviewCard = props => {
 				<h5>Review By: {props.displayname + "  (" +  props.username + ")"}</h5>
 				<h5>{props.reviews}</h5>
 				<h5>{props.yourReviews}</h5>
-				<div className={props.myClass} onClick={props.deletebtn} reviewid={props.reviewid}>X</div>
+				<div className={props.myClass} onClick={props.deletebtn} reviewid={props.reviewid}>&times;</div>
+				<div className={props.editClass} onClick={props.editreview} reviewid={props.reviewid}></div>
 			</div>
 		</div>
 	);

@@ -1,18 +1,17 @@
 import React, { Component } from "react";
-import { Col, Row } from "../grid";
+import { Row } from "../grid";
 import API from "../../utils/API";
 import { FormBtn } from "../Form/index";
 import { getCurrentProfile } from "../../actions/profileActions";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-class CommentForm extends Component {
+class EditForm extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			rating: 0,
-			comment: "",
-			errors: {}
+			comment: ""
 		};
 		this.handleInputChange = this.handleInputChange.bind(this);
 	}
@@ -20,6 +19,13 @@ class CommentForm extends Component {
 	componentDidMount() {
 		this.props.getCurrentProfile();
 		this.loadReviews();
+	}
+
+	componentWillReceiveProps(nextProps) {
+		this.setState({ 
+			rating: nextProps.review.rating,
+			comment: nextProps.review.review
+		});
 	}
 
 	loadReviews = () => {
@@ -41,38 +47,32 @@ class CommentForm extends Component {
 	handleFormSubmit = event => {
 		event.preventDefault();
 		if (this.state.comment) {
-			this.addReview();
+			this.updateReview();
 		}
 	};
 
-	addReview = () => {
-		API.addReview({
+	updateReview = () => {
+		API.updateReview({
+			_id: this.props.review._id,
 			UserId: this.props.auth.user.id,
 			username: this.props.auth.user.username,
 			displayname: this.props.auth.user.displayname,
-			YelpId: this.props.passProp,
-			restaurantname: this.props.restaurantName,
+			YelpId: this.props.review.YelpId,
+			restaurantname: this.props.review.restaurantname,
 			rating: this.state.rating,
-			review: this.state.comment,
+			review: this.state.comment
+		}).then(()=> {
+			this.props.closeModal();
+			this.props.refreshFunction();
+			this.loadReviews();
 		})
-			.then(this.loadReviews())
-			.catch(error=> {
-				console.log(error.response.data)
-				this.setState({
-					errors: error.response.data
-				})
-			});
+		  .catch(err => console.log(err));
 	}
 
 	render() {
-		const { user } = this.props.auth;
 		return (
 			<div className="card">
 				<Row>
-					<Col size="md-2">
-						<img className="comment-pic" src={user.profilePic} alt="profile" />
-						<div className="text-center">{user.username}</div>
-					</Col>
 					<div className="col-md">
 						<form>
 							<div className="form-group">
@@ -106,24 +106,32 @@ class CommentForm extends Component {
 									value={this.state.comment}
 									onChange={this.handleInputChange("comment")}
 								/>
-								<p className="error">{this.state.errors.review}</p>
 							</div>
-							<FormBtn
-								disabled={!this.state.comment}
-								onClick={this.handleFormSubmit}
-								className="btn btn-success"
-							>
-								Submit Review
-							</FormBtn>
+							
 						</form>
 					</div>
 				</Row>
+				<div className="btngroup">
+					<FormBtn
+						disabled={!this.state.comment}
+						onClick={this.handleFormSubmit}
+						className="btn btn-success btn-left"
+					>
+						Update Review
+					</FormBtn>
+					<FormBtn
+						onClick={this.props.closeModal}
+						className="btn btn-danger btn-right"
+					>
+						Cancel
+					</FormBtn>
+				</div>
 			</div>
 		);
 	}
 }
 
-CommentForm.propTypes = {
+EditForm.propTypes = {
 	getCurrentProfile: PropTypes.func.isRequired,
 	auth: PropTypes.object.isRequired,
 	profile: PropTypes.object.isRequired,
@@ -137,4 +145,4 @@ const mapStateToProps = state => ({
 export default connect(
 	mapStateToProps,
 	{ getCurrentProfile }
-)(CommentForm);
+)(EditForm);
