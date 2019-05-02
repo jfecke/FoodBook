@@ -12,6 +12,7 @@ class CommentForm extends Component {
 		this.state = {
 			rating: 0,
 			comment: "",
+			errors: {}
 		};
 		this.handleInputChange = this.handleInputChange.bind(this);
 	}
@@ -55,7 +56,12 @@ class CommentForm extends Component {
 			review: this.state.comment,
 		})
 			.then(this.loadReviews())
-			.catch(err => console.log(err));
+			.catch(error=> {
+				console.log(error.response.data)
+				this.setState({
+					errors: error.response.data
+				})
+			});
 	}
 
 	render() {
@@ -100,6 +106,7 @@ class CommentForm extends Component {
 									value={this.state.comment}
 									onChange={this.handleInputChange("comment")}
 								/>
+								<p className="error">{this.state.errors.review}</p>
 							</div>
 							<FormBtn
 								disabled={!this.state.comment}

@@ -63,6 +63,7 @@ class EditForm extends Component {
 			review: this.state.comment
 		}).then(()=> {
 			this.props.closeModal();
+			this.props.refreshFunction();
 			this.loadReviews();
 		})
 		  .catch(err => console.log(err));
@@ -116,7 +117,7 @@ class EditForm extends Component {
 						onClick={this.handleFormSubmit}
 						className="btn btn-success btn-left"
 					>
-						Submit Review
+						Update Review
 					</FormBtn>
 					<FormBtn
 						onClick={this.props.closeModal}

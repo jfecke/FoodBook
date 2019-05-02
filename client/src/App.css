@@ -240,6 +240,7 @@
 	top: 10px;
 	right: 10px;
 	border: 3px solid black;
+	border-radius: 100%;
 	cursor: pointer;
 	height: 30px;
 	width: 30px;
@@ -253,7 +254,9 @@
 		position: absolute;
 		top: 10px;
 		right: 50px;
-		border: 3px solid black;
+		background: url("./img/editbutton.svg") no-repeat;
+		background-size: cover;
+		background-position: center;
 		cursor: pointer;
 		height: 30px;
 		width: 30px;
@@ -265,13 +268,15 @@
 	
   
   .deletebtn:hover {
-	color: red;
-	border: 3px solid red;
+		color: red;
+		border: 3px solid red;
 	}
 
 	.editbtn:hover{
 		color: red;
-		border: 3px solid red;
+		background: url("./img/editbutton-hover.png") no-repeat;
+		background-size: cover;
+		background-position: center;
 		}
 	
 	#modal {
@@ -342,6 +347,12 @@
 
 .btn-right {
 	float: right;
+}
+
+.error {
+	color: red;
+	font-size: 18px;
+	font-weight: bold;
 }
 
 @media screen and (max-width: 1700px) {

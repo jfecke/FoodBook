@@ -280,6 +280,7 @@ class Dashboard extends Component {
 							<EditForm
               review = {this.state.thisReview}
               closeModal={this.closeModal}
+              refreshFunction={this.getReviews}
 							 />
 						</Col>
           </div>

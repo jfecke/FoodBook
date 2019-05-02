@@ -8,6 +8,8 @@ import { Row, Col, Container } from "../components/grid/index";
 import { getCurrentProfile } from "../actions/profileActions";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import EditForm from "../components/comments/EditForm";
+import { FormBtn } from "../components/Form/index";
 
 class Restaurants extends Component {
 	constructor(props) {
@@ -24,8 +26,10 @@ class Restaurants extends Component {
 			yelpId: "",
 			reviews: [],
 			yourReviews: [],
-			editReview: {},
-			modalState: "hide-modal"
+			thisReview: {},
+			modalState: "hide-modal",
+			editContentClass: "modal-content-edit d-none",
+			deleteContentClass: "modal-content-delete d-none"
 		};
 		this.getReviews = this.getReviews.bind(this);
 	}
@@ -68,24 +72,49 @@ class Restaurants extends Component {
 	deleteReview = event => {
 		event.preventDefault();
 		let reviewID = event.target.getAttribute("reviewid")
-		API.deleteReview(reviewID).then(() => {
-			this.setState({
-				yourReviews: []
-			});
-			this.getReviews();
-		});
+    this.setState({
+      deleteContentClass: "modal-content-delete showContent",
+      modalState: "show-modal",
+      reviewID: reviewID
+    })
 	}
 
-	editreview = event => {
+	confirmDelete = (event) => {
+		event.preventDefault();
+		API.deleteReview(this.state.reviewID).then(() => {
+				this.setState({
+			yourReviews: [],
+			modalState: "hide-modal",
+			editContentClass: "modal-content-edit d-none",
+			deleteContentClass: "modal-content-delete d-none"
+		});
+				this.getReviews();
+			});
+	}
+
+	editReview = event => {
 		event.preventDefault();
 		let reviewID = event.target.getAttribute("reviewid");
 		API.getReviews({_id: reviewID}).then(review => {
 			this.setState({
-				editReview: review.data[0],
-				modalState: "show-modal"
+				thisReview: review.data[0],
+        modalState: "show-modal",
+        editContentClass: "modal-content-edit showContent"
 			})
 		});
-	}
+  }
+  
+  closeModal = (event) => {
+    if (typeof(event) !== "undefined") {
+      event.preventDefault();
+    }
+    this.setState({
+      modalState: "hide-modal",
+      editContentClass: "modal-content-edit d-none",
+      deleteContentClass: "modal-content-delete d-none"
+    })
+    this.getReviews();
+  };
 
 
 	render() {
@@ -138,12 +167,42 @@ class Restaurants extends Component {
 									deletebtn={this.deleteReview}
 									reviewid={yourReview._id}
 									editClass={yourReview.editClass}
-									editreview={this.editreview}
+									editreview={this.editReview}
 								/>
 							))}
 						</Col>
 					</Row>
 				</Container>
+				<div id="modal" className={this.state.modalState}>
+          <div id="dashboardmodel" className={this.state.editContentClass}>
+            <Col size="md-12">
+              <h3>{this.state.thisReview.restaurantname}</h3>
+							<EditForm
+							review = {this.state.thisReview}
+							closeModal={this.closeModal}
+							refreshFunction={this.getReviews}
+							 />
+						</Col>
+          </div>
+          <div id="verifydelete" className={this.state.deleteContentClass}>
+          <h3>Delete Review?</h3>
+          <br/>
+          <div className="btngroup">
+					<FormBtn
+						onClick={this.confirmDelete}
+						className="btn btn-success btn-left"
+					>
+						Delete
+					</FormBtn>
+					<FormBtn
+						onClick={this.closeModal}
+						className="btn btn-danger btn-right"
+					>
+						Cancel
+					</FormBtn>
+				</div>
+          </div>
+        </div>
 			</div>
 		);
 	}

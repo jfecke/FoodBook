@@ -23,11 +23,20 @@ module.exports = {
     //Check Validation
     if (!isValid) {
       return res.status(400).json(errors);
-    }
+    };
+
+    db.Review.find({UserId: req.body.UserId}).then(review => {
+      console.log(review);
+      if (review.length>0) {
+        errors.review = "User has already submitted review for this Restaurant";
+				return res.status(400).json(errors);
+      } else {
+        db.Review.create(req.body)
+          .then(dbModel => res.json(dbModel))
+          .catch(err => res.status(422).json(err));
+      }
+    })
     
-    db.Review.create(req.body)
-      .then(dbModel => res.json(dbModel))
-      .catch(err => res.status(422).json(err));
   },
   update: function(req, res) {
     db.Review.findOneAndUpdate(
