@@ -355,6 +355,39 @@
 	font-weight: bold;
 }
 
+.datapage {
+	border: 2px solid gray;
+	background: white;
+}
+
+.restaurantimg {
+	width: 350px;
+	position: absolute;
+	top: 5px;
+	right: 20px;
+}
+
+.contact {
+	margin: 10px 0;
+	border: 1px solid slategray;
+	width: 350px;
+	padding-top: 10px;
+	text-align: center;
+}
+
+h6 {
+	margin-left: 10px;
+}
+
+.review {
+	margin-top: 20px;
+}
+
+.restaurantPage {
+	background: url();
+	min-height: 1000px;
+}
+
 @media screen and (max-width: 1700px) {
 	.btngroup {
 		width: 60%;
@@ -368,7 +401,15 @@
 			min-height: 400px;
 			width: 70%;
 	}
+
 }
+
+@media screen and (max-width: 990px) {
+	.restaurantimg {
+		width: 250px;
+	}
+}
+
 
 @media screen and (max-width: 740px) {
 	.modal-content {
@@ -387,5 +428,10 @@
 
 	.btngroup {
 		width: 70%;
+	}
+
+	.restaurantimg {
+		width: 80%;
+		position: static;
 	}
 }

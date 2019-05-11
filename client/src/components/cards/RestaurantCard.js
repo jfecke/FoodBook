@@ -66,7 +66,7 @@ const RestaurantCard = props => {
 							className="btn btn-dark justify-content-end"
 							style={{ float: "right", margin: 1 }}
 						>
-							Review
+							More Info
 						</Link>
 					</div>
 				</div>

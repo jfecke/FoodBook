@@ -26,7 +26,6 @@ module.exports = {
     };
 
     db.Review.find({UserId: req.body.UserId}).then(review => {
-      console.log(review);
       if (review.length>0) {
         errors.review = "User has already submitted review for this Restaurant";
 				return res.status(400).json(errors);

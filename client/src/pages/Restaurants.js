@@ -30,7 +30,6 @@ class Restaurants extends Component {
 	};
 
 	handleInputChange = event => {
-		//console.log(event.target)
 		const { name, value } = event.target;
 		this.setState({
 			[name]: value,
@@ -46,7 +45,6 @@ class Restaurants extends Component {
 				locationVal: res.data,
 			});
 		});
-		// console.log(this.state.locationVal)
 	};
 
 	handleAutocomp = event => {
@@ -58,7 +56,6 @@ class Restaurants extends Component {
 				lat: this.state.locationVal.lat,
 				lng: this.state.locationVal.lng,
 			}).then(res => {
-				console.log(res.data);
 				this.setState({
 					searchObj: {
 						categories: res.data.categories,
@@ -72,10 +69,6 @@ class Restaurants extends Component {
 		}
 	};
 
-	handleTextComplete = event => {
-		console.log(event.target);
-		//this.setState({searchVal: event.target})
-	};
 
 	render() {
 		return (

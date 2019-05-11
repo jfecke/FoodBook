@@ -67,7 +67,7 @@ class CommentForm extends Component {
 	render() {
 		const { user } = this.props.auth;
 		return (
-			<div className="card">
+			<div className="card review">
 				<Row>
 					<Col size="md-2">
 						<img className="comment-pic" src={user.profilePic} alt="profile" />

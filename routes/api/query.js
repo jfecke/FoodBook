@@ -27,7 +27,6 @@ router.route("/").put(function(req, res) {
                 res.send(filtered);
             }  else {
                 var arraylength = restaurants.length
-                console.log("Array LENGTH",arraylength);
                 res.send(restaurants);
             }         
         })

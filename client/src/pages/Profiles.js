@@ -115,7 +115,6 @@ class Profiles extends Component {
     }).then(results => {
       if (results.data.length > 0) {
         API.deleteFollower(results.data[0]._id).then(resultsOBJ => {
-          console.log(resultsOBJ.data);
           tempusers[usernum].followers -= 1;
           tempusers[usernum].isFollowing = "Follow";
           tempusers[usernum].className = "btn btn-primary";
@@ -126,7 +125,6 @@ class Profiles extends Component {
           FollowerId: this.props.auth.user.id,
           FollowingId: userid
         }).then(resultsOBJ => {
-          console.log(resultsOBJ.data);
           tempusers[usernum].followers += 1;
           tempusers[usernum].isFollowing = "Unfollow";
           tempusers[usernum].className = "btn btn-danger";

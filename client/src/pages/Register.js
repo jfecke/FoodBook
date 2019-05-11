@@ -103,7 +103,6 @@ class Register extends Component {
 			newUser.profilePic = this.state.profilePic;
 		};
 		this.props.registerUser(newUser, this.props.history).then(results => {
-			console.log(results);
 			this.setState({
 				modalState: "show-modal",
 				message: results.data
