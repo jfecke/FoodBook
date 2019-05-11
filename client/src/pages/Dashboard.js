@@ -192,7 +192,8 @@ class Dashboard extends Component {
   render() {
     const { user } = this.props.auth;
     return (
-      <Container>
+      <div className="page-h dark-overlay">
+        <Container>
         <div className="dashboard-bg">
           <div className="profile-header text-center">
             <Row>
@@ -305,6 +306,7 @@ class Dashboard extends Component {
           </div>
         </div>
       </Container>
+    </div>
       
     );
   }

@@ -6,7 +6,6 @@ const API = require("../utils/API");
 router.route("/").post(function(req, res) {
     API.geocode(req.body)
         .then((results) => {
-            console.log(results.data)
             res.send(results.data.results[0].geometry.location)
         }).catch( err => console.log(err))
 });

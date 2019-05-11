@@ -9,19 +9,6 @@
   border-bottom: 1px solid lightgray;
 }
 
-.profiles {
-	position: relative;
-	background: url("../img/allfood2.jpeg") no-repeat;
-	background-size: cover;
-	background-position: center;
-	height: 100vh;
-	margin-top: -24px;
-  margin-bottom: -50px;
-  color: black;
-  text-align: center;
-  font-family: 'Courier New', Courier, monospace;
-}
-
 .card > img {
   height: 90px;
   width: 90px;

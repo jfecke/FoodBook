@@ -103,7 +103,6 @@ class Register extends Component {
 			newUser.profilePic = this.state.profilePic;
 		};
 		this.props.registerUser(newUser, this.props.history).then(results => {
-			console.log(results);
 			this.setState({
 				modalState: "show-modal",
 				message: results.data
@@ -128,11 +127,11 @@ class Register extends Component {
 		const { errors } = this.state;
 
 		return (
-			<div className="register">
+			<div className="register dark-overlay">
 				<div className="container">
 					<div className="row">
 						<div className="col-md-8 m-auto">
-							<h1 className="display-4 text-center font-weight-bold">Sign Up</h1>
+							<h1 className="display-4 text-center font-weight-bold white">Sign Up</h1>
 							<p className="lead text-center">Create your FoodBook account</p>
 							<form noValidate onSubmit={this.onSubmit}>
 								<div className="form-group">

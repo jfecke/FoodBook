@@ -30,7 +30,6 @@ class Restaurants extends Component {
 	};
 
 	handleInputChange = event => {
-		//console.log(event.target)
 		const { name, value } = event.target;
 		this.setState({
 			[name]: value,
@@ -46,7 +45,6 @@ class Restaurants extends Component {
 				locationVal: res.data,
 			});
 		});
-		// console.log(this.state.locationVal)
 	};
 
 	handleAutocomp = event => {
@@ -58,7 +56,6 @@ class Restaurants extends Component {
 				lat: this.state.locationVal.lat,
 				lng: this.state.locationVal.lng,
 			}).then(res => {
-				console.log(res.data);
 				this.setState({
 					searchObj: {
 						categories: res.data.categories,
@@ -72,16 +69,12 @@ class Restaurants extends Component {
 		}
 	};
 
-	handleTextComplete = event => {
-		console.log(event.target);
-		//this.setState({searchVal: event.target})
-	};
 
 	render() {
 		return (
-			<div className = "searcher">
-				<div className="container d-flex flex-column" style={{ width: 100 + "%" }}>
-					<h1>Restaurants</h1>
+			<div className = "searcher dark-overlay page-h">
+				<div className="container d-flex flex-column" style={{ width: 100 + "%",height: 100 + "%" }}>
+					<h1 className="white">Restaurants</h1>
 					<div className="d-flex flex-row" style={{ flex: 1 }}>
 						<div
 							className="d-flex flex-row"
@@ -130,12 +123,12 @@ class Restaurants extends Component {
 
 
 
-					<div className="d-flex flex-row my-2" style={{height: 500 + "px"}}>
+					<div className="d-flex flex-row my-2 carddisplay" style={{height: 100 + "%"}}>
 						<div className="col whiteback" style={{height: 100 + "%", flex: .307, width: 100 + "%" }}>
 							Sidebar filter searches, navigate to other pages..something
 						</div>
 						{this.state.restaurants.length ? (
-							<div className="col " style={{height: 100 + "%", flex: 1, width: 100 + "%" }}>
+							<div className="col carddisplay" style={{width: 100 + "%" }}>
 								{this.state.restaurants.map((restaurant, index) => {
 									return (
 										<RestaurantCard

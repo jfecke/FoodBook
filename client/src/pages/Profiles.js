@@ -115,7 +115,6 @@ class Profiles extends Component {
     }).then(results => {
       if (results.data.length > 0) {
         API.deleteFollower(results.data[0]._id).then(resultsOBJ => {
-          console.log(resultsOBJ.data);
           tempusers[usernum].followers -= 1;
           tempusers[usernum].isFollowing = "Follow";
           tempusers[usernum].className = "btn btn-primary";
@@ -126,7 +125,6 @@ class Profiles extends Component {
           FollowerId: this.props.auth.user.id,
           FollowingId: userid
         }).then(resultsOBJ => {
-          console.log(resultsOBJ.data);
           tempusers[usernum].followers += 1;
           tempusers[usernum].isFollowing = "Unfollow";
           tempusers[usernum].className = "btn btn-danger";
@@ -140,7 +138,7 @@ class Profiles extends Component {
 
   render() {
     return (
-      <div className="profiles">
+      <div className="profiles dark-overlay">
         <form className="d-flex flex-column" type="submit" style={{ width: 100 + "%" }}>
           <h1><strong>Foodies</strong></h1>
           <div className="d-flex flex-row" style={{ flex: 1 }}>
@@ -160,22 +158,23 @@ class Profiles extends Component {
             />
           </div>
         </form>
-           {this.state.users.map(user => (
-                <ProfileCard
-                  id={user._id}
-                  imageurl={user.profilePic}
-                  name={user.displayname}
-                  username={user.username}
-                  key={user._id}
-                  followers={user.followers}
-                  reviews={user.reviews}
-                  follow={this.handleFollow}
-                  location={user.city + ", "+user.stateName}
-                  isFollowing={user.isFollowing}
-                  className={user.className}>
-
-                </ProfileCard>
+          <div className="carddisplay">
+            {this.state.users.map(user => (
+              <ProfileCard
+                id={user._id}
+                imageurl={user.profilePic}
+                name={user.displayname}
+                username={user.username}
+                key={user._id}
+                followers={user.followers}
+                reviews={user.reviews}
+                follow={this.handleFollow}
+                location={user.city + ", "+user.stateName}
+                isFollowing={user.isFollowing}
+                className={user.className}>
+              </ProfileCard>
               ))}
+          </div>      
       </div>
     );
   }
