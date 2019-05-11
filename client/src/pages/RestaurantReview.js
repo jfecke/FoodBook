@@ -151,7 +151,7 @@ class Restaurants extends Component {
 		const passProp = this.props.location.state.yelpId;
 		const restaurant = this.state.restaurant;
 		return (
-			<div className="restaurantPage">
+			<div className="page-h dark-overlay">
 				<form className="d-flex flex-column" style={{ width: 100 + "%" }}>
 					<div className="d-flex flex-row" style={{ flex: 1 }} />
 				</form>
@@ -202,23 +202,25 @@ class Restaurants extends Component {
 					</Row>
 
 					<Row>
-						<Col size="md-12">
-							{this.state.yourReviews.map(yourReview => (
-								<ReviewCard
-									id={yourReview.UserId}
-									name={restaurant.name}
-									key={yourReview._id}
-									username = {yourReview.username}
-									displayname = {yourReview.displayname}
-									rating={yourReview.rating}
-									review={yourReview.review}
-									myClass={yourReview.className}
-									deletebtn={this.deleteReview}
-									reviewid={yourReview._id}
-									editClass={yourReview.editClass}
-									editreview={this.editReview}
-								/>
-							))}
+						<Col size="md-12" className="carddisplay">
+							<div className="carddisplay">
+								{this.state.yourReviews.map(yourReview => (
+									<ReviewCard
+										id={yourReview.UserId}
+										name={restaurant.name}
+										key={yourReview._id}
+										username = {yourReview.username}
+										displayname = {yourReview.displayname}
+										rating={yourReview.rating}
+										review={yourReview.review}
+										myClass={yourReview.className}
+										deletebtn={this.deleteReview}
+										reviewid={yourReview._id}
+										editClass={yourReview.editClass}
+										editreview={this.editReview}
+									/>
+								))}
+							</div>
 						</Col>
 					</Row>
 				</Container>

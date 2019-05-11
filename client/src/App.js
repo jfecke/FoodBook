@@ -50,9 +50,9 @@ class App extends Component {
 		return (
 			<Provider store={store}>
 				<Router>
-					<div className="App">
+					<div className="App page-b">
 						<Navbar />
-						<div className="container">
+						<div className="container page-h">
 							<Switch>
 								<Route exact path="/" component={Landing} />
 								<Route exact path="/register" component={Register} />

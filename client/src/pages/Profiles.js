@@ -138,7 +138,7 @@ class Profiles extends Component {
 
   render() {
     return (
-      <div className="profiles">
+      <div className="profiles dark-overlay">
         <form className="d-flex flex-column" type="submit" style={{ width: 100 + "%" }}>
           <h1><strong>Foodies</strong></h1>
           <div className="d-flex flex-row" style={{ flex: 1 }}>
@@ -158,22 +158,23 @@ class Profiles extends Component {
             />
           </div>
         </form>
-           {this.state.users.map(user => (
-                <ProfileCard
-                  id={user._id}
-                  imageurl={user.profilePic}
-                  name={user.displayname}
-                  username={user.username}
-                  key={user._id}
-                  followers={user.followers}
-                  reviews={user.reviews}
-                  follow={this.handleFollow}
-                  location={user.city + ", "+user.stateName}
-                  isFollowing={user.isFollowing}
-                  className={user.className}>
-
-                </ProfileCard>
+          <div className="carddisplay">
+            {this.state.users.map(user => (
+              <ProfileCard
+                id={user._id}
+                imageurl={user.profilePic}
+                name={user.displayname}
+                username={user.username}
+                key={user._id}
+                followers={user.followers}
+                reviews={user.reviews}
+                follow={this.handleFollow}
+                location={user.city + ", "+user.stateName}
+                isFollowing={user.isFollowing}
+                className={user.className}>
+              </ProfileCard>
               ))}
+          </div>      
       </div>
     );
   }
