@@ -17,11 +17,9 @@ module.exports = {
         location: 'austin, tx'
     },
     search: function(query) {
-        console.log("I QUERY THIS!!!", query)
         return client.search(query)
     },
     review: function(id){
-        console.log("Finding Reviews for id: "+id)
         return client.reviews(id)
     },
     autocomp: function(input){

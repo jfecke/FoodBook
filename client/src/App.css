@@ -96,6 +96,7 @@
 
 .card {
 	margin-bottom: 10px;
+	border: none;
 }
 
 .logout {
@@ -116,8 +117,6 @@
 	bottom: 0px;
 }
 
-	
-
 .card {
 	background: #fff;
 	color: black;
@@ -127,45 +126,50 @@
 	font-size: 14px;
 	flex: 1;
 	border-bottom: 1px solid lightgray;
-  }
+}
+	
+.searcher {
+	margin-top: -24px;
+}
+
+.profiles {
+	position: relative;
+	min-height: 1000px;
+	margin-top: -24px;
+	color: black;
+	text-align: center;
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
   
-  .profiles {
-		position: relative;
-		min-height: 1000px;
-	  margin-top: -24px;
-		color: black;
-		text-align: center;
-		font-family: Verdana, Geneva, Tahoma, sans-serif;
-  }
-  
-  .card > img {
+.card > img {
 	height: 90px;
 	width: 90px;
-  }
+}
   
-  .title {
+.title {
 	font-size: 20px;
-  }
+}
   
-  .muted {
+.muted {
 	font-size: 12;
 	color: rgb(145, 144, 144);
-  }
-  
-  .form-flex {
+}
+
+.form-flex {
 	flex: 1 0 auto;
 	height: 20px;
-  }
-  
-  .search-btn {
+}
+
+.search-btn {
 	color: grey;
 	height: 200px;
-  }
-  
-  body {
+}
+
+body {
 	background-color: lightgray;
-  }
-  .card {
+}
+
+.card {
 	background: #fff;
 	height: 100;
 	width: 100%;
@@ -173,7 +177,7 @@
 	font-size: 14px;
 	flex: 1;
 	font-family: Verdana, Geneva, Tahoma, sans-serif;
-  }
+}
   
   
   .card > img {
@@ -299,18 +303,20 @@
 	display:block;
 	margin: 300px auto;
 	background-color: #fefefe;
-	border: 10px solid #0086F1;
+	border: 10px solid black;
 	min-height: 150px;
 	width: 40%;
 	text-align: center;
 	border-radius: 25px;
 }
 
+
+
 .modal-content-delete {
 	display:block;
 	margin: 300px auto;
 	background-color: #fefefe;
-	border: 10px solid #0086F1;
+	border: 10px solid black;
 	min-height: 150px;
 	width: 40%;
 	text-align: center;
@@ -389,10 +395,12 @@ h6 {
 
 }
 
-.page-b {
-	background: url("./img/showcase.jpg") no-repeat;
-	background-size: cover;
-	background-position: center;
+.page-b { 
+  background: url("./img/showcase.jpg") no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 
 .white {
