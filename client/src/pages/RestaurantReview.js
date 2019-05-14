@@ -72,6 +72,7 @@ class Restaurants extends Component {
 			.then(reviews => {
 				let total = 0;
 				let count = 0;
+				let average = 0;
 				for (let i in reviews.data) {
 					if (reviews.data[i].UserId === this.props.auth.user.id) {
 						reviews.data[i]["className"] = "deletebtn"
@@ -84,10 +85,10 @@ class Restaurants extends Component {
 						reviews.data[i]["editClass"] = "d-none"
 					}
 				}
-				let average = Math.round(total/count);
-				if (typeof(average) !== "number") {
-					average = 0;
+				if (count > 0) {
+					average = total/count;
 				}
+				
 				this.setState({
 					numReviews: reviews.data.length,
 					yourReviews: reviews.data,
