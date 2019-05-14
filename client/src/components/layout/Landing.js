@@ -14,11 +14,13 @@ class Landing extends Component {
 	render() {
 		return (
 			<div className="landing">
-				<div className="dark-overlay landing-inner text-light">
+				<div className="landing-inner text-light">
 					<div className="container">
 						<div className="row">
 							<div className="col-md-12 text-center">
-								<h1 className="display-3 mb-4"><strong>FoodBook</strong></h1>
+								<h1 className="display-3 mb-4">
+									<strong>FoodBook</strong>
+								</h1>
 								<p className="lead">
 									{" "}
 									Create a profile, share/rate your favorite restaurants and get
