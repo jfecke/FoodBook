@@ -51,35 +51,40 @@ class App extends Component {
 			<Provider store={store}>
 				<Router>
 					<div className="App page-b">
-						<Navbar />
-						<div className="container page-h">
-							<Switch>
-								<Route exact path="/" component={Landing} />
-								<Route exact path="/register" component={Register} />
-								<Route exact path="/login" component={Login} />
-								<PrivateRoute exact path="/search" component={Restaurants} />
-								<PrivateRoute exact path="/profiles" component={Profiles} />
-								<PrivateRoute path="/dashboard" component={Dashboard} />
-								<PrivateRoute path="/search/id" component={RestaurantReview} />
-								<Route component={NoMatch} />
+						<div className="dark-overlay">
+							<Navbar />
+							<div className="container page-h">
+								<Switch>
+									<Route exact path="/" component={Landing} />
+									<Route exact path="/register" component={Register} />
+									<Route exact path="/login" component={Login} />
+									<PrivateRoute exact path="/search" component={Restaurants} />
+									<PrivateRoute exact path="/profiles" component={Profiles} />
+									<PrivateRoute path="/dashboard" component={Dashboard} />
+									<PrivateRoute
+										path="/search/id"
+										component={RestaurantReview}
+									/>
+									<Route component={NoMatch} />
 
-								<PrivateRoute
-									exact
-									path="/search/review"
-									component={RestaurantReview}
-								/>
-								<PrivateRoute
-									exact
-									path="/dashboard/review"
-									component={FollowReview}
-								/>
-								<PrivateRoute
-									path="/dashboard/userreview"
-									component={UserReview}
-								/>
-							</Switch>
+									<PrivateRoute
+										exact
+										path="/search/review"
+										component={RestaurantReview}
+									/>
+									<PrivateRoute
+										exact
+										path="/dashboard/review"
+										component={FollowReview}
+									/>
+									<PrivateRoute
+										path="/dashboard/userreview"
+										component={UserReview}
+									/>
+								</Switch>
+							</div>
+							<Footer />
 						</div>
-						<Footer />
 					</div>
 				</Router>
 			</Provider>

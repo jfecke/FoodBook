@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { registerUser } from "../actions/authActions";
 import TextFieldGroup from "../components/common/TextFieldGroup";
-import API from "../utils/API"
+import API from "../utils/API";
 
 class Register extends Component {
 	state = {
@@ -19,7 +19,7 @@ class Register extends Component {
 		profilePic: "",
 		errors: {},
 		modalState: "hide-modal",
-		message: ""
+		message: "",
 	};
 
 	// Check to see if logged in
@@ -44,13 +44,13 @@ class Register extends Component {
 			if (/^([a-zA-Z0-9]){0,15}$/.test(e.target.value)) {
 				this.setState({ [e.target.name]: e.target.value });
 			}
-		}  else {
+		} else {
 			this.setState({ [e.target.name]: e.target.value });
 		}
-		
+
 		if (e.target.name === "username") {
-			API.getUsers({username:e.target.value}).then(user => {
-				if (user.data.length>0) {
+			API.getUsers({ username: e.target.value }).then(user => {
+				if (user.data.length > 0) {
 					let temperrors = this.state.errors;
 					temperrors.username = "Username unavailable";
 					this.setState({ errors: temperrors });
@@ -59,11 +59,12 @@ class Register extends Component {
 					temperrors.username = "";
 					this.setState({ errors: temperrors });
 				}
-			})
+			});
 		} else if (e.target.name === "password") {
 			if (!/^([a-zA-Z0-9-_]){0,15}$/.test(e.target.value)) {
 				let temperrors = this.state.errors;
-				temperrors.password = "Invalid Characters. Use Only: a-z, A-Z, 0-9, '_', '-'";
+				temperrors.password =
+					"Invalid Characters. Use Only: a-z, A-Z, 0-9, '_', '-'";
 				this.setState({ errors: temperrors });
 			} else {
 				let temperrors = this.state.errors;
@@ -73,9 +74,13 @@ class Register extends Component {
 		} else if (e.target.name === "password2") {
 			if (!/^([a-zA-Z0-9-_]){0,15}$/.test(e.target.value)) {
 				let temperrors = this.state.errors;
-				temperrors.password2 = "Invalid Characters. Use Only: a-z, A-Z, 0-9, '_', '-'";
+				temperrors.password2 =
+					"Invalid Characters. Use Only: a-z, A-Z, 0-9, '_', '-'";
 				this.setState({ errors: temperrors });
-			} else if (e.target.value.length > 0 && e.target.value !== this.state.password) {
+			} else if (
+				e.target.value.length > 0 &&
+				e.target.value !== this.state.password
+			) {
 				let temperrors = this.state.errors;
 				temperrors.password2 = "Passwords do not match";
 				this.setState({ errors: temperrors });
@@ -84,7 +89,7 @@ class Register extends Component {
 				temperrors.password2 = "";
 				this.setState({ errors: temperrors });
 			}
-		} 
+		}
 	};
 
 	//onSubmit
@@ -97,41 +102,45 @@ class Register extends Component {
 			password: this.state.password.trim(),
 			password2: this.state.password2.trim(),
 			city: this.state.city.trim(),
-			stateName: this.state.stateName.trim()
+			stateName: this.state.stateName.trim(),
 		};
 		if (this.state.profilePic.length > 0) {
 			newUser.profilePic = this.state.profilePic;
-		};
-		this.props.registerUser(newUser, this.props.history).then(results => {
-			this.setState({
-				modalState: "show-modal",
-				message: results.data
+		}
+		this.props
+			.registerUser(newUser, this.props.history)
+			.then(results => {
+				this.setState({
+					modalState: "show-modal",
+					message: results.data,
+				});
 			})
-		})
-		.catch((error) => {
-			this.setState({
-				errors: error.response.data
-			})
-		})
+			.catch(error => {
+				this.setState({
+					errors: error.response.data,
+				});
+			});
 	};
 
-	closeModal = (event) => { 
+	closeModal = event => {
 		if (event.target.id === "closeme") {
 			event.preventDefault();
-			this.setState({modalState: "hide-modal"});
-			this.props.history.push('/login');
+			this.setState({ modalState: "hide-modal" });
+			this.props.history.push("/login");
 		}
-	}
+	};
 
 	render() {
 		const { errors } = this.state;
 
 		return (
-			<div className="register dark-overlay">
+			<div className="register">
 				<div className="container">
 					<div className="row">
 						<div className="col-md-8 m-auto">
-							<h1 className="display-4 text-center font-weight-bold white">Sign Up</h1>
+							<h1 className="display-4 text-center font-weight-bold white">
+								Sign Up
+							</h1>
 							<p className="lead text-center">Create your FoodBook account</p>
 							<form noValidate onSubmit={this.onSubmit}>
 								<div className="form-group">
@@ -143,7 +152,7 @@ class Register extends Component {
 										onChange={this.onChange}
 										error={errors.username}
 									/>
-									
+
 									<TextFieldGroup
 										placeholder="Display Name"
 										name="displayname"
@@ -216,14 +225,24 @@ class Register extends Component {
 						</div>
 					</div>
 				</div>
-				<div id="modal" className={this.state.modalState} onClick={this.closeModal}>
-          			<div id="portfolioscreen" className="modal-content">
-              		<div>
-						<h2 className="message">{this.state.message}</h2>
+				<div
+					id="modal"
+					className={this.state.modalState}
+					onClick={this.closeModal}
+				>
+					<div id="portfolioscreen" className="modal-content">
+						<div>
+							<h2 className="message">{this.state.message}</h2>
+						</div>
+						<button
+							id="closeme"
+							className="btn btn-outline-danger closebtn"
+							onClick={this.closeModal}
+						>
+							Close
+						</button>
 					</div>
-             	 	<button id="closeme" className="btn btn-outline-danger closebtn" onClick={this.closeModal}>Close</button>
-          			</div>
-        		</div>
+				</div>
 			</div>
 		);
 	}
